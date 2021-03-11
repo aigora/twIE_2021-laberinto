@@ -5,12 +5,9 @@ Tenemos pensado hacer un laberinto con misterios y pruebas que le daran
  iremos mejorándolo, el objetivo claro será lograr salir.
 
 ## Integrantes del equipo
-
-<<<<<<< HEAD
-Abraham Pumarada @abrahampumarada; Jorge Bengoa @Jorgebpinedo
-=======
-[Abraham Pumarada @abrahampumarada; Jorge Bengoa @Jorgebpinedo; Luis Muro @LuisMiguelMuro]
->>>>>>> 04929605d94a467bb9f9266207af6157079649fc
+Abraham Pumarada @abrahampumarada (https://github.com/abrahampumarada?tab=packages)
+Jorge Bengoa @Jorgebpinedo
+Luis Muro @LuisMiguelMuro
 
 ## Objetivos del trabajo
 

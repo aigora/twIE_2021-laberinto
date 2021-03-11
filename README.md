@@ -6,7 +6,11 @@ Tenemos pensado hacer un laberinto con misterios y pruebas que le daran
 
 ## Integrantes del equipo
 
+<<<<<<< HEAD
 Abraham Pumarada @abrahampumarada; Jorge Bengoa @Jorgebpinedo
+=======
+[Abraham Pumarada @abrahampumarada; Jorge Bengoa @Jorgebpinedo; Luis Muro @LuisMiguelMuro]
+>>>>>>> 04929605d94a467bb9f9266207af6157079649fc
 
 ## Objetivos del trabajo
 

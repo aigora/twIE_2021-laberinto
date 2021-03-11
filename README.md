@@ -6,7 +6,7 @@
 
 ## Integrantes del equipo
 
-[Abraham Pumarada @abrahampumarada; Jorge Bengoa j.bpinedo@alumnos.upm.es]
+[Abraham Pumarada @abrahampumarada; Jorge Bengoa @Jorgebpinedo]
 
 ## Objetivos del trabajo
 

@@ -6,7 +6,7 @@
 
 ## Integrantes del equipo
 
-[Abraham Pumarada @abrahampumarada; Jorge Bengoa @Jorgebpinedo]
+[Abraham Pumarada @abrahampumarada; Jorge Bengoa @Jorgebpinedo; Luis Muro @LuisMiguelMuro]
 
 ## Objetivos del trabajo
 

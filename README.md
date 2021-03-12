@@ -6,7 +6,7 @@ Tenemos pensado hacer un laberinto con misterios y pruebas que le daran
 
 ## Integrantes del equipo
 Abraham Pumarada @abrahampumarada (https://github.com/abrahampumarada?tab=packages)
-Jorge Bengoa @Jorgebpinedo
+Jorge Bengoa @Jorgebpinedo (https://github.com/Jorgebpinedo)
 Luis Muro @LuisMiguelMuro
 Luis Peñaranda @Luispdelmazo (https://github.com/Luispdelmazo/Inicio_Github)
 

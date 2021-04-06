@@ -1,96 +1,72 @@
 #include <stdio.h>
 #include <string.h>
 
-#define N 100
-
-void menu ();
-void cargar_o_nueva();
-void nueva();
-void registrar();
-
-typedef struct
-{
-    char nombre_usuario[N];
-    char contrasena[N];
-    char confirmar_contrasena[N];
-}registro;
-
 int main ()
 {
-   menu();
-   return 0;
 
-}
+    int elegir[10];
+    char usuario[100];
+    _Bool bucle[10]={1,1,1,1,1,1,1,1};
 
-void menu ()
-{
-    int constante;
     printf ("Juego Laberinto\n\n");
-    cargar_o_nueva();
 
-
-}
-void cargar_o_nueva()
-{
-    int selecciona;
-    printf("1-<Nueva partida>\n");
-    printf("2-<Cargar partida>\n\n");
-    scanf("%i",&selecciona);
-    printf("\n");
-    if (selecciona==1)
-        nueva();
-}
-
-void nueva()
-{
-    int selecciona;
-    printf("1-<Registrarse>\n");
-    printf("2-<Iniciar sesion>\n");
-    printf("3-<Atras>\n");
-    printf("4-<Salir>\n\n");
-    scanf("%i",&selecciona);
-    printf("\n");
-    if(selecciona==1)
-        registrar();
-    else if (selecciona==3)
-        cargar_o_nueva();
-    else if (selecciona==4)
-        exit(-1);
-}
-void registrar()
-{
-    registro usuario;
-    int contador=0;
-    _Bool exito=0;
-
-    printf("Nombre de usuario: ");
-    scanf("%s",usuario.nombre_usuario);
-    printf("\nContrasena: ");
-    scanf("%s",usuario.contrasena);
-    printf("\nConfirmar contrasena: ");
-
-    while(contador<=3 && exito==0)
+    do
     {
-        scanf("%s",usuario.confirmar_contrasena);
-        if(strcmp(usuario.confirmar_contrasena,usuario.contrasena)!=0)
-            {
-            printf("Contrasena incorrecta\n\n");
-            contador++;
-            if (contador>3)
-               {
-                   printf("\n");
-                   registrar();
-               }
-            else
-                {
-                printf("Confirme contrasena: ");
-                }
+        printf("1-<Nueva partida>\n");
+        printf("2-<Cargar partida>\n");
+        printf("3-<Puntuaciones>\n");
+        printf("4-<Instrucciones>\n");
+        printf("5-<Salir>\n");
 
-            }
-        else
-            {
-                printf("\nRegistrando...");
-                exito=1;
-            }
+        scanf("%i",&elegir[0]);
+        printf("\n");
+
+        switch(elegir[0])
+        {
+            case 1:
+                do
+                {
+                printf("1-<Nombre de usuario>\n");
+                printf("2-<Salir>\n");
+                scanf("%i",&elegir[1]);
+                    if (elegir[1]==1)
+                    {
+                        printf("Ingresa nombre de usuario: \n");
+                        scanf("%[^\n]",usuario);
+                    }
+                    else
+                        bucle[1]=0;
+                }
+                while(bucle[1]);
+                break;
+
+            case 2:
+                printf("1-<Nombre de usuario>\n");
+                printf("2-<Salir>\n");
+                printf("Usa ficheros, por ahora no sabemos\n");
+                break;
+
+            case 3:
+                printf("Usa ficheros, por ahora no sabemos\n");
+                break;
+
+            case 4:
+                printf("Una vez tengamos en programa listo rellenaremos este campo\n");
+                break;
+
+            case 5:
+                printf("Saliendo...");
+                bucle[0]=0;
+                break;
+
+            default:
+                printf("Error!\n");
+                printf("Introduce un valor comprendido entre 1 y 5");
+                break;
+        }
+
     }
+    while(bucle[0]);
+
+    return 0;
 }

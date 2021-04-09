@@ -28,8 +28,6 @@ int main ()
         switch(elegir[0])
         {
             case 1:
-                do
-                {
                 printf("1-<Configuracion de la partida>\n");
                 printf("2-<Salir>\n");
                 scanf("%i",&elegir[1]);
@@ -49,7 +47,6 @@ int main ()
                             printf("3-<Modo 3>\n");
                             scanf("%i",&elegir[3]);
                             printf("Iniciando partida...\n");
-                            bucle[1]=0;
                         }
                         else if (elegir[2]==2)
                         {
@@ -90,18 +87,15 @@ int main ()
                                 default:
                                     printf("Error!\n");
                                     break;
-
                             }
                         }
                         else
                             printf("Error!\n");
                     }
                     else if (elegir[1]=2)
-                        bucle[1]=bucle[0]=0;
+                        bucle[0]=0;
                     else
                         printf("Error!\n");
-                }
-                while(bucle[1]);
                 break;
 
             case 2:
@@ -114,7 +108,7 @@ int main ()
                     bucle[0]=0;
                 else
                     printf("Error!\n");
-                printf("Usa ficheros, por ahora no sabemos\n");
+                    printf("Usa ficheros, por ahora no sabemos\n");
                 break;
 
             case 3:
@@ -141,3 +135,4 @@ int main ()
 
     return 0;
 }
+

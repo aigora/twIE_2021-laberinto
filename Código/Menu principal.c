@@ -38,7 +38,7 @@ int main ()
                         scanf("%i",&elegir[2]);
                         if (elegir[2]==1)
                         {
-                            printf("Nombre de usuario (la partida se guardara con el mismo nombre): \n"); //Crear función que realice esto
+                            printf("Nombre de usuario (la partida se guardara con el mismo nombre): \n"); //Crear funciÃ³n que realice esto
                             scanf(" %[^\n]",usuario);
                             strcpy(nombre_partida,usuario);
                             printf("Modo de juego:\n");
@@ -136,3 +136,4 @@ int main ()
     return 0;
 }
 */
+

@@ -90,14 +90,21 @@ void movimiento_jugador(SDL_Rect *posicion, SDL_Rect *jugador, int anchoimagen, 
         }
 }
 
-void interseccion (SDL_Rect posicion, SDL_Rect posicion_bala, SDL_Texture *jugador)
+_Bool interseccion (SDL_Rect posicion, SDL_Rect posicion_bala, SDL_Texture *jugador)
 {
     float distancia=sqrt(pow(posicion.x-posicion_bala.x,2)+pow(posicion.y-posicion_bala.y,2));
+    _Bool intersecan=0;
 
     if(distancia>50)
+    {
         SDL_SetTextureColorMod(jugador,255,255,255);
+        intersecan=0;
+    }
     else
+    {
         SDL_SetTextureColorMod(jugador,255,0,0);
-
+        intersecan=1;
+    }
+    return intersecan;
 }
 

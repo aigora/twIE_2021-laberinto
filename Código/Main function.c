@@ -21,9 +21,16 @@ int main (int argc, char *argv[])
     SDL_Texture *jugador1=NULL;
     SDL_Texture *jugador2=NULL;
     SDL_Texture *bala=NULL;
+    SDL_Texture *vida1=NULL;
+    SDL_Texture *vida2=NULL;
+    SDL_Texture *vida3=NULL;
+    SDL_Texture *municion1=NULL;
+    SDL_Texture *municion2=NULL;
+    SDL_Texture *municion3=NULL;
     SDL_Event evento;
     _Bool ejecutando=1;
     int altoimagen,anchoimagen;
+    int ancho_vida,alto_vida;
     const int velocidad_movimiento=2;
 
 
@@ -35,6 +42,9 @@ int main (int argc, char *argv[])
 
     jugador1=cargar_texturas("Animacion.png",escenario);
     jugador2=cargar_texturas("Animacion.png",escenario);
+    vida1=cargar_texturas("Vida.png",escenario);
+    vida2=cargar_texturas("Vida.png",escenario);
+    vida3=cargar_texturas("Vida.png",escenario);
 
     SDL_QueryTexture(jugador1,NULL,NULL,&anchoimagen,&altoimagen);
 
@@ -59,6 +69,18 @@ SDL_Rect posicion2;
     posicion2.x=posicion2.y=300;
     posicion2.w=posicion2.h=100;
 
+SDL_Rect posicion_vida1;
+SDL_Rect posicion_vida2;
+SDL_Rect posicion_vida3;
+
+SDL_QueryTexture(vida1,NULL,NULL,&ancho_vida,&alto_vida);
+
+posicion_vida1.w=posicion_vida2.w=posicion_vida3.w=30;
+posicion_vida1.h=posicion_vida2.h=posicion_vida3.h=30;
+posicion_vida1.y=posicion_vida2.y=posicion_vida3.y=0;
+posicion_vida1.x=700;
+posicion_vida2.x=750;
+posicion_vida3.x=800;
 
 SDL_Rect posicionbala;
 
@@ -92,10 +114,15 @@ SDL_Rect posicionbala;
         if(posicionbala.x>=550)
             SDL_DestroyTexture(bala);
 
+
         SDL_RenderClear(escenario);
         SDL_RenderCopy(escenario,jugador1,&recortar_jugador1,&posicion);
         SDL_RenderCopy(escenario,bala,NULL,&posicionbala);
         SDL_RenderCopy(escenario,jugador2,&recortar_jugador2,&posicion2);
+        SDL_RenderCopy(escenario,vida1,NULL,&posicion_vida1);
+        SDL_RenderCopy(escenario,vida2,NULL,&posicion_vida2);
+        SDL_RenderCopy(escenario,vida3,NULL,&posicion_vida3);
+
         SDL_RenderPresent(escenario);
 
     }

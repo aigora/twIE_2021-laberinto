@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Proyecto de informática" />
+		<Option title="Nuevo proyecto" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Proyecto de informática" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/Nuevo proyecto" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/Proyecto de informática" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/Nuevo proyecto" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -35,17 +35,14 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image" />
-			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/SDL/SDL2-General/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
-			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/SDL/SDL2-Imagen/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" />
+			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/Trabajo Github/twIE_2021-laberinto/SDL2/SDL2-General/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
+			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/Trabajo Github/twIE_2021-laberinto/SDL2/SDL2-Imagen/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="Funciones_principales1.c">
+		<Unit filename="Funciones_principales.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Funciones_principales1.h" />
-		<Unit filename="Main function.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Menu principal.c">
+		<Unit filename="Funciones_principales.h" />
+		<Unit filename="Main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

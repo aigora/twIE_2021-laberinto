@@ -108,3 +108,17 @@ _Bool interseccion (SDL_Rect posicion, SDL_Rect posicion_bala, SDL_Texture *juga
     return intersecan;
 }
 
+void vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int numero_vidas, int *tiempo)
+{
+    if (intersecan)
+    {
+        *tiempo+=1;
+        if(*tiempo==20)
+        {
+            recortar->x+=ancho_vida/3;
+            *tiempo=0;
+        }
+    }
+    else
+        numero_vidas=3;
+}

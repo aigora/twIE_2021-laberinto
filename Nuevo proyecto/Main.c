@@ -15,15 +15,19 @@ int main (int argc, char *argv[])
     int tiempo_jugador1=0,tiempo_jugador2=0;
     int numero_jugador;
     int x=0,y=0;
+    int tiempo_interseccion=0;
     SDL_Window *ventanaprincipal=NULL;
     SDL_Surface *superficieprincipal=NULL;
     SDL_Renderer *escenario=NULL;
     SDL_Texture *jugador1=NULL;
     SDL_Texture *jugador2=NULL;
     SDL_Texture *bala=NULL;
+    SDL_Texture *vidas=NULL;
     SDL_Event evento;
     _Bool ejecutando=1;
+    _Bool intersecan=0;
     int altoimagen,anchoimagen;
+    int ancho_vida,alto_vida;
     const int velocidad_movimiento=2;
 
 
@@ -35,8 +39,10 @@ int main (int argc, char *argv[])
 
     jugador1=cargar_texturas("Animacion.png",escenario);
     jugador2=cargar_texturas("Animacion.png",escenario);
+    vidas=cargar_texturas("Vida.png",escenario);
 
     SDL_QueryTexture(jugador1,NULL,NULL,&anchoimagen,&altoimagen);
+    SDL_QueryTexture(vidas,NULL,NULL,&ancho_vida,&alto_vida);
 
 SDL_Rect recortar_jugador1;
     recortar_jugador1.x=0;
@@ -62,6 +68,17 @@ SDL_Rect posicion2;
 
 SDL_Rect posicionbala;
 
+SDL_Rect posicion_vidas;
+posicion_vidas.x=700;
+posicion_vidas.y=0;
+posicion_vidas.w=100;
+posicion_vidas.h=50;
+
+SDL_Rect recortar_vidas;
+recortar_vidas.x=recortar_vidas.y=0;
+recortar_vidas.w=ancho_vida;
+recortar_vidas.h=alto_vida;
+
     while(ejecutando)
     {
         while(SDL_PollEvent(&evento)!=0)
@@ -86,7 +103,9 @@ SDL_Rect posicionbala;
         movimiento_jugador(&posicion,&recortar_jugador1,anchoimagen,altoimagen,&tiempo_jugador1,1);
         movimiento_jugador(&posicion2,&recortar_jugador2,anchoimagen,altoimagen,&tiempo_jugador2,2);
         limites_mapa(&posicion);
-        interseccion(posicion,posicion2,jugador2);
+        intersecan=interseccion(posicion,posicion2,jugador2);
+        vidas_restantes(&recortar_vidas,intersecan,ancho_vida,altoimagen,&tiempo_interseccion);
+
 
 
         if(posicionbala.x>=550)
@@ -96,16 +115,17 @@ SDL_Rect posicionbala;
         SDL_RenderCopy(escenario,jugador1,&recortar_jugador1,&posicion);
         SDL_RenderCopy(escenario,bala,NULL,&posicionbala);
         SDL_RenderCopy(escenario,jugador2,&recortar_jugador2,&posicion2);
+        SDL_RenderCopy(escenario,vidas,&recortar_vidas,&posicion_vidas);
         SDL_RenderPresent(escenario);
 
     }
-
+    SDL_DestroyTexture(vidas);
     SDL_DestroyTexture(jugador2);
     SDL_DestroyTexture(jugador1);
     SDL_DestroyTexture(bala);
     SDL_DestroyRenderer(escenario);
     SDL_DestroyWindow(ventanaprincipal);
-    ventanaprincipal=superficieprincipal=jugador1=bala=jugador2=NULL;
+    ventanaprincipal=superficieprincipal=jugador1=bala=vidas=jugador2=NULL;
 
     SDL_Quit();
 

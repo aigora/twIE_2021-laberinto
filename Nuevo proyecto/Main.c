@@ -7,7 +7,7 @@
 typedef struct
 {
 
-}personaje;
+}municion_total;
 
 
 int main (int argc, char *argv[])
@@ -15,20 +15,27 @@ int main (int argc, char *argv[])
     int tiempo_jugador1=0,tiempo_jugador2=0;
     int numero_jugador;
     int x=0,y=0;
+    int tiempo_recarga=0;
     int tiempo_interseccion=0;
     SDL_Window *ventanaprincipal=NULL;
     SDL_Surface *superficieprincipal=NULL;
     SDL_Renderer *escenario=NULL;
     SDL_Texture *jugador1=NULL;
     SDL_Texture *jugador2=NULL;
-    SDL_Texture *bala=NULL;
+    SDL_Texture *bala1=NULL;
+    SDL_Texture *bala2=NULL;
+    SDL_Texture *bala3=NULL;
     SDL_Texture *vidas=NULL;
+    SDL_Texture *municion=NULL;
     SDL_Event evento;
     _Bool ejecutando=1;
     _Bool intersecan=0;
     int altoimagen,anchoimagen;
     int ancho_vida,alto_vida;
+    int ancho_municion,alto_municion;
     const int velocidad_movimiento=2;
+
+    int numero_balas=3;
 
 
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -40,9 +47,11 @@ int main (int argc, char *argv[])
     jugador1=cargar_texturas("Animacion.png",escenario);
     jugador2=cargar_texturas("Animacion.png",escenario);
     vidas=cargar_texturas("Vida.png",escenario);
+    municion=cargar_texturas("Municion.png",escenario);
 
     SDL_QueryTexture(jugador1,NULL,NULL,&anchoimagen,&altoimagen);
     SDL_QueryTexture(vidas,NULL,NULL,&ancho_vida,&alto_vida);
+    SDL_QueryTexture(municion,NULL,NULL,&ancho_municion,&alto_municion);
 
 SDL_Rect recortar_jugador1;
     recortar_jugador1.x=0;
@@ -67,6 +76,14 @@ SDL_Rect posicion2;
 
 
 SDL_Rect posicionbala;
+//posicionbala.x=posicionbala.y=0;
+
+
+SDL_Rect posicion_municion;
+posicion_municion.y=0;
+posicion_municion.w=100;
+posicion_municion.h=50;
+posicion_municion.x=600;
 
 SDL_Rect posicion_vidas;
 posicion_vidas.x=700;
@@ -87,17 +104,29 @@ recortar_vidas.h=alto_vida;
             {
                 ejecutando=0;
             }
+
             if (evento.type==SDL_KEYDOWN)
             {
                 if(evento.key.keysym.sym==SDLK_SPACE)
                 {
-                bala=cargar_texturas("Zanahoria.png",escenario);
-                posicionbala.x=posicion.x+posicion.w;
-                posicionbala.y=posicion.y+posicion.h/2;
-                posicionbala.w=posicionbala.h=50;
+                switch(numero_balas)
+                {
+                case 3:
+                    bala1=disparar(escenario,&posicionbala,posicion,&numero_balas);
+                    break;
+                case 2:
+                    bala2=disparar(escenario,&posicionbala,posicion,&numero_balas);
+                    break;
+                case 1:
+                    bala3=disparar(escenario,&posicionbala,posicion,&numero_balas);
+                    break;
+                }
+
                 }
             }
         }
+
+
         posicionbala.x+=6;
 
         movimiento_jugador(&posicion,&recortar_jugador1,anchoimagen,altoimagen,&tiempo_jugador1,1);
@@ -109,23 +138,31 @@ recortar_vidas.h=alto_vida;
 
 
         if(posicionbala.x>=550)
-            SDL_DestroyTexture(bala);
+        {
+            SDL_DestroyTexture(bala1);
+            numero_balas++;
+        }
 
         SDL_RenderClear(escenario);
         SDL_RenderCopy(escenario,jugador1,&recortar_jugador1,&posicion);
-        SDL_RenderCopy(escenario,bala,NULL,&posicionbala);
+        SDL_RenderCopy(escenario,bala1,NULL,&posicionbala);
+        SDL_RenderCopy(escenario,bala2,NULL,&posicionbala);
+        SDL_RenderCopy(escenario,bala3,NULL,&posicionbala);
         SDL_RenderCopy(escenario,jugador2,&recortar_jugador2,&posicion2);
         SDL_RenderCopy(escenario,vidas,&recortar_vidas,&posicion_vidas);
+        SDL_RenderCopy(escenario,municion,NULL,&posicion_municion);
         SDL_RenderPresent(escenario);
 
     }
+
+    SDL_DestroyTexture(municion);
     SDL_DestroyTexture(vidas);
     SDL_DestroyTexture(jugador2);
     SDL_DestroyTexture(jugador1);
-    SDL_DestroyTexture(bala);
+    SDL_DestroyTexture(bala1);
     SDL_DestroyRenderer(escenario);
     SDL_DestroyWindow(ventanaprincipal);
-    ventanaprincipal=superficieprincipal=jugador1=bala=vidas=jugador2=NULL;
+    ventanaprincipal=superficieprincipal=jugador1=bala1=vidas=jugador2=municion=NULL;
 
     SDL_Quit();
 

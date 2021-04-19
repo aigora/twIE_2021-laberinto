@@ -122,3 +122,22 @@ void vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int 
     else
         numero_vidas=3;
 }
+SDL_Texture *disparar(SDL_Renderer *escenario, SDL_Rect *posicion_bala, SDL_Rect posicion_shooter, int *numero_balas)
+{
+    SDL_Texture *bala=NULL;
+
+    if (*numero_balas>=1)
+    {
+    bala=cargar_texturas("Zanahoria.png",escenario);
+    posicion_bala->x=posicion_shooter.x+posicion_shooter.w;
+    posicion_bala->y=posicion_shooter.y+posicion_shooter.h/2;
+    posicion_bala->w=posicion_bala->h=50;
+    *numero_balas=0;
+    }
+
+
+    return bala;
+}
+
+
+

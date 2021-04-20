@@ -105,38 +105,37 @@ _Bool interseccion (SDL_Rect posicion, SDL_Rect posicion_bala, SDL_Texture *juga
         SDL_SetTextureColorMod(jugador,255,0,0);
         intersecan=1;
     }
+
     return intersecan;
 }
 
-void vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int numero_vidas, int *tiempo)
+int vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int numero_vidas, SDL_Rect posicion_bala, SDL_Rect posicion_victima)
 {
-    if (intersecan)
+    if (intersecan && posicion_bala.x>=posicion_victima.x-3 && posicion_bala.x<=posicion_victima.x+3)
     {
-        *tiempo+=1;
-        if(*tiempo==20)
-        {
-            recortar->x+=ancho_vida/3;
-            *tiempo=0;
-        }
-    }
-    else
+        numero_vidas--;
+    switch(numero_vidas)
+    {
+    case 2:
+        recortar->x+=ancho_vida/3;
+        recortar->y=0;
+        recortar->w=ancho_vida-ancho_vida/3;
+        break;
+    case 1:
+        recortar->x+=ancho_vida/3;
+        recortar->y=0;
+        break;
+    case 0:
         numero_vidas=3;
-}
-SDL_Texture *disparar(SDL_Renderer *escenario, SDL_Rect *posicion_bala, SDL_Rect posicion_shooter, int *numero_balas)
-{
-    SDL_Texture *bala=NULL;
-
-    if (*numero_balas>=1)
-    {
-    bala=cargar_texturas("Zanahoria.png",escenario);
-    posicion_bala->x=posicion_shooter.x+posicion_shooter.w;
-    posicion_bala->y=posicion_shooter.y+posicion_shooter.h/2;
-    posicion_bala->w=posicion_bala->h=50;
-    *numero_balas=0;
+        recortar->x=0;
+        recortar->w=ancho_vida;
+        break;
+    default:
+        recortar->x=ancho_vida;
+        break;
     }
-
-
-    return bala;
+    }
+    return numero_vidas;
 }
 
 

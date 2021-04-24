@@ -109,7 +109,7 @@ _Bool interseccion (SDL_Rect posicion, SDL_Rect posicion_bala, SDL_Texture *juga
     return intersecan;
 }
 
-int vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int numero_vidas, SDL_Rect posicion_bala, SDL_Rect posicion_victima, int contador_balas)
+int vidas_restantes (SDL_Rect *recortar, SDL_Rect *posicion_vida, _Bool intersecan, int ancho_vida, int numero_vidas, SDL_Rect posicion_bala, SDL_Rect posicion_victima, _Bool contador_balas)
 {
     if (contador_balas==1)
     {
@@ -120,16 +120,17 @@ int vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int n
     case 2:
         recortar->x+=ancho_vida/3;
         recortar->y=0;
-        recortar->w=ancho_vida-ancho_vida/3;
+        posicion_vida->w-=33;
         break;
     case 1:
         recortar->x+=ancho_vida/3;
-        recortar->y=0;
+        posicion_vida->w-=33;
         break;
     case 0:
         numero_vidas=3;
         recortar->x=0;
-        recortar->w=ancho_vida;
+        posicion_vida->w-=34;
+        posicion_vida->w=100;
         break;
     default:
         recortar->x=ancho_vida;
@@ -138,6 +139,35 @@ int vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int n
     }
     return numero_vidas;
 }
+void recargar(SDL_Rect *recortar_municion, SDL_Rect *posicion_municion, int *tiempo_recarga, int ancho_municion,_Bool bala_activa)
+{
+    if (bala_activa)
+    {
+    *tiempo_recarga+=1;
 
+    if (recortar_municion->x>=ancho_municion/4)
+    {
+        recortar_municion->x=0;
+        posicion_municion->w=100;
+    }
+
+
+    if (*tiempo_recarga==2)
+    {
+        recortar_municion->x+=1;
+        posicion_municion->w-=1;
+        *tiempo_recarga=0;
+    }
+    }
+}
+void you_win(SDL_Rect *posicion_texto, int numero_vidas, SDL_Renderer *escenario, SDL_Texture *texto)
+{
+    if (numero_vidas==0)
+        {
+            posicion_texto->w+=5;
+            posicion_texto->h+=2;
+            SDL_RenderCopy(escenario,texto,NULL,posicion_texto);
+        }
+}
 
 

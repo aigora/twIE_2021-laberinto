@@ -12,7 +12,7 @@ typedef struct
 
 int main (int argc, char *argv[])
 {
-    int contador_balas=0;
+    _Bool contador_balas=0;
     int tiempo_jugador1=0,tiempo_jugador2=0;
     int numero_jugador;
     int x=0,y=0;
@@ -26,6 +26,7 @@ int main (int argc, char *argv[])
     SDL_Texture *bala=NULL;
     SDL_Texture *vidas=NULL;
     SDL_Texture *municion=NULL;
+    SDL_Texture *texto_ganador=NULL;
     SDL_Event evento;
     _Bool ejecutando=1;
     _Bool intersecan=0;
@@ -48,7 +49,8 @@ int main (int argc, char *argv[])
     jugador1=cargar_texturas("Animacion.png",escenario);
     jugador2=cargar_texturas("Animacion.png",escenario);
     vidas=cargar_texturas("Vida.png",escenario);
-    municion=cargar_texturas("Municion.png",escenario);
+    municion=cargar_texturas("Zanahoria.png",escenario);
+    texto_ganador=cargar_texturas("Texto.png",escenario);
 
     SDL_QueryTexture(jugador1,NULL,NULL,&anchoimagen,&altoimagen);
     SDL_QueryTexture(vidas,NULL,NULL,&ancho_vida,&alto_vida);
@@ -98,11 +100,18 @@ recortar_vidas.x=recortar_vidas.y=0;
 recortar_vidas.w=ancho_vida;
 recortar_vidas.h=alto_vida;
 
+SDL_Rect recortar_municion;
+recortar_municion.x=0;
+recortar_municion.y=0;
+recortar_municion.w=ancho_municion;
+recortar_municion.h=alto_municion;
+
+SDL_Rect posicion_texto;
+posicion_texto.x=posicion_texto.y=250;
+posicion_texto.w=posicion_texto.h=0;
 
 
-
-
-    while(ejecutando)
+   while(ejecutando)
     {
 
         while(SDL_PollEvent(&evento)!=0)
@@ -116,12 +125,12 @@ recortar_vidas.h=alto_vida;
             {
                 if(evento.key.keysym.sym==SDLK_SPACE && bala_activa==0)
                 {
-                    bala=cargar_texturas("Zanahoria.png", escenario);
+                    bala=cargar_texturas("Bala.png", escenario);
                     posicionbala.x=posicion.x+posicion.w;
                     posicionbala.y=posicion.y+posicion.h/2;
                     posicionbala.w=posicionbala.h=50;
                     bala_activa=1;
-                    contador_balas++;
+                    contador_balas=1;
                 }
             }
         }
@@ -145,26 +154,28 @@ recortar_vidas.h=alto_vida;
 
         if (intersecan)
         {
-            numero_vidas=vidas_restantes(&recortar_vidas,intersecan,ancho_vida,numero_vidas,posicionbala,posicion2,contador_balas);
+            numero_vidas=vidas_restantes(&recortar_vidas,&posicion_vidas,intersecan,ancho_vida,numero_vidas,posicionbala,posicion2,contador_balas);
             SDL_DestroyTexture(bala);
             contador_balas=0;
         }
 
-
-
+        recargar(&recortar_municion,&posicion_municion,&tiempo_disparo,ancho_municion,contador_balas);
 
         SDL_RenderClear(escenario);
-
 
         SDL_RenderCopy(escenario,bala,NULL,&posicionbala);
         SDL_RenderCopy(escenario,jugador1,&recortar_jugador1,&posicion);
         SDL_RenderCopy(escenario,jugador2,&recortar_jugador2,&posicion2);
         SDL_RenderCopy(escenario,vidas,&recortar_vidas,&posicion_vidas);
-        SDL_RenderCopy(escenario,municion,NULL,&posicion_municion);
+        SDL_RenderCopy(escenario,municion,&recortar_municion,&posicion_municion);
         SDL_RenderPresent(escenario);
 
     }
 
+
+
+
+    SDL_DestroyTexture(texto_ganador);
     SDL_DestroyTexture(municion);
     SDL_DestroyTexture(vidas);
     SDL_DestroyTexture(jugador2);
@@ -172,7 +183,7 @@ recortar_vidas.h=alto_vida;
     SDL_DestroyTexture(bala);
     SDL_DestroyRenderer(escenario);
     SDL_DestroyWindow(ventanaprincipal);
-    ventanaprincipal=superficieprincipal=jugador1=bala=vidas=jugador2=municion=NULL;
+    ventanaprincipal=superficieprincipal=jugador1=bala=vidas=jugador2=municion=texto_ganador=NULL;
 
     SDL_Quit();
 

@@ -12,7 +12,7 @@ typedef struct
 
 int main (int argc, char *argv[])
 {
-
+    int contador_balas=0;
     int tiempo_jugador1=0,tiempo_jugador2=0;
     int numero_jugador;
     int x=0,y=0;
@@ -121,6 +121,7 @@ recortar_vidas.h=alto_vida;
                     posicionbala.y=posicion.y+posicion.h/2;
                     posicionbala.w=posicionbala.h=50;
                     bala_activa=1;
+                    contador_balas++;
                 }
             }
         }
@@ -138,8 +139,18 @@ recortar_vidas.h=alto_vida;
         movimiento_jugador(&posicion,&recortar_jugador1,anchoimagen,altoimagen,&tiempo_jugador1,1);
         movimiento_jugador(&posicion2,&recortar_jugador2,anchoimagen,altoimagen,&tiempo_jugador2,2);
         limites_mapa(&posicion);
+
+
         intersecan=interseccion(posicion2,posicionbala,jugador2);
-        numero_vidas=vidas_restantes(&recortar_vidas,intersecan,ancho_vida,numero_vidas,posicionbala,posicion2);
+
+        if (intersecan)
+        {
+            numero_vidas=vidas_restantes(&recortar_vidas,intersecan,ancho_vida,numero_vidas,posicionbala,posicion2,contador_balas);
+            SDL_DestroyTexture(bala);
+            contador_balas=0;
+        }
+
+
 
 
         SDL_RenderClear(escenario);

@@ -109,11 +109,12 @@ _Bool interseccion (SDL_Rect posicion, SDL_Rect posicion_bala, SDL_Texture *juga
     return intersecan;
 }
 
-int vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int numero_vidas, SDL_Rect posicion_bala, SDL_Rect posicion_victima)
+int vidas_restantes (SDL_Rect *recortar, _Bool intersecan, int ancho_vida, int numero_vidas, SDL_Rect posicion_bala, SDL_Rect posicion_victima, int contador_balas)
 {
-    if (intersecan && posicion_bala.x>=posicion_victima.x-3 && posicion_bala.x<=posicion_victima.x+3)
+    if (contador_balas==1)
     {
-        numero_vidas--;
+    numero_vidas--;
+
     switch(numero_vidas)
     {
     case 2:

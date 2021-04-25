@@ -45,6 +45,9 @@
 		<Unit filename="Main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Menú principal.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

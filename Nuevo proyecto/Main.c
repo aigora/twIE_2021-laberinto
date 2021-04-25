@@ -1,13 +1,9 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Funciones_principales.h"
 
-typedef struct
-{
-
-}municion_total;
 
 
 int main (int argc, char *argv[])
@@ -188,4 +184,4 @@ posicion_texto.w=posicion_texto.h=0;
     SDL_Quit();
 
     return 0;
-}
+}*/

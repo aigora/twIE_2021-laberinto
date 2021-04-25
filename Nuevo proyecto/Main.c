@@ -8,8 +8,8 @@
 
 int main (int argc, char *argv[])
 {
-
-
+    int tiempo_recarga_estructura=0;
+    _Bool recargando_estructura=0;
     _Bool recargando1=0;
     int tiempo_jugador1=0,tiempo_jugador2=0;
     int numero_jugador;
@@ -127,11 +127,21 @@ generar_jugador(jugador,1,escenario);
                     recargando1=1;
                 }
             }
+            if(recargando_estructura==0)
+                recargando_estructura=disparar(jugador,1,evento,escenario);
         }
 
         recargar(&recortar_municion,&posicion_municion,&tiempo_disparo,ancho_municion,&recargando1);
+        recargar_estructura(jugador,1,&tiempo_recarga_estructura,&recargando_estructura);
 
-
+        if(jugador[1].posicion_bala.x<=700)
+        {
+            jugador[1].posicion_bala.x+=6;
+        }
+        else
+        {
+            SDL_DestroyTexture(jugador[1].bala);
+        }
         if(posicionbala.x<=700)
         {
             posicionbala.x+=6;
@@ -145,6 +155,7 @@ generar_jugador(jugador,1,escenario);
         movimiento_jugador(&posicion,&recortar_jugador1,anchoimagen,altoimagen,&tiempo_jugador1,1);
         movimiento_jugador_estructura(jugador,1,&tiempo_jugador2);
         limites_mapa(&posicion);
+        limites_mapa_estructura(jugador,1);
         /*
         intersecan=interseccion(posicion2,posicionbala,jugador2);
 
@@ -166,6 +177,7 @@ generar_jugador(jugador,1,escenario);
         SDL_RenderCopy(escenario,jugador[1].animacion,&jugador[1].recortar_animacion,&jugador[1].posicion_animacion);
         SDL_RenderCopy(escenario,jugador[1].vidas,&jugador[1].recortar_vidas,&jugador[1].posicion_vidas);
         SDL_RenderCopy(escenario,jugador[1].municion,&jugador[1].recortar_municion,&jugador[1].posicion_municion);
+        SDL_RenderCopy(escenario,jugador[1].bala,NULL,&jugador[1].posicion_bala);
         SDL_RenderPresent(escenario);
 
     }
@@ -182,6 +194,7 @@ generar_jugador(jugador,1,escenario);
     SDL_DestroyTexture(jugador[numero_jugador].vidas);
     SDL_DestroyTexture(jugador[numero_jugador].animacion);
     SDL_DestroyTexture(jugador[numero_jugador].municion);
+    SDL_DestroyTexture(jugador[1].bala);
     SDL_DestroyRenderer(escenario);
     SDL_DestroyWindow(ventanaprincipal);
     ventanaprincipal=superficieprincipal=jugador1=bala=vidas=jugador2=municion=texto_ganador=NULL;

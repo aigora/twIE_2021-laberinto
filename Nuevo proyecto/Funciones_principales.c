@@ -139,25 +139,26 @@ int vidas_restantes (SDL_Rect *recortar, SDL_Rect *posicion_vida, _Bool intersec
     }
     return numero_vidas;
 }
-void recargar(SDL_Rect *recortar_municion, SDL_Rect *posicion_municion, int *tiempo_recarga, int ancho_municion,_Bool bala_activa)
+void recargar(SDL_Rect *recortar_municion, SDL_Rect *posicion_municion, int *tiempo_recarga, int ancho_municion, _Bool *recargando)
 {
-    if (bala_activa)
+    if (*recargando)
     {
     *tiempo_recarga+=1;
 
-    if (recortar_municion->x>=ancho_municion/4)
-    {
-        recortar_municion->x=0;
-        posicion_municion->w=100;
-    }
+       if (recortar_municion->x>=ancho_municion/4)
+        {
+            recortar_municion->x=0;
+            posicion_municion->w=100;
+            *recargando=0;
+        }
 
 
-    if (*tiempo_recarga==2)
-    {
-        recortar_municion->x+=1;
-        posicion_municion->w-=1;
-        *tiempo_recarga=0;
-    }
+        if (*tiempo_recarga==2)
+        {
+            recortar_municion->x+=1;
+            posicion_municion->w-=1;
+            *tiempo_recarga=0;
+        }
     }
 }
 void you_win(SDL_Rect *posicion_texto, int numero_vidas, SDL_Renderer *escenario, SDL_Texture *texto)
@@ -169,7 +170,98 @@ void you_win(SDL_Rect *posicion_texto, int numero_vidas, SDL_Renderer *escenario
             SDL_RenderCopy(escenario,texto,NULL,posicion_texto);
         }
 }
-void multijugador()
+
+void movimiento_jugador_estructura(variables_jugador jugador[], int numero_jugador, int *tiempo)
+{
+    const Uint8 *captura=SDL_GetKeyboardState(NULL);
+    int velocidad_movimiento=2;
+    SDL_Scancode teclas[4];
+
+    if(numero_jugador==0)
+    {
+    teclas[0]=SDL_SCANCODE_RIGHT;
+    teclas[1]=SDL_SCANCODE_LEFT;
+    teclas[2]=SDL_SCANCODE_UP;
+    teclas[3]=SDL_SCANCODE_DOWN;
+    }
+    if(numero_jugador==1)
+    {
+    teclas[0]=SDL_SCANCODE_D;
+    teclas[1]=SDL_SCANCODE_A;
+    teclas[2]=SDL_SCANCODE_W;
+    teclas[3]=SDL_SCANCODE_S;
+    }
+
+    if(captura[teclas[0]])
+        {
+            jugador[numero_jugador].recortar_animacion.y=0;
+            jugador[numero_jugador].posicion_animacion.x+=velocidad_movimiento;
+            *tiempo+=1;
+            if(*tiempo>=5)
+            {
+                jugador[numero_jugador].recortar_animacion.x+=jugador[numero_jugador].ancho_animacion/8;
+                if(jugador[numero_jugador].recortar_animacion.x>=jugador[numero_jugador].ancho_animacion)
+                    jugador[numero_jugador].recortar_animacion.x=0;
+                *tiempo=0;
+            }
+        }
+       if (captura[teclas[1]])
+        {
+            jugador[numero_jugador].recortar_animacion.y=jugador[numero_jugador].alto_animacion/2;
+            jugador[numero_jugador].posicion_animacion.x-=velocidad_movimiento;
+            *tiempo+=1;
+            if(*tiempo>=5)
+            {
+                jugador[numero_jugador].recortar_animacion.x-=jugador[numero_jugador].ancho_animacion/8;
+                if(jugador[numero_jugador].recortar_animacion.x<=0)
+                    jugador[numero_jugador].recortar_animacion.x=jugador[numero_jugador].ancho_animacion*7/8;
+                *tiempo=0;
+            }
+        }
+        if (captura[teclas[2]])
+        {
+            jugador[numero_jugador].posicion_animacion.y-=2;
+        }
+        if (captura[teclas[3]])
+        {
+            jugador[numero_jugador].posicion_animacion.y+=2;
+        }
+}
+void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario)
+{
+    jugador[numero_jugador].vidas=cargar_texturas("Vida.png",escenario);
+    jugador[numero_jugador].municion=cargar_texturas("Zanahoria.png",escenario);
+    jugador[numero_jugador].animacion=cargar_texturas("Animacion.png",escenario);
+
+    SDL_QueryTexture(jugador[numero_jugador].vidas,NULL,NULL,&jugador[numero_jugador].ancho_vida,&jugador[numero_jugador].alto_vida);
+    SDL_QueryTexture(jugador[numero_jugador].municion,NULL,NULL,&jugador[numero_jugador].ancho_municion,&jugador[numero_jugador].alto_municion);
+    SDL_QueryTexture(jugador[numero_jugador].animacion,NULL,NULL,&jugador[numero_jugador].ancho_animacion,&jugador[numero_jugador].alto_animacion);
+
+    jugador[numero_jugador].recortar_animacion.x=jugador[numero_jugador].recortar_animacion.y=0;
+    jugador[numero_jugador].recortar_animacion.w=jugador[numero_jugador].ancho_animacion/8;
+    jugador[numero_jugador].recortar_animacion.h=jugador[numero_jugador].alto_animacion/2;
+    jugador[numero_jugador].posicion_animacion.x=jugador[numero_jugador].posicion_animacion.y=300;
+    jugador[numero_jugador].posicion_animacion.w=jugador[numero_jugador].posicion_animacion.h=100;
+
+    jugador[numero_jugador].recortar_vidas.x=jugador[numero_jugador].recortar_vidas.y=0;
+    jugador[numero_jugador].recortar_vidas.w=jugador[numero_jugador].ancho_vida;
+    jugador[numero_jugador].recortar_vidas.h=jugador[numero_jugador].alto_vida;
+    jugador[numero_jugador].posicion_vidas.x=200;
+    jugador[numero_jugador].posicion_vidas.y=0;
+    jugador[numero_jugador].posicion_vidas.w=100;
+    jugador[numero_jugador].posicion_vidas.h=50;
+
+    jugador[numero_jugador].recortar_municion.x=jugador[numero_jugador].recortar_municion.y=0;
+    jugador[numero_jugador].recortar_municion.w=jugador[numero_jugador].ancho_municion;
+    jugador[numero_jugador].recortar_municion.h=jugador[numero_jugador].alto_municion;
+    jugador[numero_jugador].posicion_municion.x=100;
+    jugador[numero_jugador].posicion_municion.y=0;
+    jugador[numero_jugador].posicion_municion.w=100;
+    jugador[numero_jugador].posicion_municion.h=50;
+}
+
+
+/*void multijugador(int numero_jugadores)
 {
     _Bool contador_balas=0;
     int tiempo_jugador1=0,tiempo_jugador2=0;
@@ -346,4 +438,4 @@ posicion_texto.w=posicion_texto.h=0;
 
     SDL_Quit();
 
-}
+}*/

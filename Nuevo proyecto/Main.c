@@ -1,4 +1,4 @@
-/*#include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -8,12 +8,12 @@
 
 int main (int argc, char *argv[])
 {
-    _Bool contador_balas=0;
+
+
+    _Bool recargando1=0;
     int tiempo_jugador1=0,tiempo_jugador2=0;
     int numero_jugador;
-    int x=0,y=0;
     int tiempo_disparo=0;
-    int tiempo_interseccion=0;
     SDL_Window *ventanaprincipal=NULL;
     SDL_Surface *superficieprincipal=NULL;
     SDL_Renderer *escenario=NULL;
@@ -43,7 +43,6 @@ int main (int argc, char *argv[])
     escenario=SDL_CreateRenderer(ventanaprincipal,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 
     jugador1=cargar_texturas("Animacion.png",escenario);
-    jugador2=cargar_texturas("Animacion.png",escenario);
     vidas=cargar_texturas("Vida.png",escenario);
     municion=cargar_texturas("Zanahoria.png",escenario);
     texto_ganador=cargar_texturas("Texto.png",escenario);
@@ -58,20 +57,14 @@ SDL_Rect recortar_jugador1;
     recortar_jugador1.w=anchoimagen/8;
     recortar_jugador1.h=altoimagen/2;
 
-SDL_Rect recortar_jugador2;
-    recortar_jugador2.x=0;
-    recortar_jugador2.y=0;
-    recortar_jugador2.w=anchoimagen/8;
-    recortar_jugador2.h=altoimagen/2;
+
 
 SDL_Rect posicion;
     posicion.x=posicion.y=0;
     posicion.w=100;
     posicion.h=100;
 
-SDL_Rect posicion2;
-    posicion2.x=posicion2.y=300;
-    posicion2.w=posicion2.h=100;
+
 
 
 SDL_Rect posicionbala;
@@ -107,6 +100,11 @@ posicion_texto.x=posicion_texto.y=250;
 posicion_texto.w=posicion_texto.h=0;
 
 
+
+variables_jugador jugador[2];
+
+generar_jugador(jugador,1,escenario);
+
    while(ejecutando)
     {
 
@@ -119,17 +117,20 @@ posicion_texto.w=posicion_texto.h=0;
 
             if (evento.type==SDL_KEYDOWN)
             {
-                if(evento.key.keysym.sym==SDLK_SPACE && bala_activa==0)
+                if(evento.key.keysym.sym==SDLK_SPACE && bala_activa==0 && recargando1==0)
                 {
                     bala=cargar_texturas("Bala.png", escenario);
                     posicionbala.x=posicion.x+posicion.w;
                     posicionbala.y=posicion.y+posicion.h/2;
                     posicionbala.w=posicionbala.h=50;
                     bala_activa=1;
-                    contador_balas=1;
+                    recargando1=1;
                 }
             }
         }
+
+        recargar(&recortar_municion,&posicion_municion,&tiempo_disparo,ancho_municion,&recargando1);
+
 
         if(posicionbala.x<=700)
         {
@@ -142,28 +143,29 @@ posicion_texto.w=posicion_texto.h=0;
         }
 
         movimiento_jugador(&posicion,&recortar_jugador1,anchoimagen,altoimagen,&tiempo_jugador1,1);
-        movimiento_jugador(&posicion2,&recortar_jugador2,anchoimagen,altoimagen,&tiempo_jugador2,2);
+        movimiento_jugador_estructura(jugador,1,&tiempo_jugador2);
         limites_mapa(&posicion);
-
-
+        /*
         intersecan=interseccion(posicion2,posicionbala,jugador2);
 
         if (intersecan)
         {
-            numero_vidas=vidas_restantes(&recortar_vidas,&posicion_vidas,intersecan,ancho_vida,numero_vidas,posicionbala,posicion2,contador_balas);
+            numero_vidas=vidas_restantes(&recortar_vidas,&posicion_vidas,intersecan,ancho_vida,numero_vidas,posicionbala,posicion2,bala_activa);
             SDL_DestroyTexture(bala);
-            contador_balas=0;
-        }
+            bala_activa=0;
+        }*/
 
-        recargar(&recortar_municion,&posicion_municion,&tiempo_disparo,ancho_municion,contador_balas);
+
 
         SDL_RenderClear(escenario);
 
         SDL_RenderCopy(escenario,bala,NULL,&posicionbala);
         SDL_RenderCopy(escenario,jugador1,&recortar_jugador1,&posicion);
-        SDL_RenderCopy(escenario,jugador2,&recortar_jugador2,&posicion2);
         SDL_RenderCopy(escenario,vidas,&recortar_vidas,&posicion_vidas);
         SDL_RenderCopy(escenario,municion,&recortar_municion,&posicion_municion);
+        SDL_RenderCopy(escenario,jugador[1].animacion,&jugador[1].recortar_animacion,&jugador[1].posicion_animacion);
+        SDL_RenderCopy(escenario,jugador[1].vidas,&jugador[1].recortar_vidas,&jugador[1].posicion_vidas);
+        SDL_RenderCopy(escenario,jugador[1].municion,&jugador[1].recortar_municion,&jugador[1].posicion_municion);
         SDL_RenderPresent(escenario);
 
     }
@@ -177,11 +179,15 @@ posicion_texto.w=posicion_texto.h=0;
     SDL_DestroyTexture(jugador2);
     SDL_DestroyTexture(jugador1);
     SDL_DestroyTexture(bala);
+    SDL_DestroyTexture(jugador[numero_jugador].vidas);
+    SDL_DestroyTexture(jugador[numero_jugador].animacion);
+    SDL_DestroyTexture(jugador[numero_jugador].municion);
     SDL_DestroyRenderer(escenario);
     SDL_DestroyWindow(ventanaprincipal);
     ventanaprincipal=superficieprincipal=jugador1=bala=vidas=jugador2=municion=texto_ganador=NULL;
+    jugador[numero_jugador].municion=jugador[numero_jugador].vidas=jugador[numero_jugador].animacion;
 
     SDL_Quit();
 
     return 0;
-}*/
+}

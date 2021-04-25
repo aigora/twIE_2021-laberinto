@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -37,7 +37,7 @@ int main (int argc, char *argv[])
                     if (elegir[1]==1)
                     {
                         printf("1-<Individual>\n");
-                        printf("2-<Multijugador>\n");
+                        printf("2-<Multijugador (2 jugadores)>\n");
                         scanf("%i",&elegir[2]);
                         if (elegir[2]==1)
                         {
@@ -50,36 +50,25 @@ int main (int argc, char *argv[])
                             printf("3-<Modo 3>\n");
                             scanf("%i",&elegir[3]);
                             printf("Iniciando partida...\n");
-                            if (elegir[3]==1)
-                                multijugador();
 
                         }
                         else if (elegir[2]==2)
                         {
-                            printf("Nombre de la partdia: ");
+                            printf("Nombre de la partida: ");
                             scanf(" %[^\n]",nombre_partida);
-                            printf("Numero de jugadores (2 o 3): \n");
+                            printf("Nombre usuario 1: ");
+                            scanf(" %[^\n]",usuario1);
+                            printf("\nNmbre usuario 2: ");
+                            scanf(" %[^\n]",usuario2);
+                            printf("Modo de juego:\n");
+                            printf("1-<Modo 1>\n");
+                            printf("2-<Modo 2>\n");
+                            printf("3-<Modo 3>\n");
                             scanf("%i",&elegir[3]);
-                            switch (elegir[3])
-                            {
-                                case 2:
-                                    printf("Nombre usuario 1: ");
-                                    scanf(" %[^\n]",usuario1);
-                                    printf("\n Nmbre usuario 2: ");
-                                    scanf(" %[^\n]",usuario2);
-                                    printf("Modo de juego:\n");
-                                    printf("1-<Modo 1>\n");
-                                    printf("2-<Modo 2>\n");
-                                    printf("3-<Modo 3>\n");
-                                    scanf("%i",&elegir[3]);
-                                    printf("Iniciando partida...\n");
-                                    break;
+                            printf("Iniciando partida...\n");
+                            if (elegir[3]==1)
+                                multijugador(elegir[2]);
 
-
-                                default:
-                                    printf("Error!\n");
-                                    break;
-                            }
                         }
                         else
                             printf("Error!\n");
@@ -127,3 +116,4 @@ int main (int argc, char *argv[])
 
     return 0;
 }
+*/

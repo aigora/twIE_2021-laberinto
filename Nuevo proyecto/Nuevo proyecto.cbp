@@ -38,6 +38,9 @@
 			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/Trabajo Github/twIE_2021-laberinto/SDL2/SDL2-General/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
 			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/Trabajo Github/twIE_2021-laberinto/SDL2/SDL2-Imagen/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" />
 		</Linker>
+		<Unit filename="Funciona por favor.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Funciones_principales.c">
 			<Option compilerVar="CC" />
 		</Unit>

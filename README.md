@@ -5,7 +5,6 @@ Tenemos pensado hacer un laberinto con misterios y pruebas que le daran
  iremos mejorándolo, el objetivo claro será lograr salir.
 
 ## Integrantes del equipo
-Abraham Pumarada @abrahampumarada (https://github.com/abrahampumarada?tab=packages)
 Jorge Bengoa @Jorgebpinedo
 Luis Muro @LuisMiguelMuro
 Luis Peñaranda @Luispdelmazo (https://github.com/Luispdelmazo/Inicio_Github)

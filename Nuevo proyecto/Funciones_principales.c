@@ -98,14 +98,13 @@ void limites_mapa_estructura (variables_jugador jugador[],int numero_jugador)
     if(jugador[numero_jugador].posicion_animacion.y>=400)
         jugador[numero_jugador].posicion_animacion.y-=velocidad_movimiento;
 }
-_Bool disparar (variables_jugador jugador[], int numero_jugador, SDL_Event evento, SDL_Renderer *escenario)
+void disparar (variables_jugador jugador[], int numero_jugador, SDL_Event evento, SDL_Renderer *escenario)
 {
-    _Bool recargando=0;
     SDL_KeyCode tecla;
 
     if (numero_jugador==0)
         tecla=SDLK_SPACE;
-    else
+    else if (numero_jugador==1)
         tecla=SDLK_f;
 
     if(evento.type==SDL_KEYDOWN)
@@ -116,22 +115,21 @@ _Bool disparar (variables_jugador jugador[], int numero_jugador, SDL_Event event
             jugador[numero_jugador].posicion_bala.x=jugador[numero_jugador].posicion_animacion.x+jugador[numero_jugador].posicion_animacion.w;
             jugador[numero_jugador].posicion_bala.y=jugador[numero_jugador].posicion_animacion.y+jugador[numero_jugador].posicion_animacion.h/2;
             jugador[numero_jugador].posicion_bala.w=jugador[numero_jugador].posicion_bala.h=50;
-            recargando=1;
+            jugador[numero_jugador].recargando=1;
         }
     }
-    return recargando;
 }
-void recargar_estructura(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga, _Bool *recargando)
+void recargar_estructura(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga)
 {
-    if (*recargando)
+    if (jugador[numero_jugador].recargando)
     {
     *tiempo_recarga+=1;
-       if (jugador[numero_jugador].recortar_municion.x>=jugador[numero_jugador].ancho_municion/4)
+       /*if (jugador[numero_jugador].recortar_municion.x>=jugador[numero_jugador].ancho_municion/4)
         {
             jugador[numero_jugador].recortar_municion.x=0;
             jugador[numero_jugador].posicion_municion.w=100;
-            *recargando=0;
-        }
+            jugador[numero_jugador].recargando=0;
+        }*/
 
 
         if (*tiempo_recarga==2)
@@ -139,6 +137,12 @@ void recargar_estructura(variables_jugador jugador[], int numero_jugador, int *t
             jugador[numero_jugador].recortar_municion.x+=1;
             jugador[numero_jugador].posicion_municion.w-=1;
             *tiempo_recarga=0;
+            if (jugador[numero_jugador].recortar_municion.x==jugador[numero_jugador].ancho_municion/4)
+            {
+                jugador[numero_jugador].recortar_municion.x=0;
+                jugador[numero_jugador].posicion_municion.w=100;
+                jugador[numero_jugador].recargando=0;
+            }
         }
     }
 }
@@ -160,9 +164,9 @@ void interseccion_estructura(variables_jugador jugador[], int numero_jugador, va
 
 }
 
-int vidas_restantes_estructura (variables_jugador victima[], int numero_victima, _Bool contador_balas)
+int vidas_restantes_estructura (variables_jugador victima[], int numero_victima, variables_jugador shooter[], int numero_shooter)
 {
-    if (contador_balas==1)
+    if (victima[numero_victima].intersecan==1)
     {
     victima[numero_victima].numero_vidas--;
 

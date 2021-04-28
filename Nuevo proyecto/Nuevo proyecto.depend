@@ -403,3 +403,17 @@
 
 1619520219 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\nuevo proyecto\funciona por favor.c
 
+1619525063 source:c:\users\pista\onedrive\documentos\github\twie_2021-laberinto\nuevo proyecto\funciona por favor.c
+
+1619455993 source:c:\users\pista\onedrive\documentos\github\twie_2021-laberinto\nuevo proyecto\menú principal.c
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	"Funciones_principales.h"
+
+1619525063 c:\users\pista\onedrive\documentos\github\twie_2021-laberinto\nuevo proyecto\funciones_principales.h
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+

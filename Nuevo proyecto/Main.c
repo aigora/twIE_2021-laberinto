@@ -106,12 +106,6 @@ else//Genera los jugadores con las funciones definidas de antes
 
     fichero(jugador,0);
 
-   /* datos_partida=fopen("Escribir un nombre.txt","w");//Abre un fichero en el que se almacenaran todos los datos de la partida por si queremos rescatarla
-
-    fprintf(datos_partida,"%i %i",jugador[0].numero_vidas,jugador[1].numero_vidas);
-
-    fclose(datos_partida);*/
-
     free(jugador);//Libera lo reservado con malloc anteriormente
     SDL_DestroyTexture(texto_ganador);//Destruye todas las texturas creadas, la ventana, el render y lasuperficie
     destruir_atributos(jugador,0);

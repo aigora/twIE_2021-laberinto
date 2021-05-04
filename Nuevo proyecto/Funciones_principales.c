@@ -117,7 +117,7 @@ void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int 
     }
     if (jugador[numero_jugador].posicion_bala.x>700 && jugador[numero_jugador].bala_existe==1)//Si la bala llega a los limites definidos se destruye
     {
-        SDL_DestroyTexture(jugador[0].bala);
+        SDL_DestroyTexture(jugador[numero_jugador].bala);
         jugador[numero_jugador].bala_existe=0;//La bala ya no existe
     }
 
@@ -307,5 +307,39 @@ void fichero (variables_jugador jugador[], int numero_jugador)
     }
 
     fclose(datos_partida);
+}
+
+void cargar_partida(variables_jugador jugador[], int numero_jugador)
+{
+    FILE *cargar;
+    int aux,aux2;
+    int i=0,j=0;
+
+    cargar=fopen("Nombre partida.txt","r");
+
+    for (int i=0;i<2;i++)
+    {
+        fscanf(cargar,"Numero de jugador %i\n\n",&i);
+
+        fscanf(cargar,"Numero de vidas: %i\n",&jugador[i].numero_vidas);
+        fscanf(cargar,"Balas usadas: %i\n",&jugador[i].contador_bala);
+
+        fscanf(cargar,"Recargando, intersecan, balas existe: %i %i %i\n",&jugador[i].recargando,&jugador[i].intersecan,&jugador[i].bala_existe);
+
+        fscanf(cargar,"Posicion bala: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_bala.x,&jugador[i].posicion_bala.y,&jugador[i].posicion_bala.w,&jugador[i].posicion_bala.h);
+
+        fscanf(cargar,"Posicion animacion: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_animacion.x,&jugador[i].posicion_animacion.y,&jugador[i].posicion_animacion.w,&jugador[i].posicion_animacion.h);
+        fscanf(cargar,"Recortar animacion: x:%i y:%i w:%i h:%i\n",&jugador[i].recortar_animacion.x,&jugador[i].recortar_animacion.y,&jugador[i].recortar_animacion.w,&jugador[i].recortar_animacion.h);
+
+        fscanf(cargar,"Posicion municion: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_municion.x,&jugador[i].posicion_municion.y,&jugador[i].posicion_municion.w,&jugador[i].posicion_municion.h);
+        fscanf(cargar,"Recortar municion: x:%i y:%i w:%i h:%i\n",&jugador[i].recortar_municion.x,&jugador[i].recortar_municion.y,&jugador[i].recortar_municion.w,&jugador[i].recortar_municion.h);
+
+        fscanf(cargar,"Posicion vidas: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_vidas.x,&jugador[i].posicion_vidas.y,&jugador[i].posicion_vidas.w,&jugador[i].posicion_vidas.h);
+        fscanf(cargar,"Recortar vidas: x:%i y:%i w:%i h:%i\n",&jugador[i].recortar_vidas.x,&jugador[i].recortar_vidas.y,&jugador[i].recortar_vidas.w,&jugador[i].recortar_vidas.h);
+
+        fscanf(cargar,"\n\n");
+    }
+
+    fclose(cargar);
 }
 

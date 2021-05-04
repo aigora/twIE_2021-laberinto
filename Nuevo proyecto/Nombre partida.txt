@@ -1,11 +1,11 @@
 Numero de jugador 0
 
 Numero de vidas: 3
-Balas usadas: 1
+Balas usadas: 3
 Recargando, intersecan, balas existe: 0 0 0
-Posicion bala: x:1000 y:258 w:50 h:50
-Posicion animacion: x:50 y:144 w:100 h:100
-Recortar animacion: x:648 y:0 w:108 h:140
+Posicion bala: x:702 y:100 w:50 h:50
+Posicion animacion: x:50 y:50 w:100 h:100
+Recortar animacion: x:0 y:0 w:108 h:140
 Posicion municion: x:600 y:0 w:100 h:50
 Recortar municion: x:0 y:0 w:480 h:243
 Posicion vidas: x:700 y:0 w:100 h:50
@@ -14,15 +14,15 @@ Recortar vidas: x:0 y:0 w:512 h:184
 
 Numero de jugador 1
 
-Numero de vidas: 2
-Balas usadas: 0
+Numero de vidas: 3
+Balas usadas: 4
 Recargando, intersecan, balas existe: 0 0 0
-Posicion bala: x:0 y:0 w:0 h:0
-Posicion animacion: x:400 y:218 w:100 h:100
-Recortar animacion: x:216 y:0 w:108 h:140
+Posicion bala: x:706 y:350 w:50 h:50
+Posicion animacion: x:300 y:300 w:100 h:100
+Recortar animacion: x:0 y:0 w:108 h:140
 Posicion municion: x:100 y:0 w:100 h:50
 Recortar municion: x:0 y:0 w:480 h:243
-Posicion vidas: x:200 y:0 w:67 h:50
-Recortar vidas: x:170 y:0 w:512 h:184
+Posicion vidas: x:200 y:0 w:100 h:50
+Recortar vidas: x:0 y:0 w:512 h:184
 
 

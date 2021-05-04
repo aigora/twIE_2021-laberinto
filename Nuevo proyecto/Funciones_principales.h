@@ -47,6 +47,7 @@ void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int 
 void interseccion(variables_jugador jugador[], int numero_jugador,variables_jugador victima[], int numero_victima);//Indica si dos objetos intersecan
 int vidas_restantes(variables_jugador victima[], int numero_victima, variables_jugador shooter[], int numero_shooter);//Cuando 2 objetos intersecan resta una vida al especificado
 void fichero (variables_jugador jugador[], int numero_jugador); //Guarda los datos de la partida en un fichero
+void cargar_partida(variables_jugador jugador[], int numero_jugador); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
 
 
 

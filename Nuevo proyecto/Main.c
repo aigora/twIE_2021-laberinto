@@ -102,13 +102,15 @@ else//Genera los jugadores con las funciones definidas de antes
         copiar_atributos(jugador,1,escenario);
         SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal
 
-    }//Fin del bucle principal y portanto de la partida
+    }//Fin del bucle principal y por tanto de la partida
 
-    datos_partida=fopen("Escribir un nombre.txt","w");//Abre un fichero en el que se almacenaran todos los datos de la partida por si queremos rescatarla
+    fichero(jugador,0);
+
+   /* datos_partida=fopen("Escribir un nombre.txt","w");//Abre un fichero en el que se almacenaran todos los datos de la partida por si queremos rescatarla
 
     fprintf(datos_partida,"%i %i",jugador[0].numero_vidas,jugador[1].numero_vidas);
 
-    fclose(datos_partida);
+    fclose(datos_partida);*/
 
     free(jugador);//Libera lo reservado con malloc anteriormente
     SDL_DestroyTexture(texto_ganador);//Destruye todas las texturas creadas, la ventana, el render y lasuperficie

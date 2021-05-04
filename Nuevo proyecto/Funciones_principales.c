@@ -260,11 +260,52 @@ void copiar_atributos(variables_jugador jugador[], int numero_jugador, SDL_Rende
     if (jugador[numero_jugador].bala_existe)//Solamente copiara la bala si existe
     SDL_RenderCopy(escenario,jugador[numero_jugador].bala,NULL,&jugador[numero_jugador].posicion_bala);
 }
+
 void destruir_atributos(variables_jugador jugador[], int numero_jugador)//Destruye los atributos de un jugador
 {
     SDL_DestroyTexture(jugador[numero_jugador].vidas);
     SDL_DestroyTexture(jugador[numero_jugador].animacion);
     SDL_DestroyTexture(jugador[numero_jugador].municion);
     SDL_DestroyTexture(jugador[numero_jugador].bala);
+}
+
+void fichero (variables_jugador jugador[], int numero_jugador)
+{
+    FILE *datos_partida;
+
+    datos_partida=fopen("Nombre partida.txt","w");
+
+    if (datos_partida==NULL)
+    {
+        printf("Error al guardar el juego");
+    }
+
+    else
+    {
+        for (int i=0;i<=1;i++)
+        {
+        fprintf(datos_partida,"Numero de jugador %i\n\n",i);
+
+        fprintf(datos_partida,"Numero de vidas: %i\n",jugador[i].numero_vidas);
+        fprintf(datos_partida,"Balas usadas: %i\n",jugador[i].contador_bala);
+
+        fprintf(datos_partida,"Recargando, intersecan, balas existe: %i %i %i\n",jugador[i].recargando,jugador[i].intersecan,jugador[i].bala_existe);
+
+        fprintf(datos_partida,"Posicion bala: x:%i y:%i w:%i h:%i\n",jugador[i].posicion_bala.x,jugador[i].posicion_bala.y,jugador[i].posicion_bala.w,jugador[i].posicion_bala.h);
+
+        fprintf(datos_partida,"Posicion animacion: x:%i y:%i w:%i h:%i\n",jugador[i].posicion_animacion.x,jugador[i].posicion_animacion.y,jugador[i].posicion_animacion.w,jugador[i].posicion_animacion.h);
+        fprintf(datos_partida,"Recortar animacion: x:%i y:%i w:%i h:%i\n",jugador[i].recortar_animacion.x,jugador[i].recortar_animacion.y,jugador[i].recortar_animacion.w,jugador[i].recortar_animacion.h);
+
+        fprintf(datos_partida,"Posicion municion: x:%i y:%i w:%i h:%i\n",jugador[i].posicion_municion.x,jugador[i].posicion_municion.y,jugador[i].posicion_municion.w,jugador[i].posicion_municion.h);
+        fprintf(datos_partida,"Recortar municion: x:%i y:%i w:%i h:%i\n",jugador[i].recortar_municion.x,jugador[i].recortar_municion.y,jugador[i].recortar_municion.w,jugador[i].recortar_municion.h);
+
+        fprintf(datos_partida,"Posicion vidas: x:%i y:%i w:%i h:%i\n",jugador[i].posicion_vidas.x,jugador[i].posicion_vidas.y,jugador[i].posicion_vidas.w,jugador[i].posicion_vidas.h);
+        fprintf(datos_partida,"Recortar vidas: x:%i y:%i w:%i h:%i\n",jugador[i].recortar_vidas.x,jugador[i].recortar_vidas.y,jugador[i].recortar_vidas.w,jugador[i].recortar_vidas.h);
+
+        fprintf(datos_partida,"\n\n");
+        }
+    }
+
+    fclose(datos_partida);
 }
 

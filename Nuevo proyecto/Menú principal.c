@@ -1,4 +1,4 @@
-/*#include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
                             scanf("%i",&elegir[3]);
                             printf("Iniciando partida...\n");
                             if (elegir[3]==1)
-                                multijugador(elegir[2]);
+                                multijugador(0);
 
                         }
                         else
@@ -84,7 +84,10 @@ int main (int argc, char *argv[])
                 printf("2-<Salir>\n");
                 scanf("%i",&elegir[1]);
                 if (elegir[1]==1)
+                {
                     printf("Cargando partida...");
+                    multijugador(1);
+                }
                 else if (elegir[1]==2)
                     bucle[0]=0;
                 else
@@ -114,6 +117,10 @@ int main (int argc, char *argv[])
     }
     while(bucle[0]);
 
+    printf("\nMostrar datos de la partida?\n");
+    scanf("%i",&elegir[4]);
+    datos_partida(elegir[4]);
+
     return 0;
 }
-*/
+

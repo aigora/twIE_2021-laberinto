@@ -168,11 +168,8 @@ void interseccion(variables_jugador jugador[], int numero_jugador, variables_jug
 
 }
 
-int vidas_restantes(variables_jugador victima[], int numero_victima, variables_jugador shooter[], int numero_shooter)//Animacion para indicar el numero de vidas restantes
+int vidas_restantes(variables_jugador victima[], int numero_victima)//Animacion para indicar el numero de vidas restantes
 {
-    if (victima[numero_victima].intersecan==1 )//Solo se ejecuta si intersecan
-    {                                           //Como antes hemos cambiado la posicion de la bala a 1000, solo intersecaran una vez (la funcion principal es un bucle)
-
     switch(victima[numero_victima].numero_vidas)//En funcion del numero de vidas recortara un trozo de la imagen y le asignara una posicion
     {
     case 2:
@@ -194,11 +191,10 @@ int vidas_restantes(variables_jugador victima[], int numero_victima, variables_j
         victima[numero_victima].recortar_vidas.x=victima[numero_victima].ancho_vida;
         break;
     }
-    }
     return victima[numero_victima].numero_vidas;//Devuelve el numero de vidas restantes
 }
 
-void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario)//Establece valores predeterminados al jugador indicado
+void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario, _Bool cargar)//Establece valores predeterminados al jugador indicado
 {
     int posicion_animacion,posicion_vidas,posicion_municion;
     if (numero_jugador==0) //En funcion del jugador aparecera en un lugar u otro de la pantalla
@@ -217,7 +213,6 @@ void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Render
     jugador[numero_jugador].vidas=cargar_texturas("Vida.png",escenario); //Genera las texturas a traves de la funcion cargar_texturas
     jugador[numero_jugador].municion=cargar_texturas("Zanahoria.png",escenario);
     jugador[numero_jugador].animacion=cargar_texturas("Animacion.png",escenario);
-
 
     SDL_QueryTexture(jugador[numero_jugador].vidas,NULL,NULL,&jugador[numero_jugador].ancho_vida,&jugador[numero_jugador].alto_vida);//Mide el tamaño de una textura y le asigna el ancho y el alto a las variables indicadas
     SDL_QueryTexture(jugador[numero_jugador].municion,NULL,NULL,&jugador[numero_jugador].ancho_municion,&jugador[numero_jugador].alto_municion);
@@ -272,6 +267,7 @@ void destruir_atributos(variables_jugador jugador[], int numero_jugador)//Destru
 void fichero (variables_jugador jugador[], int numero_jugador)
 {
     FILE *datos_partida;
+    int i;
 
     datos_partida=fopen("Nombre partida.txt","w");
 
@@ -282,7 +278,17 @@ void fichero (variables_jugador jugador[], int numero_jugador)
 
     else
     {
-        for (int i=0;i<=1;i++)
+        for (i=0; i<=1;i++)
+        fprintf(datos_partida,"%i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i ",
+                jugador[i].posicion_animacion.x,jugador[i].posicion_animacion.y,jugador[i].posicion_animacion.w,jugador[i].posicion_animacion.h,
+                jugador[i].recortar_animacion.x,jugador[i].recortar_animacion.y,jugador[i].recortar_animacion.w,jugador[i].recortar_animacion.h,
+                jugador[i].posicion_vidas.x,jugador[i].posicion_vidas.y,jugador[i].posicion_vidas.w,jugador[i].posicion_vidas.h,
+                jugador[i].recortar_vidas.x,jugador[i].recortar_vidas.y,jugador[i].recortar_vidas.w,jugador[i].recortar_vidas.h,
+                jugador[i].numero_vidas,jugador[i].contador_bala);
+
+        fprintf(datos_partida,"\n");
+
+        for (i=0;i<=1;i++)
         {
         fprintf(datos_partida,"Numero de jugador %i\n\n",i);
 
@@ -309,37 +315,169 @@ void fichero (variables_jugador jugador[], int numero_jugador)
     fclose(datos_partida);
 }
 
-void cargar_partida(variables_jugador jugador[], int numero_jugador)
+void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar, SDL_Renderer *escenario)
 {
-    FILE *cargar;
-    int aux,aux2;
+    FILE *puntero_datos;
+    int aux;
     int i=0,j=0;
 
-    cargar=fopen("Nombre partida.txt","r");
-
-    for (int i=0;i<2;i++)
+    if (cargar)
     {
-        fscanf(cargar,"Numero de jugador %i\n\n",&i);
+    puntero_datos=fopen("Nombre partida.txt","r");
+    for (i=0;i<2;i++)
+    fscanf(puntero_datos,"%i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i ",
+            &jugador[i].posicion_animacion.x,&jugador[i].posicion_animacion.y,&jugador[i].posicion_animacion.w,&jugador[i].posicion_animacion.h,
+            &jugador[i].recortar_animacion.x,&jugador[i].recortar_animacion.y,&jugador[i].recortar_animacion.w,&jugador[i].recortar_animacion.h,
+            &jugador[i].posicion_vidas.x,&jugador[i].posicion_vidas.y,&jugador[i].posicion_vidas.w,&jugador[i].posicion_vidas.h,
+            &jugador[i].recortar_vidas.x,&jugador[i].recortar_vidas.y,&jugador[i].recortar_vidas.w,&jugador[i].recortar_vidas.h,
+            &jugador[i].numero_vidas,&jugador[i].contador_bala);
 
-        fscanf(cargar,"Numero de vidas: %i\n",&jugador[i].numero_vidas);
-        fscanf(cargar,"Balas usadas: %i\n",&jugador[i].contador_bala);
+    fclose(puntero_datos);
+    }
+}
 
-        fscanf(cargar,"Recargando, intersecan, balas existe: %i %i %i\n",&jugador[i].recargando,&jugador[i].intersecan,&jugador[i].bala_existe);
+void datos_partida(_Bool estadisticas)
+{
+    FILE *puntero_datos;
 
-        fscanf(cargar,"Posicion bala: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_bala.x,&jugador[i].posicion_bala.y,&jugador[i].posicion_bala.w,&jugador[i].posicion_bala.h);
+    char aux;
 
-        fscanf(cargar,"Posicion animacion: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_animacion.x,&jugador[i].posicion_animacion.y,&jugador[i].posicion_animacion.w,&jugador[i].posicion_animacion.h);
-        fscanf(cargar,"Recortar animacion: x:%i y:%i w:%i h:%i\n",&jugador[i].recortar_animacion.x,&jugador[i].recortar_animacion.y,&jugador[i].recortar_animacion.w,&jugador[i].recortar_animacion.h);
+    puntero_datos=fopen("Nombre partida.txt","r");
 
-        fscanf(cargar,"Posicion municion: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_municion.x,&jugador[i].posicion_municion.y,&jugador[i].posicion_municion.w,&jugador[i].posicion_municion.h);
-        fscanf(cargar,"Recortar municion: x:%i y:%i w:%i h:%i\n",&jugador[i].recortar_municion.x,&jugador[i].recortar_municion.y,&jugador[i].recortar_municion.w,&jugador[i].recortar_municion.h);
-
-        fscanf(cargar,"Posicion vidas: x:%i y:%i w:%i h:%i\n",&jugador[i].posicion_vidas.x,&jugador[i].posicion_vidas.y,&jugador[i].posicion_vidas.w,&jugador[i].posicion_vidas.h);
-        fscanf(cargar,"Recortar vidas: x:%i y:%i w:%i h:%i\n",&jugador[i].recortar_vidas.x,&jugador[i].recortar_vidas.y,&jugador[i].recortar_vidas.w,&jugador[i].recortar_vidas.h);
-
-        fscanf(cargar,"\n\n");
+    if (estadisticas==1)
+    {
+        fseek(puntero_datos,0,SEEK_SET);
+        while(fscanf(puntero_datos,"%c",&aux)!=EOF)
+            printf("%c",aux);
     }
 
-    fclose(cargar);
+    fclose(puntero_datos);
+}
+void multijugador(_Bool cargar)
+{
+    int tiempo_estructura=0;
+    int tiempo_recarga_estructura=0;
+    int tiempo_jugador2=0;
+    int tiempo_jugador=0;
+
+    SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
+    SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
+    SDL_Renderer *escenario=NULL;//Representa cosas sobre la superficie, como si fuese la pintura
+
+    SDL_Texture *texto_ganador=NULL;
+    SDL_Event evento; //Pulsar una tecla, mover el mouse... son eventos
+    _Bool ejecutando=1; //Si el programa esta en proceso
+
+    SDL_Init(SDL_INIT_EVERYTHING);//Inicializa la biblioteca SDL (no vamos a hacer comprobaciones de errores, por ahora)
+
+    ventanaprincipal=SDL_CreateWindow("Juego laberinto",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,960,720,NULL);//Crea una ventana, centrada, de dimensiones 960x720
+    superficieprincipal=SDL_GetWindowSurface(ventanaprincipal);//Aporta una superficie a la ventana
+    escenario=SDL_CreateRenderer(ventanaprincipal,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);//Crea un render (necesario definirlo de esta forma para que funcione bien)
+
+
+SDL_Rect posicion_texto; //La posicion en la que estara el texto al finalizar el programa
+posicion_texto.x=posicion_texto.y=250;
+posicion_texto.w=posicion_texto.h=0;
+
+
+variables_jugador *jugador;//Se define un puntero del tipo variables_jugador
+
+jugador=malloc(sizeof(variables_jugador)*2);//Indicamos para cuantos jugadores necesitamos espacio
+
+if (jugador==NULL)//Comprobacion de error
+{
+    SDL_Log("Error");
+    exit(-1);
+}
+
+else//Genera los jugadores con las funciones definidas de antes
+{
+    generar_jugador(jugador,0,escenario,cargar);
+    generar_jugador(jugador,1,escenario,cargar);
+    cargar_partida(jugador,0,cargar,escenario);//Si cargamos partida carga los valores guardados sobre la estructura jugador
+}
+if (cargar) //Al cargar la partida el color de los jugadores se resetea; es necesario comprobar el numero de vidas restantes
+{
+    for (int i=0;i<2;i++)
+    {
+        if (jugador[i].numero_vidas==3)
+            SDL_SetTextureColorMod(jugador[i].animacion,255,255,255);
+        else if (jugador[i].numero_vidas==2)
+            SDL_SetTextureColorMod(jugador[i].animacion,255,0,0);
+        else
+            SDL_SetTextureColorMod(jugador[i].animacion,0,255,0);
+    }
+}
+
+   while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
+    {
+
+        while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
+        {                               //Finaliza el bucle cuando no queden eventos por procesar
+            if(evento.type==SDL_QUIT)//Si el evento es quit (darle a la cruz roja) se sale del bucle y termina el juego
+            {
+                ejecutando=0;
+            }
+            if (evento.type==SDL_KEYDOWN)//Evento del tipo pulsar tecla
+            {
+                if (evento.key.keysym.sym==SDLK_SPACE)//Si la tecla pulsada es un espacio llama a la funcion disparar para el jugador 0
+                {
+                    if (jugador[0].recargando==0 && jugador[0].bala_existe==0)
+                    disparar(jugador,0,escenario);
+                }
+                if(evento.key.keysym.sym==SDLK_f)//Si es una f lo mismo pero para el jugador 2
+                {
+                    if (jugador[1].recargando==0 && jugador[1].bala_existe==0)
+                    disparar(jugador,1,escenario);
+
+                }
+            }
+        }
+
+        recargar_y_movimiento(jugador,0,&tiempo_estructura);//Mueve la bala y recarga la municion
+        recargar_y_movimiento(jugador,1,&tiempo_recarga_estructura);
+
+        movimiento_jugador(jugador,0,&tiempo_jugador);//Para mover los jugadores
+        movimiento_jugador(jugador,1,&tiempo_jugador2);
+
+        limites_mapa(jugador,0);//Donde se pueden mover
+        limites_mapa(jugador,1);
+
+        interseccion(jugador,0,jugador,1);//Si las balas intersecan con los jugadores
+        interseccion(jugador,1,jugador,0);
+
+        if(jugador[1].intersecan)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
+        {
+            vidas_restantes(jugador,1);
+        }
+
+        if(jugador[0].intersecan)
+        {
+            vidas_restantes(jugador,0);
+        }
+
+        SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
+        copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
+        copiar_atributos(jugador,1,escenario);
+        SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal
+
+    }//Fin del bucle principal y por tanto de la partida
+
+    fichero(jugador,0);
+
+    free(jugador);//Libera lo reservado con malloc anteriormente
+    SDL_DestroyTexture(texto_ganador);//Destruye todas las texturas creadas, la ventana, el render y lasuperficie
+    destruir_atributos(jugador,0);
+    destruir_atributos(jugador,1);
+    SDL_DestroyRenderer(escenario);
+    SDL_DestroyWindow(ventanaprincipal);
+    ventanaprincipal=NULL; //Apunta todos los punteros a NULL
+    superficieprincipal=NULL;
+
+    for (int i=0;i<2;i++)
+    jugador[i].municion=jugador[i].vidas=jugador[i].animacion=jugador[i].bala=NULL;
+
+    SDL_Quit();//Sale de la libreria SDL
+
 }
 

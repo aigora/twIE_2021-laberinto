@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <SDL2/SDL.h>
@@ -11,8 +11,6 @@ int main (int argc, char *argv[])
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
     int tiempo_jugador=0;
-
-    FILE *datos_partida;
 
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
@@ -121,5 +119,5 @@ else//Genera los jugadores con las funciones definidas de antes
     SDL_Quit();//Sale de la libreria SDL
 
     return 0;
-}
+}*/
 

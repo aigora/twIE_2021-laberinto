@@ -1,4 +1,4 @@
-/*#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <SDL2/SDL.h>
@@ -44,8 +44,8 @@ if (jugador==NULL)//Comprobacion de error
 
 else//Genera los jugadores con las funciones definidas de antes
 {
-    generar_jugador(jugador,0,escenario);
-    generar_jugador(jugador,1,escenario);
+    generar_jugador(jugador,0,escenario,1);
+    generar_jugador(jugador,1,escenario,1);
 }
 
    while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
@@ -87,12 +87,12 @@ else//Genera los jugadores con las funciones definidas de antes
 
         if(jugador[1].intersecan)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
         {
-            vidas_restantes(jugador,1,jugador,0);
+            vidas_restantes(jugador,1);
         }
 
         if(jugador[0].intersecan)
         {
-            vidas_restantes(jugador,0,jugador,1);
+            vidas_restantes(jugador,0);
         }
 
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
@@ -119,5 +119,5 @@ else//Genera los jugadores con las funciones definidas de antes
     SDL_Quit();//Sale de la libreria SDL
 
     return 0;
-}*/
+}
 

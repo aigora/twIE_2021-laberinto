@@ -1,5 +1,6 @@
 # depslib dependency file v1.0
-1620142214 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\nuevo proyecto\main.c
+1620214769 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\nuevo proyecto\main.c
+	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<SDL2/SDL.h>
@@ -387,7 +388,7 @@
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 
-1620151804 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\nuevo proyecto\funciones_principales.c
+1620214714 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\nuevo proyecto\funciones_principales.c
 	<stdio.h>
 	<math.h>
 	<string.h>
@@ -395,8 +396,7 @@
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
 
-1620144174 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\nuevo proyecto\menú principal.c
-	<stdio.h>
+1620214714 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\nuevo proyecto\menú principal.c
 	<string.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>

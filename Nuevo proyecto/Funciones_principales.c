@@ -153,17 +153,20 @@ void interseccion(variables_jugador jugador[], int numero_jugador, variables_jug
         victima[numero_victima].numero_vidas--;//La victima pierde una vida
         switch(victima[numero_victima].numero_vidas)//En funcion de las vidas restantes el jugador tendra un color u otro
         {
+            case 3:
+                SDL_SetTextureColorMod(victima[numero_victima].animacion,255,255,255);//Asigna un color al jugador
+                break;
             case 2:
-                SDL_SetTextureColorMod(victima[numero_victima].animacion,255,0,0);//Asigna un color al jugador
+                SDL_SetTextureColorMod(victima[numero_victima].animacion,0,255,0);
                 break;
             case 1:
-                SDL_SetTextureColorMod(victima[numero_victima].animacion,0,255,0);
+                SDL_SetTextureColorMod(victima[numero_victima].animacion,255,0,0);
                 break;
         }
         victima[numero_victima].intersecan=1;//Como intersecan devuelve 1
         SDL_DestroyTexture(jugador[numero_jugador].bala);//Destruye la bala
         jugador[numero_jugador].bala_existe=0;//La bala no existe
-        jugador[numero_jugador].posicion_bala.x=1000;//La funcion calcula la posicion de la bala, pero al destruirla no resetea la posicion
+        jugador[numero_jugador].posicion_bala.x=1300;//La funcion calcula la posicion de la bala, pero al destruirla no resetea la posicion
     }                                                  //Parecería que esta intersecando continuamente, asi que asignamos a la bala una posicion fuera de la pantalla
 
 }
@@ -353,6 +356,7 @@ void datos_partida(_Bool estadisticas)
 
     fclose(puntero_datos);
 }
+
 void multijugador(_Bool cargar)
 {
     int tiempo_estructura=0;
@@ -403,9 +407,9 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
         if (jugador[i].numero_vidas==3)
             SDL_SetTextureColorMod(jugador[i].animacion,255,255,255);
         else if (jugador[i].numero_vidas==2)
-            SDL_SetTextureColorMod(jugador[i].animacion,255,0,0);
-        else
             SDL_SetTextureColorMod(jugador[i].animacion,0,255,0);
+        else
+            SDL_SetTextureColorMod(jugador[i].animacion,255,0,0);
     }
 }
 

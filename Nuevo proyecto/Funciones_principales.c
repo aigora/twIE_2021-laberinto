@@ -98,24 +98,40 @@ void limites_mapa(variables_jugador jugador[],int numero_jugador)//Limita el mov
     if(jugador[numero_jugador].posicion_animacion.y>=400)
         jugador[numero_jugador].posicion_animacion.y-=velocidad_movimiento;
 }
-void disparar (variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario)//Dispara una bala
+void disparar (variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima, SDL_Renderer *escenario, int *distx, int *disty)//Dispara una bala
 {
-    jugador[numero_jugador].bala=cargar_texturas("Bala.png",escenario);//Crea la bala
+    float x,y,cos,sin,distancia;
+
+    jugador[numero_jugador].bala=cargar_texturas("Estrella.png",escenario);//Crea la bala
     jugador[numero_jugador].posicion_bala.x=jugador[numero_jugador].posicion_animacion.x+jugador[numero_jugador].posicion_animacion.w;//Establece la bala en una posicion inicial
     jugador[numero_jugador].posicion_bala.y=jugador[numero_jugador].posicion_animacion.y+jugador[numero_jugador].posicion_animacion.h/2;
     jugador[numero_jugador].posicion_bala.w=jugador[numero_jugador].posicion_bala.h=50;
     jugador[numero_jugador].recargando=1;//La bala existe y el jugador empieza a recargar la siguiente
     jugador[numero_jugador].bala_existe=1;
     jugador[numero_jugador].contador_bala++;//Lleva regustro de cuantas balas se han disparado
+
+    distancia=sqrt(pow(victima[numero_victima].posicion_animacion.x-jugador[numero_jugador].posicion_animacion.x,2)
+                         +pow(victima[numero_victima].posicion_animacion.y-jugador[numero_jugador].posicion_animacion.y,2));
+
+    x=victima[numero_victima].posicion_animacion.x-jugador[numero_jugador].posicion_animacion.x;
+    y=victima[numero_victima].posicion_animacion.y-jugador[numero_jugador].posicion_animacion.y;
+
+    cos=x/distancia;
+    sin=y/distancia;
+
+    *distx=6*cos;
+    *disty=6*sin;
 }
 
-void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga)//Recarga la municion y mueve la bala por el plano
+void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga, int distx, int disty)//Recarga la municion y mueve la bala por el plano
 {
+
     if (jugador[numero_jugador].bala_existe==1)//Si la bala existe se movera por el plano de la pantalla
     {
-        jugador[numero_jugador].posicion_bala.x+=6;
+        jugador[numero_jugador].posicion_bala.x+=distx;
+        jugador[numero_jugador].posicion_bala.y+=disty;
     }
-    if (jugador[numero_jugador].posicion_bala.x>700 && jugador[numero_jugador].bala_existe==1)//Si la bala llega a los limites definidos se destruye
+    if ((jugador[numero_jugador].posicion_bala.x>700||jugador[numero_jugador].posicion_bala.x<0) && jugador[numero_jugador].bala_existe==1)//Si la bala llega a los limites definidos se destruye
     {
         SDL_DestroyTexture(jugador[numero_jugador].bala);
         jugador[numero_jugador].bala_existe=0;//La bala ya no existe
@@ -356,13 +372,15 @@ void datos_partida(_Bool estadisticas)
 
     fclose(puntero_datos);
 }
-
+/*
 void multijugador(_Bool cargar)
 {
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
     int tiempo_jugador=0;
+    int distx1,disty1;
+    int distx2,disty2;
 
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
@@ -427,19 +445,19 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
                 if (evento.key.keysym.sym==SDLK_SPACE)//Si la tecla pulsada es un espacio llama a la funcion disparar para el jugador 0
                 {
                     if (jugador[0].recargando==0 && jugador[0].bala_existe==0)
-                    disparar(jugador,0,escenario);
+                    disparar(jugador,0,jugador,1,escenario,&distx1,&disty1);
                 }
                 if(evento.key.keysym.sym==SDLK_f)//Si es una f lo mismo pero para el jugador 2
                 {
                     if (jugador[1].recargando==0 && jugador[1].bala_existe==0)
-                    disparar(jugador,1,escenario);
+                    disparar(jugador,1,jugador,0,escenario,&distx2,&disty2);
 
                 }
             }
         }
 
-        recargar_y_movimiento(jugador,0,&tiempo_estructura);//Mueve la bala y recarga la municion
-        recargar_y_movimiento(jugador,1,&tiempo_recarga_estructura);
+        recargar_y_movimiento(jugador,0,jugador,1,&tiempo_estructura);//Mueve la bala y recarga la municion
+        recargar_y_movimiento(jugador,1,jugador,0,&tiempo_recarga_estructura);
 
         movimiento_jugador(jugador,0,&tiempo_jugador);//Para mover los jugadores
         movimiento_jugador(jugador,1,&tiempo_jugador2);
@@ -483,5 +501,5 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
 
     SDL_Quit();//Sale de la libreria SDL
 
-}
+}*/
 

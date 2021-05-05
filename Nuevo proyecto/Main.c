@@ -11,6 +11,7 @@ int main (int argc, char *argv[])
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
     int tiempo_jugador=0;
+    int distx1=0,distx2=0,disty1=0,disty2=0;
 
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
@@ -62,19 +63,19 @@ else//Genera los jugadores con las funciones definidas de antes
                 if (evento.key.keysym.sym==SDLK_SPACE)//Si la tecla pulsada es un espacio llama a la funcion disparar para el jugador 0
                 {
                     if (jugador[0].recargando==0 && jugador[0].bala_existe==0)
-                    disparar(jugador,0,escenario);
+                    disparar(jugador,0,jugador,1,escenario,&distx1,&disty1);
                 }
                 if(evento.key.keysym.sym==SDLK_f)//Si es una f lo mismo pero para el jugador 2
                 {
                     if (jugador[1].recargando==0 && jugador[1].bala_existe==0)
-                    disparar(jugador,1,escenario);
+                    disparar(jugador,1,jugador,0,escenario,&distx2,&disty2);
 
                 }
             }
         }
 
-        recargar_y_movimiento(jugador,0,&tiempo_estructura);//Mueve la bala y recarga la municion
-        recargar_y_movimiento(jugador,1,&tiempo_recarga_estructura);
+        recargar_y_movimiento(jugador,0,&tiempo_estructura,distx1,disty1);//Mueve la bala y recarga la municion
+        recargar_y_movimiento(jugador,1,&tiempo_recarga_estructura,distx2,disty2);
 
         movimiento_jugador(jugador,0,&tiempo_jugador);//Para mover los jugadores
         movimiento_jugador(jugador,1,&tiempo_jugador2);

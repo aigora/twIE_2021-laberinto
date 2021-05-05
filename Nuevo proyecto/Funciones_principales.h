@@ -42,8 +42,8 @@ void copiar_atributos(variables_jugador jugador[], int numero_jugador, SDL_Rende
 void destruir_atributos(variables_jugador jugador[], int numero_jugador); //Mejorar legibilidad, destruye las texturas,renders,etc...utilizados
 void movimiento_jugador(variables_jugador jugador[], int numero_jugador, int *tiempo);//Permite moverse al jugador
 void limites_mapa(variables_jugador jugador[],int numero_jugador);//En qué zona de la pantalla puedes moverte
-void disparar (variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario);//Crea una bala a modo de disparo
-void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga);//Establece un tiempo hasta disparar la próxima bala y permite su movimiento
+void disparar (variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima, SDL_Renderer *escenario, int *distx, int *disty);//Crea una bala a modo de disparo
+void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga, int distx, int disty);//Establece un tiempo hasta disparar la próxima bala y permite su movimiento
 void interseccion(variables_jugador jugador[], int numero_jugador,variables_jugador victima[], int numero_victima);//Indica si dos objetos intersecan
 int vidas_restantes(variables_jugador victima[], int numero_victima);//Cuando 2 objetos intersecan resta una vida al especificado
 void fichero (variables_jugador jugador[], int numero_jugador); //Guarda los datos de la partida en un fichero

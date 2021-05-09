@@ -372,15 +372,14 @@ void datos_partida(_Bool estadisticas)
 
     fclose(puntero_datos);
 }
-/*
+
 void multijugador(_Bool cargar)
 {
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
     int tiempo_jugador=0;
-    int distx1,disty1;
-    int distx2,disty2;
+    int distx1=0,distx2=0,disty1=0,disty2=0;
 
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
@@ -456,8 +455,8 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
             }
         }
 
-        recargar_y_movimiento(jugador,0,jugador,1,&tiempo_estructura);//Mueve la bala y recarga la municion
-        recargar_y_movimiento(jugador,1,jugador,0,&tiempo_recarga_estructura);
+        recargar_y_movimiento(jugador,0,&tiempo_estructura,distx1,disty1);//Mueve la bala y recarga la municion
+        recargar_y_movimiento(jugador,1,&tiempo_recarga_estructura,distx2,disty2);
 
         movimiento_jugador(jugador,0,&tiempo_jugador);//Para mover los jugadores
         movimiento_jugador(jugador,1,&tiempo_jugador2);
@@ -501,6 +500,6 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
 
     SDL_Quit();//Sale de la libreria SDL
 
-}*/
+}
 
 

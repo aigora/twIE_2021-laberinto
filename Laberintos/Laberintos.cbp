@@ -30,19 +30,22 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="C:/Users/Coronavirus/OneDrive/Documentos/GitHub/SDL2-2.0.14/x86_64-w64-mingw32/include" />
-			<Add directory="C:/Users/Coronavirus/OneDrive/Documentos/GitHub/SDL2_image-2.0.5/x86_64-w64-mingw32/include" />
+			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/SDL/SDL2-General/SDL2-2.0.14/x86_64-w64-mingw32/include" />
+			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/SDL/SDL2-Imagen/SDL2_image-2.0.5/x86_64-w64-mingw32/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image" />
-			<Add directory="C:/Users/Coronavirus/OneDrive/Documentos/GitHub/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" />
-			<Add directory="C:/Users/Coronavirus/OneDrive/Documentos/GitHub/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
+			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/SDL/SDL2-General/SDL2-2.0.14/x86_64-w64-mingw32/lib" />
+			<Add directory="C:/Users/jorge/OneDrive/Documentos/OBS Studio/UPM/Informática/SDL/SDL2-Imagen/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="Funciones_principales.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Funciones_principales.h" />
 		<Unit filename="Main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Menu principal.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

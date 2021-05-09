@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <SDL2/SDL.h>
@@ -120,7 +120,7 @@ else//Genera los jugadores con las funciones definidas de antes
     SDL_Quit();//Sale de la libreria SDL
 
     return 0;
-}
+}*/
 
 
 

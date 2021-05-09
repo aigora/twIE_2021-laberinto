@@ -396,3 +396,25 @@
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
 
+1620582100 source:c:\users\pista\onedrive\documentos\github\twie_2021-laberinto\laberintos\funciones_principales.c
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	"Funciones_principales.h"
+
+1620582100 c:\users\pista\onedrive\documentos\github\twie_2021-laberinto\laberintos\funciones_principales.h
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+
+1620582100 source:c:\users\pista\onedrive\documentos\github\twie_2021-laberinto\laberintos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	"Funciones_principales.h"
+

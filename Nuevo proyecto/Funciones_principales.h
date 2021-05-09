@@ -54,3 +54,8 @@ void multijugador(_Bool cargar);//Funcion principal
 
 
 
+
+
+
+
+

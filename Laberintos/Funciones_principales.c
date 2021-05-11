@@ -86,7 +86,7 @@ void limites_mapa(variables_jugador jugador[],int numero_jugador)//Limita el mov
 {
     const int velocidad_movimiento=2;
 
-    if(jugador[numero_jugador].posicion_animacion.x>=550)//Si el jugador llega a la posicion en cuestion avanzara 2 ya que se esta moviendo, pero retrocedera 2 al haber llegado al limite
+    if(jugador[numero_jugador].posicion_animacion.x>=700)//Si el jugador llega a la posicion en cuestion avanzara 2 ya que se esta moviendo, pero retrocedera 2 al haber llegado al limite
         jugador[numero_jugador].posicion_animacion.x-=velocidad_movimiento;//En consecuencia el jugador no se mueve
 
     if (jugador[numero_jugador].posicion_animacion.x<=0)//Repetimos lo mismo en los lugares que nos interesan para definir el mapa
@@ -400,6 +400,17 @@ SDL_Rect posicion_texto; //La posicion en la que estara el texto al finalizar el
 posicion_texto.x=posicion_texto.y=250;
 posicion_texto.w=posicion_texto.h=0;
 
+SDL_Texture *muro;
+SDL_Rect pos;
+pos.x=pos.y=0;
+pos.w=pos.h=50;
+
+SDL_Rect pos1;
+pos1.x=pos1.y=30;
+pos1.w=pos1.h=50;
+
+muro=cargar_texturas("Muro.png",escenario);
+
 
 variables_jugador *jugador;//Se define un puntero del tipo variables_jugador
 
@@ -478,6 +489,8 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
         }
 
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
+        SDL_RenderCopy(escenario,muro,NULL,&pos);
+        SDL_RenderCopy(escenario,muro,NULL,&pos1);
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
         SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal

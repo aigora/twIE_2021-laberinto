@@ -35,6 +35,16 @@ typedef struct //Estructura que contiene todas las variables de un jugador
 
     }variables_jugador;
 
+
+typedef struct
+    {
+    SDL_Texture *muro;
+    SDL_Rect posicion_muro;
+    SDL_Rect recortar_muro;
+    int direccion_muro;
+    }variables_barrera;
+
+
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render); //Crea las texturas
 void you_win (SDL_Rect *posicion_texto, int numero_vidas, SDL_Renderer *escenario, SDL_Texture *texto); //Cuando termina el juego dice quién ha ganado
 void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario, _Bool cargar); //Crea el jugador (establece valores predeterminados para cada componente)
@@ -50,6 +60,8 @@ void fichero (variables_jugador jugador[], int numero_jugador); //Guarda los dat
 void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
 void datos_partida(_Bool estadisticas);//Imprime los datos de la partida
 void multijugador(_Bool cargar);//Funcion principal
+void cargar_muro (variables_barrera barrera[],SDL_Renderer *escenario,int direccion_barrera);
+void hacer_muro (int x,int y,int n,int direccion_muro,variables_barrera barrera[],SDL_Renderer *escenario,variables_jugador jugador[],int numero_jugador);
 
 
 

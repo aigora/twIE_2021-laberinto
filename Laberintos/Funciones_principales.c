@@ -5,6 +5,67 @@
 #include <SDL2/SDL_image.h>
 #include "Funciones_principales.h"
 
+void cargar_muro (variables_barrera barrera[],SDL_Renderer *escenario,int direccion_barrera)
+{
+  int alto,ancho;
+  barrera[direccion_barrera].muro=cargar_texturas("Barrera.png",escenario);
+  SDL_QueryTexture(barrera[direccion_barrera].muro,NULL,NULL,&ancho,&alto);
+  barrera[direccion_barrera].recortar_muro.x=barrera[direccion_barrera].recortar_muro.y=0;
+  barrera[direccion_barrera].recortar_muro.w=ancho;
+  barrera[direccion_barrera].recortar_muro.h=alto;
+  barrera[direccion_barrera].posicion_muro.w=50;
+  barrera[direccion_barrera].posicion_muro.h=50;
+}
+void hacer_muro (int x,int y,int n,int direccion_muro,variables_barrera barrera[],SDL_Renderer *escenario,variables_jugador jugador[],int numero_jugador)
+{
+
+    int velocidad_movimiento=2;
+    _Bool intersecan;
+    int i_x=0,i_y=0,i;
+    int jug_x_1=jugador[numero_jugador].posicion_animacion.x,jug_y_1=jugador[numero_jugador].posicion_animacion.y;
+    int jug_x_2=jugador[numero_jugador].posicion_animacion.x+jugador[numero_jugador].posicion_animacion.w,jug_y_2=jugador[numero_jugador].posicion_animacion.y+jugador[numero_jugador].posicion_animacion.h;
+    int bar_x_1=x,bar_y_1=y;
+    int bar_x_2=x,bar_y_2=y;
+    barrera[direccion_muro].posicion_muro.x=x;
+    barrera[direccion_muro].posicion_muro.y=y;
+
+
+    if (direccion_muro==0)
+    {
+    bar_x_2+=barrera[direccion_muro].posicion_muro.w;
+    for(i=0;i<n;i++)
+      {
+        SDL_RenderCopy(escenario,barrera[direccion_muro].muro,&barrera[direccion_muro].recortar_muro,&barrera[direccion_muro].posicion_muro);
+        barrera[direccion_muro].posicion_muro.y+=50;
+        bar_y_2+=50;
+      }
+    }
+    if (direccion_muro==1)
+    {
+    bar_y_2+=barrera[direccion_muro].posicion_muro.h;
+    for(i=0;i<n;i++)
+      {
+        SDL_RenderCopy(escenario,barrera[direccion_muro].muro,&barrera[direccion_muro].recortar_muro,&barrera[direccion_muro].posicion_muro);
+        barrera[direccion_muro].posicion_muro.x+=50;
+        bar_x_2+=50;
+      }
+    }
+    if (jug_x_2<bar_x_1||bar_x_2<jug_x_1||jug_y_2<bar_y_1||bar_y_2<jug_y_1);
+    else
+    {
+        if (jug_x_2==bar_x_1||bar_x_1==jug_x_2-1)
+            jugador[numero_jugador].posicion_animacion.x-=velocidad_movimiento;
+        else if (bar_x_2==jug_x_1||bar_x_2==jug_x_1+1)
+            jugador[numero_jugador].posicion_animacion.x+=velocidad_movimiento;
+        else if (jug_y_2==bar_y_1||bar_y_1==jug_y_2-1)
+            jugador[numero_jugador].posicion_animacion.y-=velocidad_movimiento;
+        else if (bar_y_2==jug_y_1||bar_y_2==jug_y_1+1)
+            jugador[numero_jugador].posicion_animacion.y+=velocidad_movimiento;
+    }
+
+}
+
+
 
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render)//Crea una textura a traves de una imagen (necesaria la ruta)
 {
@@ -355,7 +416,6 @@ void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool carga
     fclose(puntero_datos);
     }
 }
-
 void datos_partida(_Bool estadisticas)
 {
     FILE *puntero_datos;

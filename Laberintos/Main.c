@@ -49,6 +49,21 @@ else//Genera los jugadores con las funciones definidas de antes
     generar_jugador(jugador,1,escenario,1);
 }
 
+variables_barrera *barrera;//Se define un puntero del tipo variables_barrera
+
+barrera=malloc(sizeof(variables_barrera)*2);//Indicamos la direccion:vertical(0) u horizontal(1)
+if (jugador==NULL)//Comprobacion de error
+{
+    SDL_Log("Error");
+    exit(-1);
+}
+
+else//Genera los jugadores con las funciones definidas de antes
+{
+    cargar_muro(barrera,escenario,0);
+    cargar_muro(barrera,escenario,1);
+}
+
    while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
     {
 

@@ -141,6 +141,7 @@ int main (int argc, char *argv[])
     printf("\nMostrar datos de la partida?\n");
     scanf("%i",&elegir[4]);
     datos_partida(elegir[4]);
+    printf("Probando");
 
     return 0;
 }

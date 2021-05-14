@@ -820,7 +820,7 @@
 	<SDL2/begin_code.h>
 	<SDL2/close_code.h>
 
-1620987015 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\menu principal.c
+1620988669 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\menu principal.c
 	<stdio.h>
 	<string.h>
 	<SDL2/SDL.h>

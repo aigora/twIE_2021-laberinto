@@ -7,23 +7,26 @@
 int main (int argc, char *argv[])
 {
     char instrucciones[]="Bienvenido a las instrucciones del juego!!\n\n\
-    Selecciona la opcion <<Nueva partida>> para iniciar el juego, <<Cargar partida>> para continuar una partida anterior\
-    o <<Salir>> para salir del programa\n\n\
-    Si has seleccionado  <<Nueva partida>> dirigete a <<Configurar partida>> para determinar las caracteristicas de la partida\
-    En <<Configuracion partida>> el siguiente paso es escoger el modo de juego:\n\
+    Selecciona la opcion <<Nueva partida>> para iniciar el juego, \n\
+    <<Cargar partida>> para continuar una partida anterior\ o <<Salir>> para salir del programa.\n\n\
+    Si has seleccionado <<Cargar partida>> se reanudara la partida anterior.\n\n\
+    Si has seleccionado  <<Nueva partida>> dirigete a \n\
+    <<Configurar partida>> para determinar las caracteristicas de la partida.\n\n\
+    En <<Configuracion partida>> el siguiente paso es escoger el modo de juego:\n\n\
     <<Individual>> o \n\
     <<Multijugador>>\n\n\
     Modo individual: <<Meter descripcion>>\n\
-    \tEl movimiento sera mediante las flechas de control:\n\n\
-    Modo multijugador: se enfrentaran 2 jugadores. Cada jugador tiene 3 vidas. Pierde el jugador al que se le acaben las vidas\n\
+    \tEl movimiento sera mediante las flechas de control.\n\n\
+    Modo multijugador: se enfrentaran 2 jugadores. Cada jugador tiene 3 vidas.\n\
+    \tPierde el jugador al que se le acaben las vidas.\n\
     \tEl movimiento se realizara mediante:\n\n\
-    \tJugador 1: usara las flechas de control para moverse y la barra espaciadora para disparar\n\
-    \tJugador 2: usara las teclas 'a', 'w', 's', 'd' para moverse y la letra 'f' para disparar\n\n\
+    \tJugador 1: usara las flechas de control para moverse y la barra espaciadora para disparar.\n\
+    \tJugador 2: usara las teclas 'a', 'w', 's', 'd' para moverse y la letra 'f' para disparar.\n\n\
     La partida se guardara con el nombre que se introduzca durante la configuracion.\n\
-    Una vez finalizada la partida selecciona <<Salir>> en caso de haber terminado el juego o <<Continuar partida>> si desea seguir jugando\n\
-    Si selecciona <<Salir>> se le preguntara si quiere ver las estadisticas de la partida\
-    Introduce '1' para verlos o '0' para finalizar el juego definitivamente.\n\n\
-        ";
+    Una vez finalizada la partida selecciona <<Salir>> en caso de haber terminado el juego\n\
+    o <<Continuar partida>> si desea seguir jugando.\n\n\
+    Si selecciona <<Salir>> se le preguntara si quiere ver las estadisticas de la partida\n\
+    Introduce '1' para verlos o '0' para finalizar el juego definitivamente.\n\n";
 
     int elegir[10];
     char usuario[100];

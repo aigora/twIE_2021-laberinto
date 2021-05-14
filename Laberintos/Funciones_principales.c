@@ -97,6 +97,7 @@ void limites_mapa(variables_jugador jugador[],int numero_jugador)//Limita el mov
 
     if(jugador[numero_jugador].posicion_animacion.y>=400)
         jugador[numero_jugador].posicion_animacion.y-=velocidad_movimiento;
+
 }
 void disparar (variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima, SDL_Renderer *escenario, int *distx, int *disty)//Dispara una bala
 {

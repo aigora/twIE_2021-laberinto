@@ -489,8 +489,6 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
         }
 
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
-        SDL_RenderCopy(escenario,muro,NULL,&pos);
-        SDL_RenderCopy(escenario,muro,NULL,&pos1);
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
         SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal

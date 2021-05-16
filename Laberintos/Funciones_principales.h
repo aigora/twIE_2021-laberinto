@@ -4,6 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include <sys/time.h>
 
+
 typedef struct //Estructura que contiene todas las variables de un jugador
     {
         int numero_jugador; //Cantidad de jugadores
@@ -39,10 +40,14 @@ typedef struct //Estructura que contiene todas las variables de un jugador
 
 typedef struct
     {
+
     SDL_Texture *muro;
+
     SDL_Rect posicion_muro;
     SDL_Rect recortar_muro;
+
     int numero_muro;
+
     }variables_barrera;
 
 
@@ -61,8 +66,14 @@ void fichero (variables_jugador jugador[], int numero_jugador); //Guarda los dat
 void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
 void datos_partida(_Bool estadisticas);//Imprime los datos de la partida
 void multijugador(_Bool cargar);//Funcion principal
-void cargar_muro (variables_barrera barrera[],SDL_Renderer *escenario,int numero_barrera, int w,int h);
-void hacer_muro (int x,int y,int n,variables_barrera barrera[],int numero_barrera,int direccion_muro,SDL_Renderer *escenario,variables_jugador jugador[]);
+void cargar_muro (variables_barrera barrera[],int numero_barrera, SDL_Renderer *escenario, char ruta[50]);
+void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,
+                 SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador);
+
+
+void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador); //Provisional
+
+
 
 
 

@@ -4,6 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include "Funciones_principales.h"
 
+
 int main (int argc, char *argv[])
 {
     char instrucciones[]="Bienvenido a las instrucciones del juego!!\n\n\
@@ -65,11 +66,6 @@ int main (int argc, char *argv[])
                             printf("Nombre de usuario (la partida se guardara con el mismo nombre): \n");
                             scanf(" %[^\n]",usuario);
                             strcpy(nombre_partida,usuario);
-                            printf("Modo de juego:\n");
-                            printf("1-<Modo 1>\n");
-                            printf("2-<Modo 2>\n");
-                            printf("3-<Modo 3>\n");
-                            scanf("%i",&elegir[3]);
                             printf("Iniciando partida...\n");
 
                         }
@@ -81,14 +77,8 @@ int main (int argc, char *argv[])
                             scanf(" %[^\n]",usuario1);
                             printf("\nNmbre usuario 2: ");
                             scanf(" %[^\n]",usuario2);
-                            printf("Modo de juego:\n");
-                            printf("1-<Modo 1>\n");
-                            printf("2-<Modo 2>\n");
-                            printf("3-<Modo 3>\n");
-                            scanf("%i",&elegir[3]);
                             printf("Iniciando partida...\n");
-                            if (elegir[3]==1)
-                                multijugador(0);
+                            multijugador(0);
 
                         }
                         else
@@ -112,8 +102,10 @@ int main (int argc, char *argv[])
                 else if (elegir[1]==2)
                     bucle[0]=0;
                 else
+                {
                     printf("Error!\n");
                     printf("Usa ficheros, por ahora no sabemos\n");
+                }
                 break;
 
             case 3:
@@ -141,7 +133,6 @@ int main (int argc, char *argv[])
     printf("\nMostrar datos de la partida?\n");
     scanf("%i",&elegir[4]);
     datos_partida(elegir[4]);
-    printf("Probando");
 
     return 0;
 }

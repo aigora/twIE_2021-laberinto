@@ -6,6 +6,7 @@
 #include "Funciones_principales.h"
 #include <sys/time.h>
 
+
 int main (int argc, char *argv[])
 {
     double seg=5.0;
@@ -64,7 +65,7 @@ if (jugador==NULL)//Comprobacion de error
     exit(-1);
 }
 
-else//Genera los jugadores con las funciones definidas de antes
+else
 {
     cargar_muro(barrera,escenario,0);
     cargar_muro(barrera,escenario,1);
@@ -121,7 +122,7 @@ else//Genera los jugadores con las funciones definidas de antes
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
         SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal
-	
+
         gettimeofday(&end, 0);
         seconds = end.tv_sec - begin.tv_sec;
         microseconds = end.tv_usec - begin.tv_usec;

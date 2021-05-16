@@ -417,26 +417,29 @@
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
 
-1620995937 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.c
+1621169843 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.c
 	<stdio.h>
 	<math.h>
 	<string.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
+	<sys/time.h>
 
-1620583129 c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.h
+1621168506 c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.h
 	<stdio.h>
 	<string.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
+	<sys/time.h>
 
-1620583855 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\main.c
+1621167096 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\main.c
 	<stdlib.h>
 	<string.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
+	<sys/time.h>
 
 1620583253 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\menú principal.c
 	<string.h>
@@ -819,7 +822,7 @@
 	<SDL2/begin_code.h>
 	<SDL2/close_code.h>
 
-1620995935 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\menu principal.c
+1621168957 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\menu principal.c
 	<stdio.h>
 	<string.h>
 	<SDL2/SDL.h>
@@ -832,4 +835,11 @@
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
+
+1621166991 c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\mapas.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	"Funciones_principales.h"
+
+1621166947 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\mapas.c
 

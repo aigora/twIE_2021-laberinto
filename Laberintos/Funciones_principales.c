@@ -6,47 +6,56 @@
 #include "Funciones_principales.h"
 #include <sys/time.h>
 
-void cargar_muro (variables_barrera barrera[],SDL_Renderer *escenario,int numero_barrera, int w, int h)
+void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
+{
+    hacer_muro(50,50,50,10,8,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(500,500,20,20,5,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(200,630,15,80,3,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+}
+
+void cargar_muro (variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, char ruta[50])
 {
   int alto,ancho;
-  barrera[numero_barrera].muro=cargar_texturas("Barrera.png",escenario);
+  barrera[numero_barrera].muro=cargar_texturas(ruta,escenario);
   SDL_QueryTexture(barrera[numero_barrera].muro,NULL,NULL,&ancho,&alto);
   barrera[numero_barrera].recortar_muro.x=barrera[numero_barrera].recortar_muro.y=0;
   barrera[numero_barrera].recortar_muro.w=ancho;
   barrera[numero_barrera].recortar_muro.h=alto;
-  barrera[numero_barrera].posicion_muro.w=w;
-  barrera[numero_barrera].posicion_muro.h=h;
 }
-void hacer_muro (int x,int y,int n,variables_barrera barrera[],int numero_barrera,int direccion_muro,SDL_Renderer *escenario,variables_jugador jugador[])
+void hacer_muro (int x,int y,int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,
+                 SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador)
 {
-
     int velocidad_movimiento=2;
     int i,j;
+
     barrera[numero_barrera].posicion_muro.x=x;
     barrera[numero_barrera].posicion_muro.y=y;
+    barrera[numero_barrera].posicion_muro.w=w;
+    barrera[numero_barrera].posicion_muro.h=h;
+
     int bar_x_1=x,bar_y_1=y;
     int bar_x_2=x,bar_y_2=y;
 
-    if (direccion_muro==0)
+    if (direccion_muro=='v')
     {
-    bar_x_2+=barrera[numero_barrera].posicion_muro.w;
-    for(i=0;i<n;i++)
-      {
-        SDL_RenderCopy(escenario,barrera[numero_barrera].muro,&barrera[numero_barrera].recortar_muro,&barrera[numero_barrera].posicion_muro);
-        barrera[numero_barrera].posicion_muro.y+=barrera[numero_barrera].posicion_muro.h;
-        bar_y_2+=barrera[numero_barrera].posicion_muro.h;
-      }
+        bar_x_2+=barrera[numero_barrera].posicion_muro.w;
+        for(i=0;i<n;i++)
+          {
+            SDL_RenderCopy(escenario,barrera[numero_barrera].muro,&barrera[numero_barrera].recortar_muro,&barrera[numero_barrera].posicion_muro);
+            barrera[numero_barrera].posicion_muro.y+=barrera[numero_barrera].posicion_muro.h;
+            bar_y_2+=barrera[numero_barrera].posicion_muro.h;
+          }
     }
 
-    if (direccion_muro==1)
+    if (direccion_muro=='h')
     {
-    bar_y_2+=barrera[numero_barrera].posicion_muro.h;
-    for(i=0;i<n;i++)
-      {
-        SDL_RenderCopy(escenario,barrera[numero_barrera].muro,&barrera[numero_barrera].recortar_muro,&barrera[numero_barrera].posicion_muro);
-        barrera[numero_barrera].posicion_muro.x+=barrera[numero_barrera].posicion_muro.w;
-        bar_x_2+=barrera[numero_barrera].posicion_muro.w;
-      }
+        bar_y_2+=barrera[numero_barrera].posicion_muro.h;
+        for(i=0;i<n;i++)
+          {
+            SDL_RenderCopy(escenario,barrera[numero_barrera].muro,&barrera[numero_barrera].recortar_muro,&barrera[numero_barrera].posicion_muro);
+            barrera[numero_barrera].posicion_muro.x+=barrera[numero_barrera].posicion_muro.w;
+            bar_x_2+=barrera[numero_barrera].posicion_muro.w;
+          }
     }
 
     for (j=0;j<2;j++)
@@ -76,9 +85,7 @@ void hacer_muro (int x,int y,int n,variables_barrera barrera[],int numero_barrer
     jugador[j].posicion_bala.x=-300;
     }
    }
-
 }
-
 
 
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render)//Crea una textura a traves de una imagen (necesaria la ruta)
@@ -413,8 +420,7 @@ void fichero (variables_jugador jugador[], int numero_jugador)
 void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar, SDL_Renderer *escenario)
 {
     FILE *puntero_datos;
-    int aux;
-    int i=0,j=0;
+    int i=0;
 
     if (cargar)
     {
@@ -475,19 +481,21 @@ SDL_Rect posicion_texto; //La posicion en la que estara el texto al finalizar el
 posicion_texto.x=posicion_texto.y=250;
 posicion_texto.w=posicion_texto.h=0;
 
-SDL_Texture *muro;
-SDL_Rect pos;
-pos.x=pos.y=0;
-pos.w=pos.h=50;
-
-SDL_Rect pos1;
-pos1.x=pos1.y=30;
-pos1.w=pos1.h=50;
-
-muro=cargar_texturas("Muro.png",escenario);
-
-
 variables_jugador *jugador;//Se define un puntero del tipo variables_jugador
+variables_barrera *barrera;
+
+barrera=malloc(sizeof(variables_barrera));
+
+if (barrera==NULL)
+{
+    SDL_Log("ERROR");
+    exit(-1);
+}
+
+else
+{
+    cargar_muro(barrera,0,escenario,"Muro.png");
+}
 
 jugador=malloc(sizeof(variables_jugador)*2);//Indicamos para cuantos jugadores necesitamos espacio
 
@@ -566,12 +574,14 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
+        mapa_multijugador(barrera,0,escenario,jugador,0);
         SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal
 
     }//Fin del bucle principal y por tanto de la partida
 
     fichero(jugador,0);
 
+    free(barrera);
     free(jugador);//Libera lo reservado con malloc anteriormente
     SDL_DestroyTexture(texto_ganador);//Destruye todas las texturas creadas, la ventana, el render y lasuperficie
     destruir_atributos(jugador,0);

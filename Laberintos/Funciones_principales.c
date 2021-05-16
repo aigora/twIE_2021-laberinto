@@ -4,64 +4,78 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Funciones_principales.h"
+#include <sys/time.h>
 
-void cargar_muro (variables_barrera barrera[],SDL_Renderer *escenario,int direccion_barrera)
+void cargar_muro (variables_barrera barrera[],SDL_Renderer *escenario,int numero_barrera, int w, int h)
 {
   int alto,ancho;
-  barrera[direccion_barrera].muro=cargar_texturas("Barrera.png",escenario);
-  SDL_QueryTexture(barrera[direccion_barrera].muro,NULL,NULL,&ancho,&alto);
-  barrera[direccion_barrera].recortar_muro.x=barrera[direccion_barrera].recortar_muro.y=0;
-  barrera[direccion_barrera].recortar_muro.w=ancho;
-  barrera[direccion_barrera].recortar_muro.h=alto;
-  barrera[direccion_barrera].posicion_muro.w=50;
-  barrera[direccion_barrera].posicion_muro.h=50;
+  barrera[numero_barrera].muro=cargar_texturas("Barrera.png",escenario);
+  SDL_QueryTexture(barrera[numero_barrera].muro,NULL,NULL,&ancho,&alto);
+  barrera[numero_barrera].recortar_muro.x=barrera[numero_barrera].recortar_muro.y=0;
+  barrera[numero_barrera].recortar_muro.w=ancho;
+  barrera[numero_barrera].recortar_muro.h=alto;
+  barrera[numero_barrera].posicion_muro.w=w;
+  barrera[numero_barrera].posicion_muro.h=h;
 }
-void hacer_muro (int x,int y,int n,int direccion_muro,variables_barrera barrera[],SDL_Renderer *escenario,variables_jugador jugador[],int numero_jugador)
+void hacer_muro (int x,int y,int n,variables_barrera barrera[],int numero_barrera,int direccion_muro,SDL_Renderer *escenario,variables_jugador jugador[])
 {
 
     int velocidad_movimiento=2;
-    _Bool intersecan;
-    int i_x=0,i_y=0,i;
-    int jug_x_1=jugador[numero_jugador].posicion_animacion.x,jug_y_1=jugador[numero_jugador].posicion_animacion.y;
-    int jug_x_2=jugador[numero_jugador].posicion_animacion.x+jugador[numero_jugador].posicion_animacion.w,jug_y_2=jugador[numero_jugador].posicion_animacion.y+jugador[numero_jugador].posicion_animacion.h;
+    int i,j;
+    barrera[numero_barrera].posicion_muro.x=x;
+    barrera[numero_barrera].posicion_muro.y=y;
     int bar_x_1=x,bar_y_1=y;
     int bar_x_2=x,bar_y_2=y;
-    barrera[direccion_muro].posicion_muro.x=x;
-    barrera[direccion_muro].posicion_muro.y=y;
-
 
     if (direccion_muro==0)
     {
-    bar_x_2+=barrera[direccion_muro].posicion_muro.w;
+    bar_x_2+=barrera[numero_barrera].posicion_muro.w;
     for(i=0;i<n;i++)
       {
-        SDL_RenderCopy(escenario,barrera[direccion_muro].muro,&barrera[direccion_muro].recortar_muro,&barrera[direccion_muro].posicion_muro);
-        barrera[direccion_muro].posicion_muro.y+=50;
-        bar_y_2+=50;
+        SDL_RenderCopy(escenario,barrera[numero_barrera].muro,&barrera[numero_barrera].recortar_muro,&barrera[numero_barrera].posicion_muro);
+        barrera[numero_barrera].posicion_muro.y+=barrera[numero_barrera].posicion_muro.h;
+        bar_y_2+=barrera[numero_barrera].posicion_muro.h;
       }
     }
+
     if (direccion_muro==1)
     {
-    bar_y_2+=barrera[direccion_muro].posicion_muro.h;
+    bar_y_2+=barrera[numero_barrera].posicion_muro.h;
     for(i=0;i<n;i++)
       {
-        SDL_RenderCopy(escenario,barrera[direccion_muro].muro,&barrera[direccion_muro].recortar_muro,&barrera[direccion_muro].posicion_muro);
-        barrera[direccion_muro].posicion_muro.x+=50;
-        bar_x_2+=50;
+        SDL_RenderCopy(escenario,barrera[numero_barrera].muro,&barrera[numero_barrera].recortar_muro,&barrera[numero_barrera].posicion_muro);
+        barrera[numero_barrera].posicion_muro.x+=barrera[numero_barrera].posicion_muro.w;
+        bar_x_2+=barrera[numero_barrera].posicion_muro.w;
       }
     }
+
+    for (j=0;j<2;j++)
+   {
+    int jug_x_1=jugador[j].posicion_animacion.x,jug_y_1=jugador[j].posicion_animacion.y;
+    int jug_x_2=jugador[j].posicion_animacion.x+jugador[j].posicion_animacion.w,jug_y_2=jugador[j].posicion_animacion.y+jugador[j].posicion_animacion.h;
+    int bala_x_1=jugador[j].posicion_bala.x,bala_y_1=jugador[j].posicion_bala.y;
+    int bala_x_2=jugador[j].posicion_bala.x+jugador[j].posicion_bala.w,bala_y_2=jugador[j].posicion_bala.y+jugador[j].posicion_bala.h;
     if (jug_x_2<bar_x_1||bar_x_2<jug_x_1||jug_y_2<bar_y_1||bar_y_2<jug_y_1);
     else
     {
         if (jug_x_2==bar_x_1||bar_x_1==jug_x_2-1)
-            jugador[numero_jugador].posicion_animacion.x-=velocidad_movimiento;
+            jugador[j].posicion_animacion.x-=velocidad_movimiento;
         else if (bar_x_2==jug_x_1||bar_x_2==jug_x_1+1)
-            jugador[numero_jugador].posicion_animacion.x+=velocidad_movimiento;
+            jugador[j].posicion_animacion.x+=velocidad_movimiento;
         else if (jug_y_2==bar_y_1||bar_y_1==jug_y_2-1)
-            jugador[numero_jugador].posicion_animacion.y-=velocidad_movimiento;
+            jugador[j].posicion_animacion.y-=velocidad_movimiento;
         else if (bar_y_2==jug_y_1||bar_y_2==jug_y_1+1)
-            jugador[numero_jugador].posicion_animacion.y+=velocidad_movimiento;
+            jugador[j].posicion_animacion.y+=velocidad_movimiento;
     }
+
+    if (bala_x_2<bar_x_1||bar_x_2<bala_x_1||bala_y_2<bar_y_1||bar_y_2<bala_y_1);
+    else
+    {
+    SDL_DestroyTexture(jugador[j].bala);
+    jugador[j].bala_existe=0;
+    jugador[j].posicion_bala.x=-300;
+    }
+   }
 
 }
 

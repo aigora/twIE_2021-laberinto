@@ -4,9 +4,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Funciones_principales.h"
+#include <sys/time.h>
 
 int main (int argc, char *argv[])
 {
+    double seg=5.0;
+    long seconds ;
+    long microseconds;
+    double elapsed=0;
+    struct timeval begin, end;
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
@@ -66,7 +72,7 @@ else//Genera los jugadores con las funciones definidas de antes
 
    while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
     {
-
+	gettimeofday(&begin, 0);
         while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
         {                               //Finaliza el bucle cuando no queden eventos por procesar
             if(evento.type==SDL_QUIT)//Si el evento es quit (darle a la cruz roja) se sale del bucle y termina el juego
@@ -115,6 +121,16 @@ else//Genera los jugadores con las funciones definidas de antes
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
         SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal
+	
+        gettimeofday(&end, 0);
+        seconds = end.tv_sec - begin.tv_sec;
+        microseconds = end.tv_usec - begin.tv_usec;
+        elapsed += seconds + microseconds*1e-6;
+	if (elapsed<seg+0.01&&elapsed>seg-0.01)
+        {
+          printf("%f",elapsed);
+          seg+=5.0;
+        }
 
     }//Fin del bucle principal y por tanto de la partida
 

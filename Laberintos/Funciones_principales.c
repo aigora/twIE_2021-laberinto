@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include "Funciones_principales.h"
 #include <sys/time.h>
+#include <stdlib.h>
 
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
@@ -17,18 +18,21 @@ void cargar_muro (variables_barrera barrera[], int numero_barrera, SDL_Renderer 
 {
   int alto_muro,ancho_muro;
   int alto_mina,ancho_mina;
+
   barrera[numero_barrera].muro=cargar_texturas(ruta_muro,escenario);
   barrera[numero_barrera].mina=cargar_texturas(ruta_mina,escenario);
+
   SDL_QueryTexture(barrera[numero_barrera].muro,NULL,NULL,&ancho_muro,&alto_muro);
   SDL_QueryTexture(barrera[numero_barrera].mina,NULL,NULL,&ancho_mina,&alto_mina);
+
   barrera[numero_barrera].recortar_muro.x=barrera[numero_barrera].recortar_muro.y=0;
-  barrera[numero_barrera].recortar_mina.x=barrera[numero_barrera].recortar_mina.y=0;
   barrera[numero_barrera].recortar_muro.w=ancho_muro;
   barrera[numero_barrera].recortar_muro.h=alto_muro;
+
+  barrera[numero_barrera].recortar_mina.x=barrera[numero_barrera].recortar_mina.y=0;
   barrera[numero_barrera].recortar_mina.w=ancho_mina;
   barrera[numero_barrera].recortar_mina.h=alto_mina;
   barrera[numero_barrera].posicion_mina.h=barrera[numero_barrera].posicion_mina.w=50;
-  barrera[numero_barrera].posicion_mina.x=barrera[numero_barrera].posicion_mina.y=-400;
 }
 void hacer_muro (int x,int y,int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,
                  SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador)
@@ -94,22 +98,155 @@ void hacer_muro (int x,int y,int w, int h, int n, char direccion_muro,variables_
     }
    }
 }
+void mina (variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador, int *tiempo_mina)
+{
 
-void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],double elapsed,double *segma,char ruta_mina[50],int *chocan)
+    int aleatorio;
+    _Bool intersecan=1;
+    float dist;
+
+    do
+    {
+    aleatorio=rand()%20;
+    aleatorio++;
+
+    switch(aleatorio)
+        {
+            case 1:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=127;
+            break;
+            case 2:
+            barrera[numero_barrera].posicion_mina.x=400;
+            barrera[numero_barrera].posicion_mina.y=128;
+            break;
+            case 3:
+            barrera[numero_barrera].posicion_mina.x=500;
+            barrera[numero_barrera].posicion_mina.y=129;
+            break;
+            case 4:
+            barrera[numero_barrera].posicion_mina.x=600;
+            barrera[numero_barrera].posicion_mina.y=130;
+            break;
+            case 5:
+            barrera[numero_barrera].posicion_mina.x=700;
+            barrera[numero_barrera].posicion_mina.y=131;
+            break;
+            case 6:
+            barrera[numero_barrera].posicion_mina.x=800;
+            barrera[numero_barrera].posicion_mina.y=132;
+            break;
+            case 7:
+            barrera[numero_barrera].posicion_mina.x=900;
+            barrera[numero_barrera].posicion_mina.y=133;
+            break;
+            case 8:
+            barrera[numero_barrera].posicion_mina.x=350;
+            barrera[numero_barrera].posicion_mina.y=134;
+            break;
+            case 9:
+            barrera[numero_barrera].posicion_mina.x=450;
+            barrera[numero_barrera].posicion_mina.y=135;
+            break;
+            case 10:
+            barrera[numero_barrera].posicion_mina.x=550;
+            barrera[numero_barrera].posicion_mina.y=136;
+            break;
+            case 11:
+            barrera[numero_barrera].posicion_mina.x=650;
+            barrera[numero_barrera].posicion_mina.y=137;
+            break;
+            case 12:
+            barrera[numero_barrera].posicion_mina.x=750;
+            barrera[numero_barrera].posicion_mina.y=138;
+            break;
+            case 13:
+            barrera[numero_barrera].posicion_mina.x=850;
+            barrera[numero_barrera].posicion_mina.y=139;
+            break;
+            case 14:
+            barrera[numero_barrera].posicion_mina.x=950;
+            barrera[numero_barrera].posicion_mina.y=140;
+            break;
+            case 15:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=141;
+            break;
+            case 16:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=142;
+            break;
+            case 17:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=143;
+            break;
+            case 18:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=147;
+            break;
+            case 19:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=144;
+            break;
+            case 20:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=145;
+            break;
+        }
+        dist=sqrt(pow(barrera[numero_barrera].posicion_mina.x-jugador[numero_jugador].posicion_animacion.x,2)
+                         +pow(barrera[numero_barrera].posicion_mina.y-jugador[numero_jugador].posicion_animacion.y,2));
+        if (dist>50)
+            intersecan=0;
+    }
+    while(intersecan);
+}
+
+void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables_barrera barrera[], int numero_barrera)
+{
+    float distancia=sqrt(pow(barrera[numero_barrera].posicion_mina.x-jugador[numero_jugador].posicion_animacion.x,2)
+                         +pow(barrera[numero_barrera].posicion_mina.y-jugador[numero_jugador].posicion_animacion.y,2));//Pitagoras para saber la distancia entre la bala y el jugador
+
+    if(distancia>50)//No intersecan
+        jugador[numero_jugador].interseca_mina=0;//Si no intersecan devuelve 0
+
+    else if (distancia<50)//Distancia corta, intersecan
+    {
+        jugador[numero_jugador].numero_vidas--;//La victima pierde una vida
+        switch(jugador[numero_jugador].numero_vidas)//En funcion de las vidas restantes el jugador tendra un color u otro
+        {
+            case 3:
+                SDL_SetTextureColorMod(jugador[numero_jugador].animacion,255,255,255);//Asigna un color al jugador
+                break;
+            case 2:
+                SDL_SetTextureColorMod(jugador[numero_jugador].animacion,0,255,0);
+                break;
+            case 1:
+                SDL_SetTextureColorMod(jugador[numero_jugador].animacion,255,0,0);
+                break;
+        }
+        jugador[numero_jugador].interseca_mina=1;//Como intersecan devuelve 1
+        SDL_DestroyTexture(barrera[numero_barrera].mina);//Destruye la bala
+        barrera[numero_barrera].mina_existe=0;
+        barrera[numero_barrera].posicion_mina.x=1400;
+    }
+}
+
+void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],
+                double elapsed,double *segma,char ruta_mina[50],int *chocan)
 {
     if (elapsed==0.0)
     *segma=5.0;
-    barrera[numero_barrera].mina=cargar_texturas(ruta_mina,escenario);
+
     double delay;
     int generar_mina;
     int posicion_mina,j,i;
     int mina_x_1,mina_x_2;
     int mina_y_1,mina_y_2;
     int jug_x_1[2],jug_x_2[2],jug_y_1[2],jug_y_2[2],bala_x_1[2],bala_x_2[2],bala_y_1[2],bala_y_2[2];
-    mina_x_1=barrera[numero_barrera].posicion_mina.x;
+
     mina_x_2=barrera[numero_barrera].posicion_mina.x+barrera[numero_barrera].posicion_mina.w;
-    mina_y_1=barrera[numero_barrera].posicion_mina.y;
     mina_y_2=barrera[numero_barrera].posicion_mina.y+barrera[numero_barrera].posicion_mina.h;
+
     for(j=0;j<2;j++)
     {
     jug_x_1[j]=jugador[j].posicion_animacion.x;
@@ -122,14 +259,10 @@ void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *esc
     bala_y_2[j]=jugador[j].posicion_bala.y+jugador[j].posicion_bala.h;
     }
 
-
     if ((elapsed>=*segma)||*chocan==1)
     {
-        printf("ejecutado");
-        printf("retraso");
         do
        {
-        printf("una");
         generar_mina=0;
         posicion_mina=rand()%20+1;
         switch(posicion_mina)
@@ -215,10 +348,12 @@ void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *esc
             barrera[numero_barrera].posicion_mina.y=145;
             break;
         }
+
         mina_x_1=barrera[numero_barrera].posicion_mina.x;
         mina_x_2=barrera[numero_barrera].posicion_mina.x+barrera[numero_barrera].posicion_mina.w;
         mina_y_1=barrera[numero_barrera].posicion_mina.y;
         mina_y_2=barrera[numero_barrera].posicion_mina.y+barrera[numero_barrera].posicion_mina.h;
+
         for(j=0;j<2;j++)
         {
             generar_mina=1;
@@ -228,6 +363,7 @@ void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *esc
         }
 
        }while(generar_mina==1);
+
         delay=(int)elapsed+5.0;
         *segma=(float)delay;
         *chocan=0;
@@ -551,12 +687,12 @@ void destruir_atributos(variables_jugador jugador[], int numero_jugador)//Destru
     SDL_DestroyTexture(jugador[numero_jugador].bala);
 }
 
-void fichero (variables_jugador jugador[], int numero_jugador)
+void fichero (variables_jugador jugador[], int numero_jugador, char nombre_partida[])
 {
     FILE *datos_partida;
     int i;
 
-    datos_partida=fopen("Nombre partida.txt","w");
+    datos_partida=fopen(nombre_partida,"w");
 
     if (datos_partida==NULL)
     {
@@ -602,14 +738,14 @@ void fichero (variables_jugador jugador[], int numero_jugador)
     fclose(datos_partida);
 }
 
-void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar, SDL_Renderer *escenario)
+void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar, SDL_Renderer *escenario, char nombre_partida[])
 {
     FILE *puntero_datos;
     int i=0;
 
     if (cargar)
     {
-    puntero_datos=fopen("Nombre partida.txt","r");
+    puntero_datos=fopen(nombre_partida,"r");
     for (i=0;i<2;i++)
     fscanf(puntero_datos,"%i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i ",
             &jugador[i].posicion_animacion.x,&jugador[i].posicion_animacion.y,&jugador[i].posicion_animacion.w,&jugador[i].posicion_animacion.h,
@@ -621,6 +757,7 @@ void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool carga
     fclose(puntero_datos);
     }
 }
+
 void datos_partida(_Bool estadisticas)
 {
     FILE *puntero_datos;
@@ -639,13 +776,21 @@ void datos_partida(_Bool estadisticas)
     fclose(puntero_datos);
 }
 
-void multijugador(_Bool cargar)
+void multijugador(_Bool cargar, char nombre_partida[])
 {
+    double segma;
+    int chocan;
+    long int seconds;
+    long int microseconds;
+    double elapsed=0;
+    struct timeval begin,end;
+    int segundos;
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
     int tiempo_jugador=0;
     int distx1=0,distx2=0,disty1=0,disty2=0;
+    int ancho,alto,incremento;
 
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
@@ -679,7 +824,7 @@ if (barrera==NULL)
 
 else
 {
-    cargar_muro(barrera,0,escenario,"Muro.png");
+    cargar_muro(barrera,0,escenario,"Muro.png","Texto.png");
 }
 
 jugador=malloc(sizeof(variables_jugador)*2);//Indicamos para cuantos jugadores necesitamos espacio
@@ -694,7 +839,7 @@ else//Genera los jugadores con las funciones definidas de antes
 {
     generar_jugador(jugador,0,escenario,cargar);
     generar_jugador(jugador,1,escenario,cargar);
-    cargar_partida(jugador,0,cargar,escenario);//Si cargamos partida carga los valores guardados sobre la estructura jugador
+    cargar_partida(jugador,0,cargar,escenario,nombre_partida);//Si cargamos partida carga los valores guardados sobre la estructura jugador
 }
 if (cargar) //Al cargar la partida el color de los jugadores se resetea; es necesario comprobar el numero de vidas restantes
 {
@@ -711,7 +856,7 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
 
    while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
     {
-
+        gettimeofday(&begin, 0);
         while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
         {                               //Finaliza el bucle cuando no queden eventos por procesar
             if(evento.type==SDL_QUIT)//Si el evento es quit (darle a la cruz roja) se sale del bucle y termina el juego
@@ -759,12 +904,21 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
-        mapa_multijugador(barrera,0,escenario,jugador,0);
-        SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal
+        hacer_muro(250,49,50,50,5,'h',barrera,0,escenario,jugador,0);
+        hacer_muro(358,110,50,50,4,'v',barrera,0,escenario,jugador,0);
+       // hacer_mina(barrera,0,escenario,jugador,elapsed,&segma,"Texto.png",&chocan);
+        SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal
+        gettimeofday(&end, 0);
+        seconds = end.tv_sec - begin.tv_sec;
+        microseconds = end.tv_usec - begin.tv_usec;
+        elapsed += seconds + microseconds*1e-6;
+
+        if (elapsed>100.0)
+            elapsed=0.0;
 
     }//Fin del bucle principal y por tanto de la partida
 
-    fichero(jugador,0);
+    fichero(jugador,0,nombre_partida);
 
     free(barrera);
     free(jugador);//Libera lo reservado con malloc anteriormente
@@ -780,7 +934,6 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
     jugador[i].municion=jugador[i].vidas=jugador[i].animacion=jugador[i].bala=NULL;
 
     SDL_Quit();//Sale de la libreria SDL
-
 }
 
 

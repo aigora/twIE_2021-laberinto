@@ -1,4 +1,4 @@
-/*#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <SDL2/SDL.h>
@@ -13,7 +13,9 @@ int main (int argc, char *argv[])
     long int seconds;
     long int microseconds;
     double elapsed=0;
+    struct timeval begin,end;
     int segundos;
+    int tiempo_mina=0;
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
@@ -49,8 +51,8 @@ if (jugador==NULL)//Comprobacion de error
 
 else//Genera los jugadores con las funciones definidas de antes
 {
-    generar_jugador(jugador,0,escenario,1);
-    generar_jugador(jugador,1,escenario,1);
+    generar_jugador(jugador,0,escenario,0);
+    generar_jugador(jugador,1,escenario,0);
 }
 
 variables_barrera *barrera;//Se define un puntero del tipo variables_jugador
@@ -62,13 +64,22 @@ if (jugador==NULL)//Comprobacion de error
     exit(-1);
 }
 
-else//Genera los jugadores con las funciones definidas de antes
+else
 {
-    cargar_muro(barrera,0,escenario,"Barrera.png","Mina.png");
+    cargar_muro(barrera,0,escenario,"Barrera.png","Texto.png");
 }
+barrera[0].mina_existe=1;
+
    while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
     {
         gettimeofday(&begin, 0);
+        tiempo_mina++;
+
+        if (barrera[0].mina_existe==0)
+        {
+            barrera[0].mina=cargar_texturas("Texto.png",escenario);
+            barrera[0].mina_existe=1;
+        }
 
         while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
         {
@@ -106,12 +117,23 @@ else//Genera los jugadores con las funciones definidas de antes
         interseccion(jugador,0,jugador,1);//Si las balas intersecan con los jugadores
         interseccion(jugador,1,jugador,0);
 
-        if(jugador[1].intersecan)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
+        if (tiempo_mina>=200 && barrera[0].mina_existe)
+        {
+            mina(barrera,0,escenario,jugador,0,&tiempo_mina);
+            mina(barrera,0,escenario,jugador,1,&tiempo_mina);
+            tiempo_mina=0;
+        }
+
+        interseccion_mina(jugador,0,barrera,0);
+        interseccion_mina(jugador,1,barrera,0);
+
+
+        if(jugador[1].intersecan||jugador[1].interseca_mina)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
         {
             vidas_restantes(jugador,1);
         }
 
-        if(jugador[0].intersecan)
+        if(jugador[0].intersecan||jugador[0].interseca_mina)
         {
             vidas_restantes(jugador,0);
         }
@@ -119,22 +141,19 @@ else//Genera los jugadores con las funciones definidas de antes
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
-        hacer_muro(250,49,50,50,5,'h',barrera,0,escenario,jugador);
-        hacer_muro(358,110,50,50,4,'v',barrera,0,escenario,jugador);
-        hacer_mina(barrera,0,escenario,jugador,elapsed,&segma,"Mina.png",&chocan);
+        SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
         SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal
-     gettimeofday(&end, 0);
-     seconds = end.tv_sec - begin.tv_sec;
-     microseconds = end.tv_usec - begin.tv_usec;
-     elapsed += seconds + microseconds*1e-6;
-     if (elapsed>100.0)
-        elapsed=0.0;
 
-
+         gettimeofday(&end, 0);
+         seconds = end.tv_sec - begin.tv_sec;
+         microseconds = end.tv_usec - begin.tv_usec;
+         elapsed += seconds + microseconds*1e-6;
+         if (elapsed>100.0)
+            elapsed=0.0;
 
     }//Fin del bucle principal y por tanto de la partida
 
-    fichero(jugador,0);
+    //fichero(jugador,0);
 
     free(jugador);
     free(barrera);//Libera lo reservado con malloc anteriormente

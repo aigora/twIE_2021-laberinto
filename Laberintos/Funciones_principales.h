@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <sys/time.h>
+#include <stdlib.h>
 
 
 typedef struct //Estructura que contiene todas las variables de un jugador
@@ -17,6 +18,7 @@ typedef struct //Estructura que contiene todas las variables de un jugador
         _Bool recargando; //Si la funcion recargar esta activa
         _Bool intersecan;//Si 2 jugadores intersecan
         _Bool bala_existe;//Si la bala esta en pantalla
+        _Bool interseca_mina;
 
 
         SDL_Texture *animacion; //Texturas relacioadas con el jugador
@@ -47,6 +49,8 @@ typedef struct
     SDL_Rect posicion_mina;
     SDL_Rect recortar_mina;
 
+    _Bool mina_existe;
+
     int numero_muro;
     }variables_barrera;
 
@@ -63,13 +67,15 @@ void disparar (variables_jugador jugador[], int numero_jugador, variables_jugado
 void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga, int distx, int disty);//Establece un tiempo hasta disparar la próxima bala y permite su movimiento
 void interseccion(variables_jugador jugador[], int numero_jugador,variables_jugador victima[], int numero_victima);//Indica si dos objetos intersecan
 int vidas_restantes(variables_jugador victima[], int numero_victima);//Cuando 2 objetos intersecan resta una vida al especificado
-void fichero (variables_jugador jugador[], int numero_jugador); //Guarda los datos de la partida en un fichero
-void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
+void fichero (variables_jugador jugador[], int numero_jugador, char nombre_partida[]); //Guarda los datos de la partida en un fichero
+void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario, char nombre_partida[]); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
 void datos_partida(_Bool estadisticas);//Imprime los datos de la partida
-void multijugador(_Bool cargar);//Funcion principal
-void cargar_muro (variables_barrera barrera[],int numero_barrera, SDL_Renderer *escenario, char ruta[50]);
+void multijugador(_Bool cargar, char nombre_partida[]);//Funcion principal
+void cargar_muro (variables_barrera barrera[],int numero_barrera, SDL_Renderer *escenario, char ruta[50], char ruta_mina[50]);
 void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,
                  SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador);
+void mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador, int *tiempo_mina);
+void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables_barrera barrera[], int numero_barrera);
 
 
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador); //Provisional

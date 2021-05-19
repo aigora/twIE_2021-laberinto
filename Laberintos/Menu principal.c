@@ -1,8 +1,9 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Funciones_principales.h"
+#include <stdlib.h>
 
 
 int main (int argc, char *argv[])
@@ -33,9 +34,10 @@ int main (int argc, char *argv[])
     char usuario[100];
     char usuario1[100];
     char usuario2[100];
-    char usuario3[100];
     char nombre_partida[100];
+    char comprobacion_nombre[100];
     _Bool bucle[10]={1,1,1,1,1,1,1,1};
+    FILE *registro_partidas;
 
     printf("Juego del laberinto\n\n");
 
@@ -73,12 +75,47 @@ int main (int argc, char *argv[])
                         {
                             printf("Nombre de la partida: ");
                             scanf(" %[^\n]",nombre_partida);
+                            strcat(nombre_partida,".txt");
+
+                            registro_partidas=fopen("Registro de las partidas.txt","r");
+
+                            while (feof(registro_partidas)==0)
+                            {
+                                fscanf(registro_partidas,"%[^\n]\n",comprobacion_nombre);
+
+                                if(strcmp(nombre_partida,comprobacion_nombre)==0)
+                                {
+                                        printf("Ya existe una partida con ese nombre\n");
+                                        printf("1-<Usar otro nombre>\n2-<Cargar partida>\n");
+                                        scanf("%i",&elegir[3]);
+
+                                        if (elegir[3]==1)
+                                        {
+                                            printf("Nombre de la partida: ");
+                                            scanf(" %[^\n]",nombre_partida);
+                                            strcat(nombre_partida,".txt");
+                                            fseek(registro_partidas,0,SEEK_SET);
+                                        }
+                                }
+                            }
+                            if (elegir[3]==2)
+                                multijugador(1,nombre_partida);
+
+                            else
+                            {
+                            fclose(registro_partidas);
+                            registro_partidas = fopen("Registro de las partidas.txt","a");
+                            fprintf(registro_partidas,"%s\n",nombre_partida);
+                            fclose(registro_partidas);
+
                             printf("Nombre usuario 1: ");
                             scanf(" %[^\n]",usuario1);
                             printf("\nNmbre usuario 2: ");
                             scanf(" %[^\n]",usuario2);
+
                             printf("Iniciando partida...\n");
-                            multijugador(0);
+                            multijugador(0,nombre_partida);
+                            }
 
                         }
                         else
@@ -97,7 +134,7 @@ int main (int argc, char *argv[])
                 if (elegir[1]==1)
                 {
                     printf("Cargando partida...");
-                    multijugador(1);
+                    //multijugador(1);
                 }
                 else if (elegir[1]==2)
                     bucle[0]=0;
@@ -135,6 +172,6 @@ int main (int argc, char *argv[])
     datos_partida(elegir[4]);
 
     return 0;
-}
+}*/
 
 

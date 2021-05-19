@@ -417,7 +417,7 @@
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
 
-1621169843 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.c
+1621446724 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.c
 	<stdio.h>
 	<math.h>
 	<string.h>
@@ -425,15 +425,18 @@
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
 	<sys/time.h>
+	<stdlib.h>
 
-1621168506 c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.h
+1621446289 c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.h
 	<stdio.h>
 	<string.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<sys/time.h>
+	<stdlib.h>
 
-1621167096 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\main.c
+1621447033 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\main.c
+	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<SDL2/SDL.h>
@@ -822,12 +825,12 @@
 	<SDL2/begin_code.h>
 	<SDL2/close_code.h>
 
-1621168957 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\menu principal.c
-	<stdio.h>
+1621442667 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\menu principal.c
 	<string.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
+	<stdlib.h>
 
 1620583998 source:c:\users\pista\onedrive\documentos\github\twie_2021-laberinto\laberintos\menu principal.c
 	<stdio.h>

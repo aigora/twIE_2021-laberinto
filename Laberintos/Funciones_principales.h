@@ -37,18 +37,19 @@ typedef struct //Estructura que contiene todas las variables de un jugador
 
     }variables_jugador;
 
-
 typedef struct
     {
-
     SDL_Texture *muro;
+    SDL_Texture *mina;
 
     SDL_Rect posicion_muro;
     SDL_Rect recortar_muro;
+    SDL_Rect posicion_mina;
+    SDL_Rect recortar_mina;
 
     int numero_muro;
-
     }variables_barrera;
+
 
 
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render); //Crea las texturas
@@ -72,7 +73,7 @@ void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables
 
 
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador); //Provisional
-
+void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],double elapsed,double *segma,char ruta_mina[50],int *chocan);
 
 
 

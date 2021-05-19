@@ -13,14 +13,22 @@ void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Rend
     hacer_muro(200,630,15,80,3,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
 }
 
-void cargar_muro (variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, char ruta[50])
+void cargar_muro (variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, char ruta_muro[50], char ruta_mina[50])
 {
-  int alto,ancho;
-  barrera[numero_barrera].muro=cargar_texturas(ruta,escenario);
-  SDL_QueryTexture(barrera[numero_barrera].muro,NULL,NULL,&ancho,&alto);
+  int alto_muro,ancho_muro;
+  int alto_mina,ancho_mina;
+  barrera[numero_barrera].muro=cargar_texturas(ruta_muro,escenario);
+  barrera[numero_barrera].mina=cargar_texturas(ruta_mina,escenario);
+  SDL_QueryTexture(barrera[numero_barrera].muro,NULL,NULL,&ancho_muro,&alto_muro);
+  SDL_QueryTexture(barrera[numero_barrera].mina,NULL,NULL,&ancho_mina,&alto_mina);
   barrera[numero_barrera].recortar_muro.x=barrera[numero_barrera].recortar_muro.y=0;
-  barrera[numero_barrera].recortar_muro.w=ancho;
-  barrera[numero_barrera].recortar_muro.h=alto;
+  barrera[numero_barrera].recortar_mina.x=barrera[numero_barrera].recortar_mina.y=0;
+  barrera[numero_barrera].recortar_muro.w=ancho_muro;
+  barrera[numero_barrera].recortar_muro.h=alto_muro;
+  barrera[numero_barrera].recortar_mina.w=ancho_mina;
+  barrera[numero_barrera].recortar_mina.h=alto_mina;
+  barrera[numero_barrera].posicion_mina.h=barrera[numero_barrera].posicion_mina.w=50;
+  barrera[numero_barrera].posicion_mina.x=barrera[numero_barrera].posicion_mina.y=-400;
 }
 void hacer_muro (int x,int y,int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,
                  SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador)
@@ -87,6 +95,183 @@ void hacer_muro (int x,int y,int w, int h, int n, char direccion_muro,variables_
    }
 }
 
+void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],double elapsed,double *segma,char ruta_mina[50],int *chocan)
+{
+    if (elapsed==0.0)
+    *segma=5.0;
+    barrera[numero_barrera].mina=cargar_texturas(ruta_mina,escenario);
+    double delay;
+    int generar_mina;
+    int posicion_mina,j,i;
+    int mina_x_1,mina_x_2;
+    int mina_y_1,mina_y_2;
+    int jug_x_1[2],jug_x_2[2],jug_y_1[2],jug_y_2[2],bala_x_1[2],bala_x_2[2],bala_y_1[2],bala_y_2[2];
+    mina_x_1=barrera[numero_barrera].posicion_mina.x;
+    mina_x_2=barrera[numero_barrera].posicion_mina.x+barrera[numero_barrera].posicion_mina.w;
+    mina_y_1=barrera[numero_barrera].posicion_mina.y;
+    mina_y_2=barrera[numero_barrera].posicion_mina.y+barrera[numero_barrera].posicion_mina.h;
+    for(j=0;j<2;j++)
+    {
+    jug_x_1[j]=jugador[j].posicion_animacion.x;
+    jug_x_2[j]=jugador[j].posicion_animacion.x+jugador[j].posicion_animacion.w;
+    jug_y_1[j]=jugador[j].posicion_animacion.y;
+    jug_y_2[j]=jugador[j].posicion_animacion.y+jugador[j].posicion_animacion.h;
+    bala_x_1[j]=jugador[j].posicion_bala.x;
+    bala_x_2[j]=jugador[j].posicion_bala.x+jugador[j].posicion_bala.w;
+    bala_y_1[j]=jugador[j].posicion_bala.y;
+    bala_y_2[j]=jugador[j].posicion_bala.y+jugador[j].posicion_bala.h;
+    }
+
+
+    if ((elapsed>=*segma)||*chocan==1)
+    {
+        printf("ejecutado");
+        printf("retraso");
+        do
+       {
+        printf("una");
+        generar_mina=0;
+        posicion_mina=rand()%20+1;
+        switch(posicion_mina)
+        {
+            case 1:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=127;
+            break;
+            case 2:
+            barrera[numero_barrera].posicion_mina.x=400;
+            barrera[numero_barrera].posicion_mina.y=128;
+            break;
+            case 3:
+            barrera[numero_barrera].posicion_mina.x=500;
+            barrera[numero_barrera].posicion_mina.y=129;
+            break;
+            case 4:
+            barrera[numero_barrera].posicion_mina.x=600;
+            barrera[numero_barrera].posicion_mina.y=130;
+            break;
+            case 5:
+            barrera[numero_barrera].posicion_mina.x=700;
+            barrera[numero_barrera].posicion_mina.y=131;
+            break;
+            case 6:
+            barrera[numero_barrera].posicion_mina.x=800;
+            barrera[numero_barrera].posicion_mina.y=132;
+            break;
+            case 7:
+            barrera[numero_barrera].posicion_mina.x=900;
+            barrera[numero_barrera].posicion_mina.y=133;
+            break;
+            case 8:
+            barrera[numero_barrera].posicion_mina.x=350;
+            barrera[numero_barrera].posicion_mina.y=134;
+            break;
+            case 9:
+            barrera[numero_barrera].posicion_mina.x=450;
+            barrera[numero_barrera].posicion_mina.y=135;
+            break;
+            case 10:
+            barrera[numero_barrera].posicion_mina.x=550;
+            barrera[numero_barrera].posicion_mina.y=136;
+            break;
+            case 11:
+            barrera[numero_barrera].posicion_mina.x=650;
+            barrera[numero_barrera].posicion_mina.y=137;
+            break;
+            case 12:
+            barrera[numero_barrera].posicion_mina.x=750;
+            barrera[numero_barrera].posicion_mina.y=138;
+            break;
+            case 13:
+            barrera[numero_barrera].posicion_mina.x=850;
+            barrera[numero_barrera].posicion_mina.y=139;
+            break;
+            case 14:
+            barrera[numero_barrera].posicion_mina.x=950;
+            barrera[numero_barrera].posicion_mina.y=140;
+            break;
+            case 15:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=141;
+            break;
+            case 16:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=142;
+            break;
+            case 17:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=143;
+            break;
+            case 18:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=147;
+            break;
+            case 19:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=144;
+            break;
+            case 20:
+            barrera[numero_barrera].posicion_mina.x=300;
+            barrera[numero_barrera].posicion_mina.y=145;
+            break;
+        }
+        mina_x_1=barrera[numero_barrera].posicion_mina.x;
+        mina_x_2=barrera[numero_barrera].posicion_mina.x+barrera[numero_barrera].posicion_mina.w;
+        mina_y_1=barrera[numero_barrera].posicion_mina.y;
+        mina_y_2=barrera[numero_barrera].posicion_mina.y+barrera[numero_barrera].posicion_mina.h;
+        for(j=0;j<2;j++)
+        {
+            generar_mina=1;
+            if((mina_x_1>jug_x_2[j]||mina_x_2<jug_x_1[j]||mina_y_1>jug_y_2[j]||mina_y_2<jug_y_1[j])
+            &&(mina_x_1>bala_x_2[j]||mina_x_2<bala_x_1[j]||mina_y_1>bala_y_2[j]||mina_y_2<bala_y_1[j]))
+            generar_mina=0;
+        }
+
+       }while(generar_mina==1);
+        delay=(int)elapsed+5.0;
+        *segma=(float)delay;
+        *chocan=0;
+    }
+
+    for(j=0;j<2;j++)
+    {
+        if (mina_x_1>jug_x_2[j]||mina_x_2<jug_x_1[j]||mina_y_1>jug_y_2[j]||mina_y_2<jug_y_1[j])
+            {
+            if(*chocan!=1)
+            *chocan=0;
+            }
+        else
+            {
+            SDL_DestroyTexture(barrera[numero_barrera].mina);
+            jugador[j].numero_vidas-=1;
+            vidas_restantes(jugador,j);
+            *chocan=1;
+            }
+        if (mina_x_1>bala_x_2[j]||mina_x_2<bala_x_1[j]||mina_y_1>bala_y_2[j]||mina_y_2<bala_y_1[j])
+            {
+            if(*chocan!=1)
+            *chocan=0;
+            }
+        else
+            {
+             SDL_DestroyTexture(barrera[numero_barrera].mina);
+             SDL_DestroyTexture(jugador[j].bala);
+             for(i=0;i<2;i++)
+             {
+                if(mina_x_1-50>jug_x_2[i]||mina_x_2+50<jug_x_1[i]||mina_y_1-50>jug_y_2[i]||mina_y_2+50<jug_y_1[i]);
+                else
+                {
+                 jugador[i].numero_vidas-=1;
+                 vidas_restantes(jugador,j);
+                }
+             }
+             jugador[j].posicion_bala.x=-400;
+             *chocan=1;
+            }
+
+    }
+SDL_RenderCopy(escenario,barrera[numero_barrera].mina,&barrera[numero_barrera].recortar_mina,&barrera[numero_barrera].posicion_mina);
+}
 
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render)//Crea una textura a traves de una imagen (necesaria la ruta)
 {

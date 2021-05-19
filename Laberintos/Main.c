@@ -6,44 +6,41 @@
 #include "Funciones_principales.h"
 #include <sys/time.h>
 
-
 int main (int argc, char *argv[])
 {
-    double seg=5.0;
-    long seconds ;
-    long microseconds;
+    double segma;
+    int chocan;
+    long int seconds;
+    long int microseconds;
     double elapsed=0;
-    struct timeval begin, end;
+    int segundos;
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
     int tiempo_jugador=0;
     int distx1=0,distx2=0,disty1=0,disty2=0;
-
+    int ancho,alto,incremento;
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
     SDL_Renderer *escenario=NULL;//Representa cosas sobre la superficie, como si fuese la pintura
 
     SDL_Texture *texto_ganador=NULL;
-    SDL_Event evento; //Pulsar una tecla, mover el mouse... son eventos
+
+     SDL_Event evento; //Pulsar una tecla, mover el mouse... son eventos
     _Bool ejecutando=1; //Si el programa esta en proceso
 
     SDL_Init(SDL_INIT_EVERYTHING);//Inicializa la biblioteca SDL (no vamos a hacer comprobaciones de errores, por ahora)
 
-    ventanaprincipal=SDL_CreateWindow("Juego laberinto",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,960,720,NULL);//Crea una ventana, centrada, de dimensiones 960x720
+    ventanaprincipal=SDL_CreateWindow("Juego laberinto",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,1000,700,NULL);//Crea una ventana, centrada, de dimensiones 960x720
     superficieprincipal=SDL_GetWindowSurface(ventanaprincipal);//Aporta una superficie a la ventana
     escenario=SDL_CreateRenderer(ventanaprincipal,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);//Crea un render (necesario definirlo de esta forma para que funcione bien)
-
-
 SDL_Rect posicion_texto; //La posicion en la que estara el texto al finalizar el programa
 posicion_texto.x=posicion_texto.y=250;
 posicion_texto.w=posicion_texto.h=0;
 
-
 variables_jugador *jugador;//Se define un puntero del tipo variables_jugador
 
 jugador=malloc(sizeof(variables_jugador)*2);//Indicamos para cuantos jugadores necesitamos espacio
-
 if (jugador==NULL)//Comprobacion de error
 {
     SDL_Log("Error");
@@ -56,26 +53,27 @@ else//Genera los jugadores con las funciones definidas de antes
     generar_jugador(jugador,1,escenario,1);
 }
 
-variables_barrera *barrera;//Se define un puntero del tipo variables_barrera
+variables_barrera *barrera;//Se define un puntero del tipo variables_jugador
 
-barrera=malloc(sizeof(variables_barrera)*2);//Indicamos la direccion:vertical(0) u horizontal(1)
+barrera=malloc(sizeof(variables_barrera));//Indicamos para cuantos jugadores necesitamos espacio
 if (jugador==NULL)//Comprobacion de error
 {
     SDL_Log("Error");
     exit(-1);
 }
 
-else
+else//Genera los jugadores con las funciones definidas de antes
 {
-    cargar_muro(barrera,escenario,0);
-    cargar_muro(barrera,escenario,1);
+    cargar_muro(barrera,0,escenario,"Barrera.png","Mina.png");
 }
-
    while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
     {
-	gettimeofday(&begin, 0);
+        gettimeofday(&begin, 0);
+
         while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
-        {                               //Finaliza el bucle cuando no queden eventos por procesar
+        {
+
+                                          //Finaliza el bucle cuando no queden eventos por procesar
             if(evento.type==SDL_QUIT)//Si el evento es quit (darle a la cruz roja) se sale del bucle y termina el juego
             {
                 ejecutando=0;
@@ -121,23 +119,25 @@ else
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
-        SDL_RenderPresent(escenario);//Presenta el render sobre la venana principal
+        hacer_muro(250,49,50,50,5,'h',barrera,0,escenario,jugador);
+        hacer_muro(358,110,50,50,4,'v',barrera,0,escenario,jugador);
+        hacer_mina(barrera,0,escenario,jugador,elapsed,&segma,"Mina.png",&chocan);
+        SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal
+     gettimeofday(&end, 0);
+     seconds = end.tv_sec - begin.tv_sec;
+     microseconds = end.tv_usec - begin.tv_usec;
+     elapsed += seconds + microseconds*1e-6;
+     if (elapsed>100.0)
+        elapsed=0.0;
 
-        gettimeofday(&end, 0);
-        seconds = end.tv_sec - begin.tv_sec;
-        microseconds = end.tv_usec - begin.tv_usec;
-        elapsed += seconds + microseconds*1e-6;
-	if (elapsed<seg+0.01&&elapsed>seg-0.01)
-        {
-          printf("%f",elapsed);
-          seg+=5.0;
-        }
+
 
     }//Fin del bucle principal y por tanto de la partida
 
     fichero(jugador,0);
 
-    free(jugador);//Libera lo reservado con malloc anteriormente
+    free(jugador);
+    free(barrera);//Libera lo reservado con malloc anteriormente
     SDL_DestroyTexture(texto_ganador);//Destruye todas las texturas creadas, la ventana, el render y lasuperficie
     destruir_atributos(jugador,0);
     destruir_atributos(jugador,1);
@@ -152,7 +152,5 @@ else
     SDL_Quit();//Sale de la libreria SDL
 
     return 0;
-}*/
-
-
+}
 

@@ -1,0 +1,29 @@
+170 128 100 100 216 0 108 140 700 0 100 50 0 0 512 184 3 1 458 146 100 100 756 0 108 140 200 0 100 50 0 0 512 184 1 0 
+Numero de jugador 0
+
+Numero de vidas: 3
+Balas usadas: 1
+Recargando, intersecan, balas existe: 0 0 0
+Posicion bala: x:-300 y:178 w:50 h:50
+Posicion animacion: x:170 y:128 w:100 h:100
+Recortar animacion: x:216 y:0 w:108 h:140
+Posicion municion: x:600 y:0 w:100 h:50
+Recortar municion: x:0 y:0 w:480 h:243
+Posicion vidas: x:700 y:0 w:100 h:50
+Recortar vidas: x:0 y:0 w:512 h:184
+
+
+Numero de jugador 1
+
+Numero de vidas: 1
+Balas usadas: 0
+Recargando, intersecan, balas existe: 0 0 0
+Posicion bala: x:0 y:0 w:0 h:0
+Posicion animacion: x:458 y:146 w:100 h:100
+Recortar animacion: x:756 y:0 w:108 h:140
+Posicion municion: x:100 y:0 w:100 h:50
+Recortar municion: x:0 y:0 w:480 h:243
+Posicion vidas: x:200 y:0 w:100 h:50
+Recortar vidas: x:0 y:0 w:512 h:184
+
+

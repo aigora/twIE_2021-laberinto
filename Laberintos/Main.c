@@ -83,7 +83,6 @@ barrera[0].mina_existe=1;
 
         while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
         {
-
                                           //Finaliza el bucle cuando no queden eventos por procesar
             if(evento.type==SDL_QUIT)//Si el evento es quit (darle a la cruz roja) se sale del bucle y termina el juego
             {
@@ -124,9 +123,13 @@ barrera[0].mina_existe=1;
             tiempo_mina=0;
         }
 
+        jugador[0].interseca_mina=jugador[1].interseca_mina=0;
+        //barrera[0].explota=0;
+
         interseccion_mina(jugador,0,barrera,0);
         interseccion_mina(jugador,1,barrera,0);
 
+        //explosion_mina(jugador,0,barrera,0);
 
         if(jugador[1].intersecan||jugador[1].interseca_mina)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
         {
@@ -141,7 +144,13 @@ barrera[0].mina_existe=1;
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
-        SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
+
+        if (barrera[0].mina_existe)
+            SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
+
+        if(barrera[0].explota)
+            SDL_RenderCopy(escenario,barrera[0].explosion,NULL,&barrera[0].posicion_explosion);
+
         SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal
 
          gettimeofday(&end, 0);

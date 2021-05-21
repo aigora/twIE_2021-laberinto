@@ -43,13 +43,16 @@ typedef struct
     {
     SDL_Texture *muro;
     SDL_Texture *mina;
+    SDL_Texture *explosion;
 
     SDL_Rect posicion_muro;
     SDL_Rect recortar_muro;
     SDL_Rect posicion_mina;
     SDL_Rect recortar_mina;
+    SDL_Rect posicion_explosion;
 
     _Bool mina_existe;
+    _Bool explota;
 
     int numero_muro;
     }variables_barrera;
@@ -66,7 +69,7 @@ void limites_mapa(variables_jugador jugador[],int numero_jugador);//En qué zona
 void disparar (variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima, SDL_Renderer *escenario, int *distx, int *disty);//Crea una bala a modo de disparo
 void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int *tiempo_recarga, int distx, int disty);//Establece un tiempo hasta disparar la próxima bala y permite su movimiento
 void interseccion(variables_jugador jugador[], int numero_jugador,variables_jugador victima[], int numero_victima);//Indica si dos objetos intersecan
-int vidas_restantes(variables_jugador victima[], int numero_victima);//Cuando 2 objetos intersecan resta una vida al especificado
+void vidas_restantes(variables_jugador victima[], int numero_victima);//Cuando 2 objetos intersecan resta una vida al especificado
 void fichero (variables_jugador jugador[], int numero_jugador, char nombre_partida[]); //Guarda los datos de la partida en un fichero
 void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario, char nombre_partida[]); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
 void datos_partida(_Bool estadisticas);//Imprime los datos de la partida
@@ -76,7 +79,7 @@ void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables
                  SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador);
 void mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador, int *tiempo_mina);
 void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables_barrera barrera[], int numero_barrera);
-
+void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_barrera barrera[],int numero_barrera);
 
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador); //Provisional
 void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],double elapsed,double *segma,char ruta_mina[50],int *chocan);

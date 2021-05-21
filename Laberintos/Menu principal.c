@@ -137,7 +137,7 @@ int main (int argc, char *argv[])
                 if (elegir[1]==1)
                 {
                     printf("Cargando partida...");
-                    //multijugador(1);
+                    //multijugador(1,nombre_partida);
                 }
                 else if (elegir[1]==2)
                     bucle[0]=0;

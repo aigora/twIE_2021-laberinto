@@ -21,6 +21,7 @@ void cargar_muro (variables_barrera barrera[], int numero_barrera, SDL_Renderer 
 
   barrera[numero_barrera].muro=cargar_texturas(ruta_muro,escenario);
   barrera[numero_barrera].mina=cargar_texturas(ruta_mina,escenario);
+  barrera[numero_barrera].explosion=cargar_texturas("Explosion.png",escenario);
 
   SDL_QueryTexture(barrera[numero_barrera].muro,NULL,NULL,&ancho_muro,&alto_muro);
   SDL_QueryTexture(barrera[numero_barrera].mina,NULL,NULL,&ancho_mina,&alto_mina);
@@ -212,18 +213,6 @@ void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables
     else if (distancia<50)//Distancia corta, intersecan
     {
         jugador[numero_jugador].numero_vidas--;//La victima pierde una vida
-        switch(jugador[numero_jugador].numero_vidas)//En funcion de las vidas restantes el jugador tendra un color u otro
-        {
-            case 3:
-                SDL_SetTextureColorMod(jugador[numero_jugador].animacion,255,255,255);//Asigna un color al jugador
-                break;
-            case 2:
-                SDL_SetTextureColorMod(jugador[numero_jugador].animacion,0,255,0);
-                break;
-            case 1:
-                SDL_SetTextureColorMod(jugador[numero_jugador].animacion,255,0,0);
-                break;
-        }
         jugador[numero_jugador].interseca_mina=1;//Como intersecan devuelve 1
         SDL_DestroyTexture(barrera[numero_barrera].mina);//Destruye la bala
         barrera[numero_barrera].mina_existe=0;
@@ -231,182 +220,43 @@ void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables
     }
 }
 
-/*void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],
-                double elapsed,double *segma,char ruta_mina[50],int *chocan)
+/*void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_barrera barrera[],int numero_barrera)
 {
-    if (elapsed==0.0)
-    *segma=5.0;
+    float distancia=sqrt(pow(barrera[numero_barrera].posicion_mina.x-jugador[numero_jugador].posicion_bala.x,2)
+                         +pow(barrera[numero_barrera].posicion_mina.y-jugador[numero_jugador].posicion_bala.y,2));
 
-    double delay;
-    int generar_mina;
-    int posicion_mina,j,i;
-    int mina_x_1,mina_x_2;
-    int mina_y_1,mina_y_2;
-    int jug_x_1[2],jug_x_2[2],jug_y_1[2],jug_y_2[2],bala_x_1[2],bala_x_2[2],bala_y_1[2],bala_y_2[2];
+    _Bool explota=0;
+    barrera[numero_barrera].explota=0;
 
-    mina_x_2=barrera[numero_barrera].posicion_mina.x+barrera[numero_barrera].posicion_mina.w;
-    mina_y_2=barrera[numero_barrera].posicion_mina.y+barrera[numero_barrera].posicion_mina.h;
+    barrera[numero_barrera].posicion_explosion.x=barrera[numero_barrera].posicion_mina.x+barrera[numero_barrera].posicion_mina.w;
+    barrera[numero_barrera].posicion_explosion.y=barrera[numero_barrera].posicion_mina.y+barrera[numero_barrera].posicion_mina.h;
+    barrera[numero_barrera].posicion_explosion.w=barrera[numero_barrera].posicion_explosion.h=20;
 
-    for(j=0;j<2;j++)
+
+    if (distancia<50)
     {
-    jug_x_1[j]=jugador[j].posicion_animacion.x;
-    jug_x_2[j]=jugador[j].posicion_animacion.x+jugador[j].posicion_animacion.w;
-    jug_y_1[j]=jugador[j].posicion_animacion.y;
-    jug_y_2[j]=jugador[j].posicion_animacion.y+jugador[j].posicion_animacion.h;
-    bala_x_1[j]=jugador[j].posicion_bala.x;
-    bala_x_2[j]=jugador[j].posicion_bala.x+jugador[j].posicion_bala.w;
-    bala_y_1[j]=jugador[j].posicion_bala.y;
-    bala_y_2[j]=jugador[j].posicion_bala.y+jugador[j].posicion_bala.h;
+        explota=1;
+        SDL_DestroyTexture(barrera[numero_barrera].mina),
+        barrera[numero_barrera].posicion_mina.x=1500;
+        SDL_DestroyTexture(jugador[numero_jugador].bala);
+        jugador[numero_jugador].posicion_bala.x=1300;
+        barrera[numero_barrera].explota=1;
+
     }
 
-    if ((elapsed>=*segma)||*chocan==1)
+    if (explota)
     {
-        do
-       {
-        generar_mina=0;
-        posicion_mina=rand()%20+1;
-        switch(posicion_mina)
+        for (int i=0;i<2;i++)
         {
-            case 1:
-            barrera[numero_barrera].posicion_mina.x=300;
-            barrera[numero_barrera].posicion_mina.y=127;
-            break;
-            case 2:
-            barrera[numero_barrera].posicion_mina.x=400;
-            barrera[numero_barrera].posicion_mina.y=128;
-            break;
-            case 3:
-            barrera[numero_barrera].posicion_mina.x=500;
-            barrera[numero_barrera].posicion_mina.y=129;
-            break;
-            case 4:
-            barrera[numero_barrera].posicion_mina.x=600;
-            barrera[numero_barrera].posicion_mina.y=130;
-            break;
-            case 5:
-            barrera[numero_barrera].posicion_mina.x=700;
-            barrera[numero_barrera].posicion_mina.y=131;
-            break;
-            case 6:
-            barrera[numero_barrera].posicion_mina.x=800;
-            barrera[numero_barrera].posicion_mina.y=132;
-            break;
-            case 7:
-            barrera[numero_barrera].posicion_mina.x=900;
-            barrera[numero_barrera].posicion_mina.y=133;
-            break;
-            case 8:
-            barrera[numero_barrera].posicion_mina.x=350;
-            barrera[numero_barrera].posicion_mina.y=134;
-            break;
-            case 9:
-            barrera[numero_barrera].posicion_mina.x=450;
-            barrera[numero_barrera].posicion_mina.y=135;
-            break;
-            case 10:
-            barrera[numero_barrera].posicion_mina.x=550;
-            barrera[numero_barrera].posicion_mina.y=136;
-            break;
-            case 11:
-            barrera[numero_barrera].posicion_mina.x=650;
-            barrera[numero_barrera].posicion_mina.y=137;
-            break;
-            case 12:
-            barrera[numero_barrera].posicion_mina.x=750;
-            barrera[numero_barrera].posicion_mina.y=138;
-            break;
-            case 13:
-            barrera[numero_barrera].posicion_mina.x=850;
-            barrera[numero_barrera].posicion_mina.y=139;
-            break;
-            case 14:
-            barrera[numero_barrera].posicion_mina.x=950;
-            barrera[numero_barrera].posicion_mina.y=140;
-            break;
-            case 15:
-            barrera[numero_barrera].posicion_mina.x=300;
-            barrera[numero_barrera].posicion_mina.y=141;
-            break;
-            case 16:
-            barrera[numero_barrera].posicion_mina.x=300;
-            barrera[numero_barrera].posicion_mina.y=142;
-            break;
-            case 17:
-            barrera[numero_barrera].posicion_mina.x=300;
-            barrera[numero_barrera].posicion_mina.y=143;
-            break;
-            case 18:
-            barrera[numero_barrera].posicion_mina.x=300;
-            barrera[numero_barrera].posicion_mina.y=147;
-            break;
-            case 19:
-            barrera[numero_barrera].posicion_mina.x=300;
-            barrera[numero_barrera].posicion_mina.y=144;
-            break;
-            case 20:
-            barrera[numero_barrera].posicion_mina.x=300;
-            barrera[numero_barrera].posicion_mina.y=145;
-            break;
-        }
-
-        mina_x_1=barrera[numero_barrera].posicion_mina.x;
-        mina_x_2=barrera[numero_barrera].posicion_mina.x+barrera[numero_barrera].posicion_mina.w;
-        mina_y_1=barrera[numero_barrera].posicion_mina.y;
-        mina_y_2=barrera[numero_barrera].posicion_mina.y+barrera[numero_barrera].posicion_mina.h;
-
-        for(j=0;j<2;j++)
+        if (sqrt(pow(barrera[numero_barrera].posicion_explosion.x-jugador[i].posicion_animacion.x,2)
+                         +pow(barrera[numero_barrera].posicion_explosion.y-jugador[i].posicion_animacion.y,2))<20)
         {
-            generar_mina=1;
-            if((mina_x_1>jug_x_2[j]||mina_x_2<jug_x_1[j]||mina_y_1>jug_y_2[j]||mina_y_2<jug_y_1[j])
-            &&(mina_x_1>bala_x_2[j]||mina_x_2<bala_x_1[j]||mina_y_1>bala_y_2[j]||mina_y_2<bala_y_1[j]))
-            generar_mina=0;
+            jugador[i].interseca_mina=1;
+            jugador[i].numero_vidas--;
         }
-
-       }while(generar_mina==1);
-
-        delay=(int)elapsed+5.0;
-        *segma=(float)delay;
-        *chocan=0;
+        }
     }
 
-    for(j=0;j<2;j++)
-    {
-        if (mina_x_1>jug_x_2[j]||mina_x_2<jug_x_1[j]||mina_y_1>jug_y_2[j]||mina_y_2<jug_y_1[j])
-            {
-            if(*chocan!=1)
-            *chocan=0;
-            }
-        else
-            {
-            SDL_DestroyTexture(barrera[numero_barrera].mina);
-            jugador[j].numero_vidas-=1;
-            vidas_restantes(jugador,j);
-            *chocan=1;
-            }
-        if (mina_x_1>bala_x_2[j]||mina_x_2<bala_x_1[j]||mina_y_1>bala_y_2[j]||mina_y_2<bala_y_1[j])
-            {
-            if(*chocan!=1)
-            *chocan=0;
-            }
-        else
-            {
-             SDL_DestroyTexture(barrera[numero_barrera].mina);
-             SDL_DestroyTexture(jugador[j].bala);
-             for(i=0;i<2;i++)
-             {
-                if(mina_x_1-50>jug_x_2[i]||mina_x_2+50<jug_x_1[i]||mina_y_1-50>jug_y_2[i]||mina_y_2+50<jug_y_1[i]);
-                else
-                {
-                 jugador[i].numero_vidas-=1;
-                 vidas_restantes(jugador,j);
-                }
-             }
-             jugador[j].posicion_bala.x=-400;
-             *chocan=1;
-            }
-
-    }
-SDL_RenderCopy(escenario,barrera[numero_barrera].mina,&barrera[numero_barrera].recortar_mina,&barrera[numero_barrera].posicion_mina);
 }*/
 
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render)//Crea una textura a traves de una imagen (necesaria la ruta)
@@ -571,18 +421,6 @@ void interseccion(variables_jugador jugador[], int numero_jugador, variables_jug
     else if (distancia<50)//Distancia corta, intersecan
     {
         victima[numero_victima].numero_vidas--;//La victima pierde una vida
-        switch(victima[numero_victima].numero_vidas)//En funcion de las vidas restantes el jugador tendra un color u otro
-        {
-            case 3:
-                SDL_SetTextureColorMod(victima[numero_victima].animacion,255,255,255);//Asigna un color al jugador
-                break;
-            case 2:
-                SDL_SetTextureColorMod(victima[numero_victima].animacion,0,255,0);
-                break;
-            case 1:
-                SDL_SetTextureColorMod(victima[numero_victima].animacion,255,0,0);
-                break;
-        }
         victima[numero_victima].intersecan=1;//Como intersecan devuelve 1
         SDL_DestroyTexture(jugador[numero_jugador].bala);//Destruye la bala
         jugador[numero_jugador].bala_existe=0;//La bala no existe
@@ -591,16 +429,21 @@ void interseccion(variables_jugador jugador[], int numero_jugador, variables_jug
 
 }
 
-int vidas_restantes(variables_jugador victima[], int numero_victima)//Animacion para indicar el numero de vidas restantes
+void vidas_restantes(variables_jugador victima[], int numero_victima)//Animacion para indicar el numero de vidas restantes
 {
     switch(victima[numero_victima].numero_vidas)//En funcion del numero de vidas recortara un trozo de la imagen y le asignara una posicion
     {
+    case 3:
+        SDL_SetTextureColorMod(victima[numero_victima].animacion,255,255,255);
+        break;
     case 2:
+        SDL_SetTextureColorMod(victima[numero_victima].animacion,0,255,0);
         victima[numero_victima].recortar_vidas.x+=victima[numero_victima].ancho_vida/3;
         victima[numero_victima].recortar_vidas.y=0;
         victima[numero_victima].posicion_vidas.w-=33;
         break;
     case 1:
+        SDL_SetTextureColorMod(victima[numero_victima].animacion,255,0,0);
         victima[numero_victima].recortar_vidas.x+=victima[numero_victima].ancho_vida/3;
         victima[numero_victima].posicion_vidas.w-=33;
         break;
@@ -614,7 +457,6 @@ int vidas_restantes(variables_jugador victima[], int numero_victima)//Animacion 
         victima[numero_victima].recortar_vidas.x=victima[numero_victima].ancho_vida;
         break;
     }
-    return victima[numero_victima].numero_vidas;//Devuelve el numero de vidas restantes
 }
 
 void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario, _Bool cargar)//Establece valores predeterminados al jugador indicado
@@ -785,6 +627,7 @@ void multijugador(_Bool cargar, char nombre_partida[])
     double elapsed=0;
     struct timeval begin,end;
     int segundos;
+    int tiempo_mina=0;
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
@@ -812,20 +655,6 @@ posicion_texto.x=posicion_texto.y=250;
 posicion_texto.w=posicion_texto.h=0;
 
 variables_jugador *jugador;//Se define un puntero del tipo variables_jugador
-variables_barrera *barrera;
-
-barrera=malloc(sizeof(variables_barrera));
-
-if (barrera==NULL)
-{
-    SDL_Log("ERROR");
-    exit(-1);
-}
-
-else
-{
-    cargar_muro(barrera,0,escenario,"Muro.png","Texto.png");
-}
 
 jugador=malloc(sizeof(variables_jugador)*2);//Indicamos para cuantos jugadores necesitamos espacio
 
@@ -841,6 +670,22 @@ else//Genera los jugadores con las funciones definidas de antes
     generar_jugador(jugador,1,escenario,cargar);
     cargar_partida(jugador,0,cargar,escenario,nombre_partida);//Si cargamos partida carga los valores guardados sobre la estructura jugador
 }
+
+variables_barrera *barrera;
+
+barrera=malloc(sizeof(variables_barrera));
+
+if (barrera==NULL)
+{
+    SDL_Log("ERROR");
+    exit(-1);
+}
+
+else
+{
+    cargar_muro(barrera,0,escenario,"Barrera.png","Texto.png");
+}
+
 if (cargar) //Al cargar la partida el color de los jugadores se resetea; es necesario comprobar el numero de vidas restantes
 {
     for (int i=0;i<2;i++)
@@ -853,10 +698,19 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
             SDL_SetTextureColorMod(jugador[i].animacion,255,0,0);
     }
 }
+barrera[0].mina_existe=1;
 
    while(ejecutando)//El programa principal es un bucle que se reproduce infinitamente hasta que cambiemos el valor de ejecutando
     {
         gettimeofday(&begin, 0);
+        tiempo_mina++;
+
+        if (barrera[0].mina_existe==0)
+        {
+            barrera[0].mina=cargar_texturas("Texto.png",escenario);
+            barrera[0].mina_existe=1;
+        }
+
         while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
         {                               //Finaliza el bucle cuando no queden eventos por procesar
             if(evento.type==SDL_QUIT)//Si el evento es quit (darle a la cruz roja) se sale del bucle y termina el juego
@@ -891,12 +745,27 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
         interseccion(jugador,0,jugador,1);//Si las balas intersecan con los jugadores
         interseccion(jugador,1,jugador,0);
 
-        if(jugador[1].intersecan)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
+        if (tiempo_mina>=200)
+        {
+            mina(barrera,0,escenario,jugador,0,&tiempo_mina);
+            mina(barrera,0,escenario,jugador,1,&tiempo_mina);
+            tiempo_mina=0;
+        }
+
+        jugador[0].interseca_mina=jugador[1].interseca_mina=0;
+        //barrera[0].explota=0;
+
+        interseccion_mina(jugador,0,barrera,0);
+        interseccion_mina(jugador,1,barrera,0);
+
+        //explosion_mina(jugador,0,barrera,0);
+
+        if(jugador[1].intersecan||jugador[1].interseca_mina)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
         {
             vidas_restantes(jugador,1);
         }
 
-        if(jugador[0].intersecan)
+        if(jugador[0].intersecan||jugador[0].interseca_mina)
         {
             vidas_restantes(jugador,0);
         }
@@ -904,10 +773,15 @@ if (cargar) //Al cargar la partida el color de los jugadores se resetea; es nece
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
-        hacer_muro(250,49,50,50,5,'h',barrera,0,escenario,jugador,0);
-        hacer_muro(358,110,50,50,4,'v',barrera,0,escenario,jugador,0);
-       // hacer_mina(barrera,0,escenario,jugador,elapsed,&segma,"Texto.png",&chocan);
+
+        if (barrera[0].mina_existe)
+            SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
+
+        //if(barrera[0].explota)
+            //SDL_RenderCopy(escenario,barrera[0].explosion,NULL,&barrera[0].posicion_explosion);
+
         SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal
+
         gettimeofday(&end, 0);
         seconds = end.tv_sec - begin.tv_sec;
         microseconds = end.tv_usec - begin.tv_usec;

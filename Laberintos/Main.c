@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <SDL2/SDL.h>
@@ -171,5 +171,5 @@ barrera[0].mina_existe=1;
     SDL_Quit();//Sale de la libreria SDL
 
     return 0;
-}
+}*/
 

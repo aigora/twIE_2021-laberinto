@@ -1,4 +1,4 @@
-/*#include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -38,6 +38,9 @@ int main (int argc, char *argv[])
     char comprobacion_nombre[100];
     _Bool bucle[10]={1,1,1,1,1,1,1,1};
     FILE *registro_partidas;
+
+    registro_partidas=fopen("Registro de las partidas.txt","a");
+    fclose(registro_partidas);
 
     printf("Juego del laberinto\n\n");
 
@@ -172,6 +175,6 @@ int main (int argc, char *argv[])
     datos_partida(elegir[4]);
 
     return 0;
-}*/
+}
 
 

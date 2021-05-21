@@ -231,7 +231,7 @@ void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables
     }
 }
 
-void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],
+/*void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],
                 double elapsed,double *segma,char ruta_mina[50],int *chocan)
 {
     if (elapsed==0.0)
@@ -407,7 +407,7 @@ void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *esc
 
     }
 SDL_RenderCopy(escenario,barrera[numero_barrera].mina,&barrera[numero_barrera].recortar_mina,&barrera[numero_barrera].posicion_mina);
-}
+}*/
 
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render)//Crea una textura a traves de una imagen (necesaria la ruta)
 {

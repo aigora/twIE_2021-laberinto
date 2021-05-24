@@ -72,7 +72,7 @@ void interseccion(variables_jugador jugador[], int numero_jugador,variables_juga
 void vidas_restantes(variables_jugador victima[], int numero_victima);//Cuando 2 objetos intersecan resta una vida al especificado
 void fichero (variables_jugador jugador[], int numero_jugador, char nombre_partida[]); //Guarda los datos de la partida en un fichero
 void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario, char nombre_partida[]); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
-void datos_partida(_Bool estadisticas);//Imprime los datos de la partida
+void datos_partida(char nombre_partida[50]);//Imprime los datos de la partida
 void multijugador(_Bool cargar, char nombre_partida[]);//Funcion principal
 void cargar_muro (variables_barrera barrera[],int numero_barrera, SDL_Renderer *escenario, char ruta[50], char ruta_mina[50]);
 void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,

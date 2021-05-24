@@ -308,13 +308,6 @@ void vidas_restantes(variables_jugador victima[], int numero_victima)//Animacion
         victima[numero_victima].posicion_vidas.w-=33;
         break;
     case 0:
-        victima[numero_victima].numero_vidas=3;
-        victima[numero_victima].recortar_vidas.x=0;
-        victima[numero_victima].posicion_vidas.w-=34;
-        victima[numero_victima].posicion_vidas.w=100;
-        break;
-    default:
-        victima[numero_victima].recortar_vidas.x=victima[numero_victima].ancho_vida;
         break;
     }
 }
@@ -410,7 +403,7 @@ void fichero (variables_jugador jugador[], int numero_jugador, char nombre_parti
                 jugador[i].recortar_vidas.x,jugador[i].recortar_vidas.y,jugador[i].recortar_vidas.w,jugador[i].recortar_vidas.h,
                 jugador[i].numero_vidas,jugador[i].contador_bala);
 
-        fprintf(datos_partida,"\n");
+        fprintf(datos_partida,"\n\n");
 
         for (i=0;i<=1;i++)
         {
@@ -459,20 +452,23 @@ void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool carga
     }
 }
 
-void datos_partida(_Bool estadisticas)
+void datos_partida(char nombre_partida[50])
 {
     FILE *puntero_datos;
 
     char aux;
+    char funciona=1;
 
-    puntero_datos=fopen("Nombre partida.txt","r");
+    puntero_datos=fopen(nombre_partida,"r");
 
-    if (estadisticas==1)
-    {
-        fseek(puntero_datos,0,SEEK_SET);
-        while(fscanf(puntero_datos,"%c",&aux)!=EOF)
-            printf("%c",aux);
-    }
+    fseek(puntero_datos,0,SEEK_SET);
+    while(fscanf(puntero_datos,"%c",&aux)!=EOF && funciona)
+        if (aux=='\n')
+        funciona=0;
+
+    while(fscanf(puntero_datos,"%c",&aux)!=EOF)
+        printf("%c",aux);
+
 
     fclose(puntero_datos);
 }
@@ -808,7 +804,7 @@ barrera[0].explota=0;
         if (elapsed>100.0)
             elapsed=0.0;
 
-        if (jugador[0].numero_vidas==2)
+        if (jugador[0].numero_vidas==0||jugador[1].numero_vidas==0)
         {
             SDL_RenderClear(escenario);
             for (int i=0;i<300;i++)
@@ -838,11 +834,6 @@ barrera[0].explota=0;
                 SDL_RenderCopy(escenario,texto_ganador,NULL,&posicion_texto);
                 SDL_RenderPresent(escenario);
             }
-            //you_win(&posicion_texto,0,escenario,texto_ganador);
-            //SDL_RenderPresent(escenario);
-            /*SDL_PollEvent(&evento);
-            if(evento.type==SDL_QUIT)
-                ejecutando=0;*/
                 ejecutando=0;
         }
 

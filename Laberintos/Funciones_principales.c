@@ -764,7 +764,7 @@ void interseccion_trampa(variables_jugador jugador[], int numero_jugador, variab
         victima[numero_victima].interseca_trampa=0;
 }
 
-void multijugador(_Bool cargar, char nombre_partida[], int victorias[],int numero_victoria, _Bool revancha)
+void multijugador(_Bool cargar, char nombre_partida[])
 {
     int control=0;
     double segma;
@@ -966,16 +966,9 @@ barrera[0].explota=0;
         if (jugador[0].numero_vidas==0||jugador[1].numero_vidas==0)
         {
             if (jugador[0].numero_vidas==0)
-            {
                 texto_ganador=cargar_texturas("Player2 wins.png", escenario);
-                victorias[1]++;
-            }
-
             if (jugador[1].numero_vidas==0)
-            {
-               texto_ganador=cargar_texturas("Player1 wins.png",escenario);
-               victorias[0]++;
-            }
+                texto_ganador=cargar_texturas("Player1 wins.png",escenario);
 
             SDL_RenderClear(escenario);
             for (int i=0;i<300;i++)
@@ -1010,7 +1003,7 @@ barrera[0].explota=0;
 
     }//Fin del bucle principal y por tanto de la partida
 
-    if (revancha==0)
+
     fichero(jugador,0,nombre_partida);
 
     free(barrera);

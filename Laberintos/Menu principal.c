@@ -30,7 +30,8 @@ int main (int argc, char *argv[])
     Si selecciona <<Salir>> se le preguntara si quiere ver las estadisticas de la partida\n\
     Introduce '1' para verlos o '0' para finalizar el juego definitivamente.\n\n";
 
-    int elegir[10];
+    _Bool atras=0;
+    char elegir[10];
     char usuario[100];
     char usuario1[100];
     char usuario2[100];
@@ -52,21 +53,23 @@ int main (int argc, char *argv[])
         printf("4-<Instrucciones>\n");
         printf("5-<Salir>\n");
 
-        scanf("%i",&elegir[0]);
+        scanf(" %c",&elegir[0]);
         printf("\n");
 
         switch(elegir[0])
         {
-            case 1:
+            case '1':
+                do
+                {
                 printf("1-<Configuracion de la partida>\n");
                 printf("2-<Salir>\n");
-                scanf("%i",&elegir[1]);
-                    if (elegir[1]==1)
+                scanf(" %c",&elegir[1]);
+                    if (elegir[1]=='1')
                     {
                         printf("1-<Individual>\n");
                         printf("2-<Multijugador (2 jugadores)>\n");
-                        scanf("%i",&elegir[2]);
-                        if (elegir[2]==1)
+                        scanf(" %c",&elegir[2]);
+                        if (elegir[2]=='1')
                         {
                             printf("Nombre de usuario (la partida se guardara con el mismo nombre): \n");
                             scanf(" %[^\n]",usuario);
@@ -74,7 +77,7 @@ int main (int argc, char *argv[])
                             printf("Iniciando partida...\n");
 
                         }
-                        else if (elegir[2]==2)
+                        else if (elegir[2]=='2')
                         {
                             printf("Nombre de la partida: ");
                             scanf(" %[^\n]",nombre_partida);
@@ -90,9 +93,9 @@ int main (int argc, char *argv[])
                                 {
                                         printf("Ya existe una partida con ese nombre\n");
                                         printf("1-<Usar otro nombre>\n2-<Cargar partida>\n");
-                                        scanf("%i",&elegir[3]);
+                                        scanf(" %c",&elegir[3]);
 
-                                        if (elegir[3]==1)
+                                        if (elegir[3]=='1')
                                         {
                                             printf("Nombre de la partida: ");
                                             scanf(" %[^\n]",nombre_partida);
@@ -101,7 +104,7 @@ int main (int argc, char *argv[])
                                         }
                                 }
                             }
-                            if (elegir[3]==2)
+                            if (elegir[3]=='2')
                                 multijugador(1,nombre_partida);
 
                             else
@@ -124,46 +127,82 @@ int main (int argc, char *argv[])
                         else
                             printf("Error!\n");
                     }
-                    else if (elegir[1]=2)
+                    else if (elegir[1]='2')
                         bucle[0]=0;
                     else
                         printf("Error!\n");
+                }while (elegir[1]!='1' || elegir[1]!='2');
                 break;
 
-            case 2:
+            case '2':
+                do
+                {
                 printf("1-<Nombre de la partida>\n");
                 printf("2-<Salir>\n");
-                scanf("%i",&elegir[1]);
-                if (elegir[1]==1)
+                scanf(" %c",&elegir[1]);
+
+                if (elegir[1]=='1')
                 {
-                    printf("Cargando partida...");
-                    //multijugador(1,nombre_partida);
+                    printf("Nombre de la partida: \n");
+                    scanf(" %[^\n]",nombre_partida);
+                    strcat(nombre_partida,".txt");
+                    registro_partidas=fopen("Registro de las partidas.txt","r");
+                    while (feof(registro_partidas)==0 && atras==0)
+                    {
+                        fscanf(registro_partidas,"%[^\n]\n",comprobacion_nombre);
+
+                        if(strcmp(nombre_partida,comprobacion_nombre)==1 || strcmp(nombre_partida,comprobacion_nombre)==-1)
+                        {
+                            if (feof(registro_partidas)!=0)
+                            {
+                                printf("No existe una partida con ese nombre\n");
+                                printf("1-<Usar otro nombre>\n2-<Menu principal>\n");
+                                scanf(" %c",&elegir[3]);
+
+                                if (elegir[3]=='1')
+                                {
+                                    printf("Nombre de la partida: ");
+                                    scanf(" %[^\n]",nombre_partida);
+                                    strcat(nombre_partida,".txt");
+                                    fseek(registro_partidas,0,SEEK_SET);
+                                }
+                            }
+                        }
+
+                        else if (strcmp(nombre_partida,comprobacion_nombre)==0)
+                        {
+                             multijugador(1,nombre_partida);
+                             atras=1;
+                        }
+
+                    }
+                    fclose(registro_partidas);
+                    atras=0;
                 }
-                else if (elegir[1]==2)
+
+                else if (elegir[1]=='2')
                     bucle[0]=0;
                 else
-                {
                     printf("Error!\n");
-                    printf("Usa ficheros, por ahora no sabemos\n");
-                }
+                }while(elegir[1]!='1'||elegir[1]!='2');
                 break;
 
-            case 3:
+            case '3':
                 printf("No hay puntuaciones!\n");
                 break;
 
-            case 4:
+            case '4':
                 printf("%s",instrucciones);
                 break;
 
-            case 5:
+            case '5':
                 printf("Saliendo...");
                 bucle[0]=0;
                 break;
 
             default:
                 printf("Error!\n");
-                printf("Introduce un valor comprendido entre 1 y 5");
+                printf("Introduce un valor comprendido entre 1 y 5\n");
                 break;
         }
 

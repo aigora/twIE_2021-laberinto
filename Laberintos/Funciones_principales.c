@@ -145,12 +145,12 @@ void movimiento_jugador(variables_jugador jugador[], int numero_jugador, int *ti
 
     if(captura[teclas[0]])//Detecta si el una tecla esta pulsada, entoces se ejecuta la condicion
         {
-            jugador[numero_jugador].recortar_animacion.y=0;
+            jugador[numero_jugador].recortar_animacion.y=jugador[numero_jugador].alto_animacion/4;
             jugador[numero_jugador].posicion_animacion.x+=velocidad_movimiento;//Mueve la animacion por el plano de la pantalla
             *tiempo+=1;
             if(*tiempo>=5)//Este if sirve para crear la animacion, el tiempo simplemente sirve para que no la ejecute demasiado rapido
             {
-                jugador[numero_jugador].recortar_animacion.x+=jugador[numero_jugador].ancho_animacion/8;//Pasa a recortar la siguiente fase de la animacion
+                jugador[numero_jugador].recortar_animacion.x+=jugador[numero_jugador].ancho_animacion/5;//Pasa a recortar la siguiente fase de la animacion
                 if(jugador[numero_jugador].recortar_animacion.x>=jugador[numero_jugador].ancho_animacion)
                     jugador[numero_jugador].recortar_animacion.x=0;//Cuando llega a la ultima fase de la animacion vuelve a la primera fase
                 *tiempo=0;
@@ -158,24 +158,42 @@ void movimiento_jugador(variables_jugador jugador[], int numero_jugador, int *ti
         }
        if (captura[teclas[1]])//Se repite lo mismo para el resto de teclas
         {
-            jugador[numero_jugador].recortar_animacion.y=jugador[numero_jugador].alto_animacion/2;
+            jugador[numero_jugador].recortar_animacion.y=0;
             jugador[numero_jugador].posicion_animacion.x-=velocidad_movimiento;
             *tiempo+=1;
             if(*tiempo>=5)
             {
-                jugador[numero_jugador].recortar_animacion.x-=jugador[numero_jugador].ancho_animacion/8;
+                jugador[numero_jugador].recortar_animacion.x-=jugador[numero_jugador].ancho_animacion/5;
                 if(jugador[numero_jugador].recortar_animacion.x<=0)
-                    jugador[numero_jugador].recortar_animacion.x=jugador[numero_jugador].ancho_animacion*7/8;
+                    jugador[numero_jugador].recortar_animacion.x=jugador[numero_jugador].ancho_animacion*4/5;
                 *tiempo=0;
             }
         }
         if (captura[teclas[2]])
         {
+            jugador[numero_jugador].recortar_animacion.y=jugador[numero_jugador].alto_animacion/2;
             jugador[numero_jugador].posicion_animacion.y-=2;
+            *tiempo+=1;
+            if(*tiempo>=5)
+            {
+                jugador[numero_jugador].recortar_animacion.x+=jugador[numero_jugador].ancho_animacion/5;
+                if(jugador[numero_jugador].recortar_animacion.x>=jugador[numero_jugador].ancho_animacion)
+                    jugador[numero_jugador].recortar_animacion.x=0;
+                *tiempo=0;
+            }
         }
         if (captura[teclas[3]])
         {
+            jugador[numero_jugador].recortar_animacion.y=jugador[numero_jugador].alto_animacion*3/4;
             jugador[numero_jugador].posicion_animacion.y+=2;
+            *tiempo+=1;
+            if(*tiempo>=5)
+            {
+                jugador[numero_jugador].recortar_animacion.x+=jugador[numero_jugador].ancho_animacion/5;
+                if(jugador[numero_jugador].recortar_animacion.x>=jugador[numero_jugador].ancho_animacion)
+                    jugador[numero_jugador].recortar_animacion.x=0;
+                *tiempo=0;
+            }
         }
 }
 void limites_mapa(variables_jugador jugador[],int numero_jugador)//Limita el movimiento del jugador al plano de la pantalla
@@ -319,7 +337,7 @@ void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Render
 
     jugador[numero_jugador].vidas=cargar_texturas("Vida.png",escenario); //Genera las texturas a traves de la funcion cargar_texturas
     jugador[numero_jugador].municion=cargar_texturas("Zanahoria.png",escenario);
-    jugador[numero_jugador].animacion=cargar_texturas("Animacion.png",escenario);
+    jugador[numero_jugador].animacion=cargar_texturas("Animation.png",escenario);
     jugador[numero_jugador].bala=cargar_texturas("Estrella.png",escenario);
 
     SDL_QueryTexture(jugador[numero_jugador].vidas,NULL,NULL,&jugador[numero_jugador].ancho_vida,&jugador[numero_jugador].alto_vida);//Mide el tamaño de una textura y le asigna el ancho y el alto a las variables indicadas
@@ -327,8 +345,8 @@ void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Render
     SDL_QueryTexture(jugador[numero_jugador].animacion,NULL,NULL,&jugador[numero_jugador].ancho_animacion,&jugador[numero_jugador].alto_animacion);
 
     jugador[numero_jugador].recortar_animacion.x=jugador[numero_jugador].recortar_animacion.y=0; //Indica donde comenzara a recortarse la animacion
-    jugador[numero_jugador].recortar_animacion.w=jugador[numero_jugador].ancho_animacion/8;
-    jugador[numero_jugador].recortar_animacion.h=jugador[numero_jugador].alto_animacion/2;
+    jugador[numero_jugador].recortar_animacion.w=jugador[numero_jugador].ancho_animacion/5;
+    jugador[numero_jugador].recortar_animacion.h=jugador[numero_jugador].alto_animacion/4;
     jugador[numero_jugador].posicion_animacion.x=jugador[numero_jugador].posicion_animacion.y=posicion_animacion;//Posicion inicial de la animacion
     jugador[numero_jugador].posicion_animacion.w=jugador[numero_jugador].posicion_animacion.h=100;
 

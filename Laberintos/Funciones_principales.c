@@ -113,12 +113,13 @@ SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render)//Crea una text
 
 void you_win(SDL_Rect *posicion_texto, int numero_vidas, SDL_Renderer *escenario, SDL_Texture *texto)//Se muestra un texto al finalizar la partida
 {
-    if (numero_vidas==0)
-        {
-            posicion_texto->w+=5;//El tamaño del texto aumenta progresivamente
-            posicion_texto->h+=2;
-            SDL_RenderCopy(escenario,texto,NULL,posicion_texto);
-        }
+    for (int i=0;i<100;i++)
+    {
+        posicion_texto->w+=5;//El tamaño del texto aumenta progresivamente
+        posicion_texto->h+=2;
+        SDL_RenderCopy(escenario,texto,NULL,&posicion_texto);
+        SDL_RenderPresent(escenario);
+    }
 }
 
 void movimiento_jugador(variables_jugador jugador[], int numero_jugador, int *tiempo)//Permite al usuario interactuar con su jugador
@@ -358,8 +359,6 @@ void copiar_atributos(variables_jugador jugador[], int numero_jugador, SDL_Rende
     SDL_RenderCopy(escenario,jugador[numero_jugador].animacion,&jugador[numero_jugador].recortar_animacion,&jugador[numero_jugador].posicion_animacion);
     SDL_RenderCopy(escenario,jugador[numero_jugador].vidas,&jugador[numero_jugador].recortar_vidas,&jugador[numero_jugador].posicion_vidas);
     SDL_RenderCopy(escenario,jugador[numero_jugador].municion,&jugador[numero_jugador].recortar_municion,&jugador[numero_jugador].posicion_municion);
-
-    //if (jugador[numero_jugador].bala_existe)//Solamente copiara la bala si existe
     SDL_RenderCopy(escenario,jugador[numero_jugador].bala,NULL,&jugador[numero_jugador].posicion_bala);
 }
 
@@ -575,7 +574,6 @@ void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables
     {
         jugador[numero_jugador].numero_vidas--;//La victima pierde una vida
         jugador[numero_jugador].interseca_mina=1;//Como intersecan devuelve 1
-        SDL_DestroyTexture(barrera[numero_barrera].mina);//Destruye la bala
         barrera[numero_barrera].mina_existe=0;
         barrera[numero_barrera].posicion_mina.x=1400;
     }
@@ -595,10 +593,8 @@ void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_b
         barrera[numero_barrera].posicion_explosion.w=barrera[numero_barrera].posicion_explosion.h=20;
 
         explota=1;
-        SDL_DestroyTexture(barrera[numero_barrera].mina),
         barrera[numero_barrera].posicion_mina.x=1500;
         barrera[numero_barrera].mina_existe=0;
-        SDL_DestroyTexture(jugador[numero_jugador].bala);
         jugador[numero_jugador].posicion_bala.x=1300;
         jugador[numero_jugador].bala_existe=0;
         barrera[numero_barrera].explota=1;
@@ -622,6 +618,7 @@ void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_b
 
 void multijugador(_Bool cargar, char nombre_partida[])
 {
+    int control=0;
     double segma;
     int chocan;
     long int seconds;
@@ -642,7 +639,7 @@ void multijugador(_Bool cargar, char nombre_partida[])
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
     SDL_Renderer *escenario=NULL;//Representa cosas sobre la superficie, como si fuese la pintura
 
-    SDL_Texture *texto_ganador=NULL;
+
     SDL_Event evento; //Pulsar una tecla, mover el mouse... son eventos
     _Bool ejecutando=1; //Si el programa esta en proceso
 
@@ -652,9 +649,10 @@ void multijugador(_Bool cargar, char nombre_partida[])
     superficieprincipal=SDL_GetWindowSurface(ventanaprincipal);//Aporta una superficie a la ventana
     escenario=SDL_CreateRenderer(ventanaprincipal,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);//Crea un render (necesario definirlo de esta forma para que funcione bien)
 
-
+SDL_Texture *texto_ganador=cargar_texturas("Texto.png",escenario);
 SDL_Rect posicion_texto; //La posicion en la que estara el texto al finalizar el programa
-posicion_texto.x=posicion_texto.y=250;
+posicion_texto.x=300;
+posicion_texto.y=150;
 posicion_texto.w=posicion_texto.h=0;
 
 variables_jugador *jugador;//Se define un puntero del tipo variables_jugador
@@ -709,16 +707,6 @@ barrera[0].explota=0;
         gettimeofday(&begin, 0);
         tiempo_mina++;
 
-        /*if (barrera[0].mina_existe==0)
-        {
-            barrera[0].mina=cargar_texturas("Texto.png",escenario);
-            barrera[0].mina_existe=1;
-        }
-
-        for (int i=0;i<2;i++)
-            if(jugador[i].bala_existe==0)
-                jugador[i].bala=cargar_texturas("Estrella.png",escenario);//Crea la bala*/
-
         while(SDL_PollEvent(&evento)!=0)//Procesa los eventos que se producen cada vez que se produce el bucle
         {                               //Finaliza el bucle cuando no queden eventos por procesar
             if(evento.type==SDL_QUIT)//Si el evento es quit (darle a la cruz roja) se sale del bucle y termina el juego
@@ -753,19 +741,18 @@ barrera[0].explota=0;
         interseccion(jugador,0,jugador,1);//Si las balas intersecan con los jugadores
         interseccion(jugador,1,jugador,0);
 
-        /*if (tiempo_mina>=200)
+        if (tiempo_mina>=200)
         {
             mina(barrera,0,escenario,jugador,0,&tiempo_mina);
             mina(barrera,0,escenario,jugador,1,&tiempo_mina);
             tiempo_mina=0;
         }
 
-        jugador[0].interseca_mina=jugador[1].interseca_mina=0;
-
         interseccion_mina(jugador,0,barrera,0);
-        interseccion_mina(jugador,1,barrera,0);*/
+        interseccion_mina(jugador,1,barrera,0);
 
-        //explosion_mina(jugador,0,barrera,0);
+        explosion_mina(jugador,0,barrera,0);
+        explosion_mina(jugador,1,barrera,0);
 
         if(jugador[1].intersecan||jugador[1].interseca_mina)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
         {
@@ -780,9 +767,7 @@ barrera[0].explota=0;
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
-
-       /* if (barrera[0].mina_existe)
-            SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
+        SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
 
         if(barrera[0].explota)
         {
@@ -794,9 +779,7 @@ barrera[0].explota=0;
                 barrera[0].posicion_explosion.x=1500;
                 tiempo_explosion=0;
             }
-        }*/
-
-
+        }
         SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal
 
         gettimeofday(&end, 0);
@@ -807,7 +790,46 @@ barrera[0].explota=0;
         if (elapsed>100.0)
             elapsed=0.0;
 
+        if (jugador[0].numero_vidas==2)
+        {
+            SDL_RenderClear(escenario);
+            for (int i=0;i<300;i++)
+            {
+                control++;
+                posicion_texto.h++;
+                posicion_texto.w++;
+                switch(control)
+                {
+                case 2:
+                    posicion_texto.x+=20;
+                    break;
+                case 4:
+                    posicion_texto.y+=20;
+                    break;
+                case 6:
+                    posicion_texto.x-=20;
+                    break;
+                case 8:
+                    posicion_texto.y-=20;
+                    break;
+                case 10:
+                    control=0;
+                    break;
+                }
+
+                SDL_RenderCopy(escenario,texto_ganador,NULL,&posicion_texto);
+                SDL_RenderPresent(escenario);
+            }
+            //you_win(&posicion_texto,0,escenario,texto_ganador);
+            //SDL_RenderPresent(escenario);
+            /*SDL_PollEvent(&evento);
+            if(evento.type==SDL_QUIT)
+                ejecutando=0;*/
+                ejecutando=0;
+        }
+
     }//Fin del bucle principal y por tanto de la partida
+
 
     fichero(jugador,0,nombre_partida);
 

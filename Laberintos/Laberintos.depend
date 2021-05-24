@@ -417,7 +417,7 @@
 	<SDL2/SDL_image.h>
 	"Funciones_principales.h"
 
-1621803067 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.c
+1621858774 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.c
 	<stdio.h>
 	<math.h>
 	<string.h>
@@ -427,7 +427,7 @@
 	<sys/time.h>
 	<stdlib.h>
 
-1621597719 c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.h
+1621857641 c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\funciones_principales.h
 	<stdio.h>
 	<string.h>
 	<SDL2/SDL.h>

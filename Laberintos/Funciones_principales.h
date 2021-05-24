@@ -19,12 +19,17 @@ typedef struct //Estructura que contiene todas las variables de un jugador
         _Bool intersecan;//Si 2 jugadores intersecan
         _Bool bala_existe;//Si la bala esta en pantalla
         _Bool interseca_mina;
+        _Bool trampa_cargada;
+        _Bool interseca_trampa;
 
 
         SDL_Texture *animacion; //Texturas relacioadas con el jugador
         SDL_Texture *vidas;
         SDL_Texture *bala;
         SDL_Texture *municion;
+        SDL_Texture *trampa;
+
+        SDL_Rect posicion_trampa;
 
         SDL_Rect posicion_bala;
 
@@ -44,6 +49,7 @@ typedef struct
     SDL_Texture *muro;
     SDL_Texture *mina;
     SDL_Texture *explosion;
+
 
     SDL_Rect posicion_muro;
     SDL_Rect recortar_muro;
@@ -83,7 +89,7 @@ void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_b
 
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador); //Provisional
 void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],double elapsed,double *segma,char ruta_mina[50],int *chocan);
-
+void interseccion_trampa(variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima);
 
 
 

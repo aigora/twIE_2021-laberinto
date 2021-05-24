@@ -332,6 +332,7 @@ void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Render
     jugador[numero_jugador].municion=cargar_texturas("Zanahoria.png",escenario);
     jugador[numero_jugador].animacion=cargar_texturas("Animation.png",escenario);
     jugador[numero_jugador].bala=cargar_texturas("Estrella.png",escenario);
+    jugador[numero_jugador].trampa=cargar_texturas("Trampa.png",escenario);
 
     SDL_QueryTexture(jugador[numero_jugador].vidas,NULL,NULL,&jugador[numero_jugador].ancho_vida,&jugador[numero_jugador].alto_vida);//Mide el tamaño de una textura y le asigna el ancho y el alto a las variables indicadas
     SDL_QueryTexture(jugador[numero_jugador].municion,NULL,NULL,&jugador[numero_jugador].ancho_municion,&jugador[numero_jugador].alto_municion);
@@ -359,11 +360,17 @@ void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Render
     jugador[numero_jugador].posicion_municion.w=100;
     jugador[numero_jugador].posicion_municion.h=50;
 
+    jugador[numero_jugador].posicion_trampa.w=50;
+    jugador[numero_jugador].posicion_trampa.h=50;
+    jugador[numero_jugador].posicion_trampa.x=1300;
+    jugador[numero_jugador].posicion_trampa.y=1300;
+
     jugador[numero_jugador].numero_vidas=3; //Numero de vidas inicial
     jugador[numero_jugador].intersecan=0; //Valores predeterminados para los parametros restantes
     jugador[numero_jugador].recargando=0;
     jugador[numero_jugador].bala_existe=0;
     jugador[numero_jugador].contador_bala=0;
+    jugador[numero_jugador].trampa_cargada=1;
 }
 void copiar_atributos(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario)//Copia los atributos de un jugador sobre el render
 {
@@ -371,6 +378,7 @@ void copiar_atributos(variables_jugador jugador[], int numero_jugador, SDL_Rende
     SDL_RenderCopy(escenario,jugador[numero_jugador].vidas,&jugador[numero_jugador].recortar_vidas,&jugador[numero_jugador].posicion_vidas);
     SDL_RenderCopy(escenario,jugador[numero_jugador].municion,&jugador[numero_jugador].recortar_municion,&jugador[numero_jugador].posicion_municion);
     SDL_RenderCopy(escenario,jugador[numero_jugador].bala,NULL,&jugador[numero_jugador].posicion_bala);
+    SDL_RenderCopy(escenario,jugador[numero_jugador].trampa,NULL,&jugador[numero_jugador].posicion_trampa);
 }
 
 void destruir_atributos(variables_jugador jugador[], int numero_jugador)//Destruye los atributos de un jugador
@@ -630,6 +638,21 @@ void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_b
 
 }
 
+void interseccion_trampa(variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima)
+{
+    float distancia=sqrt(pow(jugador[numero_jugador].posicion_trampa.x-victima[numero_victima].posicion_animacion.x,2)+
+                         pow(jugador[numero_jugador].posicion_trampa.y-victima[numero_victima].posicion_animacion.y,2));
+
+    if(distancia<50)
+    {
+        victima[numero_victima].numero_vidas--;
+        jugador[numero_jugador].posicion_trampa.x=1300;
+        victima[numero_victima].interseca_trampa=1;
+    }
+    else
+        victima[numero_victima].interseca_trampa=0;
+}
+
 void multijugador(_Bool cargar, char nombre_partida[])
 {
     int control=0;
@@ -648,6 +671,7 @@ void multijugador(_Bool cargar, char nombre_partida[])
     int tiempo_jugador=0;
     int distx1=0,distx2=0,disty1=0,disty2=0;
     int ancho,alto,incremento;
+    _Bool trampa_cargada=0;
 
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
@@ -740,6 +764,25 @@ barrera[0].explota=0;
                     disparar(jugador,1,jugador,0,escenario,&distx2,&disty2);
 
                 }
+
+                if (evento.key.keysym.sym==SDLK_m)
+                    {
+                        if (jugador[0].trampa_cargada==1)
+                        {
+                        jugador[0].trampa_cargada=0;
+                        jugador[0].posicion_trampa.x=jugador[0].posicion_animacion.x;
+                        jugador[0].posicion_trampa.y=jugador[0].posicion_animacion.y;
+                        }
+                    }
+                if (evento.key.keysym.sym==SDLK_e)
+                    {
+                        if (jugador[1].trampa_cargada==1)
+                        {
+                        jugador[1].trampa_cargada=0;
+                        jugador[1].posicion_trampa.x=jugador[1].posicion_animacion.x;
+                        jugador[1].posicion_trampa.y=jugador[1].posicion_animacion.y;
+                        }
+                    }
             }
         }
 
@@ -765,15 +808,19 @@ barrera[0].explota=0;
         interseccion_mina(jugador,0,barrera,0);
         interseccion_mina(jugador,1,barrera,0);
 
+        interseccion_trampa(jugador,0,jugador,1);
+        interseccion_trampa(jugador,1,jugador,0);
+
         explosion_mina(jugador,0,barrera,0);
         explosion_mina(jugador,1,barrera,0);
 
-        if(jugador[1].intersecan||jugador[1].interseca_mina)//Si la bala 0 interseca con el jugador 1 llama a la funcion vidas restantes
+        if(jugador[1].intersecan||jugador[1].interseca_mina || jugador[1].interseca_trampa)//Si la bala 0 interseca con el jugador 1
+                                                            //llama a la funcion vidas restantes
         {
             vidas_restantes(jugador,1);
         }
 
-        if(jugador[0].intersecan||jugador[0].interseca_mina)
+        if(jugador[0].intersecan||jugador[0].interseca_mina || jugador[0].interseca_trampa)
         {
             vidas_restantes(jugador,0);
         }

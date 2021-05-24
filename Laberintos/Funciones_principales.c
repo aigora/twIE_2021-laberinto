@@ -433,6 +433,8 @@ void fichero (variables_jugador jugador[], int numero_jugador, char nombre_parti
         fprintf(datos_partida,"Posicion vidas: x:%i y:%i w:%i h:%i\n",jugador[i].posicion_vidas.x,jugador[i].posicion_vidas.y,jugador[i].posicion_vidas.w,jugador[i].posicion_vidas.h);
         fprintf(datos_partida,"Recortar vidas: x:%i y:%i w:%i h:%i\n",jugador[i].recortar_vidas.x,jugador[i].recortar_vidas.y,jugador[i].recortar_vidas.w,jugador[i].recortar_vidas.h);
 
+        fprintf(datos_partida,"Trampa cargada: %i\n",jugador[i].interseca_trampa);
+
         fprintf(datos_partida,"\n\n");
         }
     }
@@ -673,6 +675,7 @@ void multijugador(_Bool cargar, char nombre_partida[])
     int ancho,alto,incremento;
     _Bool trampa_cargada=0;
 
+
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
     SDL_Surface *superficieprincipal=NULL;//Superficie para la ventana, como si fuera un lienzo
     SDL_Renderer *escenario=NULL;//Representa cosas sobre la superficie, como si fuese la pintura
@@ -687,7 +690,7 @@ void multijugador(_Bool cargar, char nombre_partida[])
     superficieprincipal=SDL_GetWindowSurface(ventanaprincipal);//Aporta una superficie a la ventana
     escenario=SDL_CreateRenderer(ventanaprincipal,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);//Crea un render (necesario definirlo de esta forma para que funcione bien)
 
-SDL_Texture *texto_ganador=cargar_texturas("Texto.png",escenario);
+SDL_Texture *texto_ganador=NULL;
 SDL_Rect posicion_texto; //La posicion en la que estara el texto al finalizar el programa
 posicion_texto.x=300;
 posicion_texto.y=150;
@@ -853,6 +856,11 @@ barrera[0].explota=0;
 
         if (jugador[0].numero_vidas==0||jugador[1].numero_vidas==0)
         {
+            if (jugador[0].numero_vidas==0)
+                texto_ganador=cargar_texturas("Player2 wins.png", escenario);
+            if (jugador[1].numero_vidas==0)
+                texto_ganador=cargar_texturas("Player1 wins.png",escenario);
+
             SDL_RenderClear(escenario);
             for (int i=0;i<300;i++)
             {

@@ -31,6 +31,7 @@ int main (int argc, char *argv[])
     Introduce '1' para verlos o '0' para finalizar el juego definitivamente.\n\n";
 
     _Bool atras=0;
+    _Bool revancha=1;
     _Bool partida_on=0;
     char elegir[20][10];
     char usuario[100];
@@ -40,6 +41,7 @@ int main (int argc, char *argv[])
     char comprobacion_nombre[100];
     _Bool bucle[10]={1,1,1,1,1,1,1,1};
     FILE *registro_partidas;
+    FILE *partida;
 
     registro_partidas=fopen("Registro de las partidas.txt","a");
     fclose(registro_partidas);
@@ -106,7 +108,15 @@ int main (int argc, char *argv[])
                                 }
                             }
                             if (elegir[20][3]=='2')
-                                multijugador(1,nombre_partida);
+                                while(revancha==1)
+                                {
+                                    multijugador(1,nombre_partida);
+                                    printf("Revancha?");
+                                    scanf(" %i",&revancha);
+                                    if (revancha)
+                                        partida=fopen(nombre_partida,"w");
+                                }
+
 
                             else
                             {

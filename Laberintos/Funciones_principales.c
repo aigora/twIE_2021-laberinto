@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <math.h>
 #include <string.h>
 #include <SDL2/SDL.h>
@@ -1190,5 +1190,5 @@ barrera[0].explota=0;
     jugador[i].municion=jugador[i].vidas=jugador[i].animacion=jugador[i].bala=NULL;
 
     SDL_Quit();//Sale de la libreria SDL
-}
+}*/
 

@@ -28,6 +28,7 @@ typedef struct //Estructura que contiene todas las variables de un jugador
         SDL_Texture *bala;
         SDL_Texture *municion;
         SDL_Texture *trampa;
+        SDL_Texture *fantasma;
 
         SDL_Rect posicion_trampa;
 
@@ -41,6 +42,10 @@ typedef struct //Estructura que contiene todas las variables de un jugador
 
         SDL_Rect recortar_municion;
         SDL_Rect posicion_municion;
+
+        SDL_Rect recortar_fantasma;
+        SDL_Rect posicion_fantasma;
+        int aleatorio_fantasma[3];
 
     }variables_jugador;
 
@@ -71,7 +76,6 @@ typedef struct
     }variables_barrera;
 
 
-
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render); //Crea las texturas
 void you_win (SDL_Rect *posicion_texto, int numero_vidas, SDL_Renderer *escenario, SDL_Texture *texto); //Cuando termina el juego dice quién ha ganado
 void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario, _Bool cargar); //Crea el jugador (establece valores predeterminados para cada componente)
@@ -86,18 +90,19 @@ void vidas_restantes(variables_jugador victima[], int numero_victima);//Cuando 2
 void fichero (variables_jugador jugador[], int numero_jugador, char nombre_partida[]); //Guarda los datos de la partida en un fichero
 void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario, char nombre_partida[]); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
 void datos_partida(char nombre_partida[50]);//Imprime los datos de la partida
-void multijugador(_Bool cargar, char nombre_partida[]);//Funcion principal
+void multijugador(_Bool cargar, char nombre_partida[], int victorias[],int numero_victoria, _Bool revancha, int numero_mapa);//Funcion principal
 void cargar_muro (variables_barrera barrera[],int numero_barrera, SDL_Renderer *escenario, char ruta[50], char ruta_mina[50]);
 void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,
                  SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador);
-void mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador, int *tiempo_mina);
+void mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador);
 void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables_barrera barrera[], int numero_barrera);
 void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_barrera barrera[],int numero_barrera);
 void posicion_portal(variables_barrera barrera[],int numero_barrera);
 void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jugador[],SDL_Renderer *escenario);
 
+void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);
+void mapa_multijugador_teletransporte(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);
 
-void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador); //Provisional
 void mapa_1(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);//Mapas del modo de juego individual
 void mapa_2(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);
 void mapa_3(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);

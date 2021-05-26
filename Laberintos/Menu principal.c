@@ -39,12 +39,17 @@ int main (int argc, char *argv[])
     char usuario2[100];
     char nombre_partida[100];
     char comprobacion_nombre[100];
+    char aux;
     _Bool bucle[10]={1,1,1,1,1,1,1,1};
     FILE *registro_partidas;
     FILE *partida;
+    int victorias[2]={0};
+    _Bool fichero_revancha=0;
 
     registro_partidas=fopen("Registro de las partidas.txt","a");
     fclose(registro_partidas);
+    partida=fopen("Puntuaciones.txt","a");
+    fclose(partida);
 
     printf("Juego del laberinto\n\n");
 
@@ -82,6 +87,10 @@ int main (int argc, char *argv[])
                         }
                         else if (elegir[20][2]=='2')
                         {
+                            printf("1-<Con revancha>\n2-<Sin revancha>\nEl modo con revancha solamente guardara las victorias y derrotas\n");
+                            scanf(" %s",&elegir[20][5]);
+                            if (elegir[20][5]=='2')
+                            {
                             printf("Nombre de la partida: ");
                             scanf(" %[^\n]",nombre_partida);
                             strcat(nombre_partida,".txt");
@@ -108,14 +117,7 @@ int main (int argc, char *argv[])
                                 }
                             }
                             if (elegir[20][3]=='2')
-                                while(revancha==1)
-                                {
-                                    multijugador(1,nombre_partida);
-                                    printf("Revancha?");
-                                    scanf(" %i",&revancha);
-                                    if (revancha)
-                                        partida=fopen(nombre_partida,"w");
-                                }
+                                multijugador(1,nombre_partida,victorias,0,0,0);
 
 
                             else
@@ -125,17 +127,36 @@ int main (int argc, char *argv[])
                             fprintf(registro_partidas,"%s\n",nombre_partida);
                             fclose(registro_partidas);
 
-                            printf("Nombre usuario 1: ");
-                            scanf(" %[^\n]",usuario1);
-                            printf("\nNmbre usuario 2: ");
-                            scanf(" %[^\n]",usuario2);
-
                             printf("Iniciando partida...\n");
-                            multijugador(0,nombre_partida);
+                            multijugador(0,nombre_partida,victorias,0,0,0);
                             }
                             bucle[0]=0;
                             partida_on=1;
                             atras=1;
+                            }
+                            else if (elegir[20][5]=='1')
+                            {
+                                printf("Nombre de la partida:\n");
+                                scanf(" %[^\n]",nombre_partida);
+                                printf("Nombre usuario 1: ");
+                                scanf(" %[^\n]",usuario1);
+                                printf("\nNmbre usuario 2: ");
+                                scanf(" %[^\n]",usuario2);
+                                while(revancha==1)
+                                {
+                                    fichero_revancha=1;
+                                    multijugador(0,nombre_partida,victorias,0,1,0);
+                                    printf("Revancha?\n");
+                                    scanf(" %i",&revancha);
+                                    if (revancha==0)
+                                    {
+                                        atras=1;
+                                        bucle[0]=0;
+                                    }
+                                }
+                            }
+                            else
+                                printf("Error!");
                         }
                         else
                             printf("Error!\n");
@@ -171,7 +192,7 @@ int main (int argc, char *argv[])
 
                         if (strcmp(nombre_partida,comprobacion_nombre)==0)
                         {
-                             multijugador(1,nombre_partida);
+                             multijugador(1,nombre_partida,victorias,0,0,0);
                              atras=1;
                              bucle[0]=0;
                              partida_on=1;
@@ -210,7 +231,10 @@ int main (int argc, char *argv[])
                 break;
 
             case '3':
-                printf("No hay puntuaciones!\n");
+                partida=fopen("Puntuaciones.txt","r");
+                while(fscanf(partida,"%c",&aux)!=EOF)
+                    printf("%c",aux);
+                fclose(partida);
                 break;
 
             case '4':
@@ -230,6 +254,13 @@ int main (int argc, char *argv[])
 
     }
     while(bucle[0]);
+
+    if (fichero_revancha==1)
+    {
+        partida=fopen("Puntuaciones.txt","a");
+        fprintf(partida,"%s: %i victorias de %s, %i victorias de %s",nombre_partida,victorias[0],usuario1,victorias[1],usuario2);
+        fclose(partida);
+    }
 
     if (partida_on)
     {

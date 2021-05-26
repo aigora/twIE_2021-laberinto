@@ -6,14 +6,12 @@
 #include "Funciones_principales.h"
 #include <sys/time.h>
 #include <stdlib.h>
-
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
     hacer_muro(50,50,50,10,8,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(500,500,20,20,5,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(200,630,15,80,3,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
 }
-
 /*void mapa_1(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
     hacer_muro(0,300,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
@@ -34,9 +32,7 @@ void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Rend
     hacer_muro(720,300,240,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(825,415,135,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(825,425,10,235,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-
 }
-
     void mapa_2(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
     hacer_muro(0,295,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
@@ -63,7 +59,6 @@ void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Rend
     hacer_muro(785,295,200,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(785,415,10,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
  }
-
     void mapa_3(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
     hacer_muro(0,0,40,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
@@ -87,7 +82,6 @@ void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Rend
     hacer_muro(320,413,350,30,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(580,443,40,105,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(180,350,110,40,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-
 }
 void mapa_4(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
@@ -118,9 +112,6 @@ void mapa_4(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escen
     hacer_muro(575,170,260,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(725,115,10,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
     hacer_muro(845,285,105,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-
-
-
 }*/
 
 void cargar_muro (variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, char ruta_muro[50], char ruta_mina[50])
@@ -1191,4 +1182,3 @@ barrera[0].explota=0;
 
     SDL_Quit();//Sale de la libreria SDL
 }
-

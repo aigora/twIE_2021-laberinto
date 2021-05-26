@@ -67,6 +67,9 @@ int main (int argc, char *argv[])
 
         switch(elegir[20][0])
         {
+        case '0':
+            multijugador(0,"JOrge",0,0,0,0);
+            break;
             case '1':
                 while(atras==0)
                 {

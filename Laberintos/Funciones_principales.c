@@ -883,7 +883,7 @@ barrera[numero_barrera].verde_activo=1;
 barrera[numero_barrera].azul_activo=1;
 }
 
-void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jugador[],SDL_Renderer *escenario)
+void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jugador[],SDL_Renderer *escenario, int numero_mapa)
 {
     int i,j=1;
     int portal_x[6];
@@ -898,6 +898,7 @@ void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jug
     int bal_y[2];
     int bal_w[2];
     int bal_h[2];
+
         for(i=0;i<2;i++)
         {
             jug_x[i]=jugador[i].posicion_animacion.x;
@@ -919,9 +920,17 @@ void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jug
             else
             SDL_SetTextureColorMod(barrera[numero_barrera].portal,100,20,20);
 
+            if (numero_mapa==0)
+            {
             barrera[numero_barrera].posicion_portal.x=portal_x[0]=100;
-            portal_w[0]=portal_x[0]+barrera[numero_barrera].posicion_portal.w;
+            barrera[numero_barrera].posicion_portal.y=portal_y[0]=70;
+            }
+            else if (numero_mapa==1)
+            {
+            barrera[numero_barrera].posicion_portal.x=portal_x[0]=100;
             barrera[numero_barrera].posicion_portal.y=portal_y[0]=100;
+            }
+            portal_w[0]=portal_x[0]+barrera[numero_barrera].posicion_portal.w;
             portal_h[0]=portal_y[0]+barrera[numero_barrera].posicion_portal.h;
             SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
             }
@@ -932,9 +941,18 @@ void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jug
             else
             SDL_SetTextureColorMod(barrera[numero_barrera].portal,20,100,20);
 
+            if (numero_mapa==0)
+            {
+            barrera[numero_barrera].posicion_portal.x=portal_x[2]=1000;
+            barrera[numero_barrera].posicion_portal.y=portal_y[2]=600;
+            }
+            else if (numero_mapa==1)
+            {
             barrera[numero_barrera].posicion_portal.x=portal_x[2]=100;
-            portal_w[2]=portal_x[2]+barrera[numero_barrera].posicion_portal.w;
             barrera[numero_barrera].posicion_portal.y=portal_y[2]=300;
+            }
+
+            portal_w[2]=portal_x[2]+barrera[numero_barrera].posicion_portal.w;
             portal_h[2]=portal_y[2]+barrera[numero_barrera].posicion_portal.h;
             SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
             }
@@ -945,32 +963,67 @@ void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jug
             else
             SDL_SetTextureColorMod(barrera[numero_barrera].portal,20,20,100);
 
-            barrera[numero_barrera].posicion_portal.x=portal_x[4]=100;
+            if (numero_mapa==0)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[4]=490;
+                barrera[numero_barrera].posicion_portal.y=portal_y[4]=320;
+            }
+            else if (numero_mapa==1)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[4]=100;
+                barrera[numero_barrera].posicion_portal.y=portal_y[4]=500;
+            }
+
             portal_w[4]=portal_x[4]+barrera[numero_barrera].posicion_portal.w;
-            barrera[numero_barrera].posicion_portal.y=portal_y[4]=500;
             portal_h[4]=portal_y[4]+barrera[numero_barrera].posicion_portal.h;
             SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
             }
             switch(barrera[numero_barrera].posicion_aleatoria[i])
             {
             case 0:
-            barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+            if (numero_mapa==0)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=875;
+                barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=180;
+            }
+            else if (numero_mapa==1)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+                barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=100;
+            }
             portal_w[i+j]=portal_x[i+j]+barrera[numero_barrera].posicion_portal.w;
-            barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=100;
             portal_h[i+j]=portal_y[i+j]+barrera[numero_barrera].posicion_portal.h;
             SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
             break;
             case 1:
-            barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+            if (numero_mapa==0)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=280;
+                barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=430;
+            }
+            else if (numero_mapa==1)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+                barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=300;
+            }
+
             portal_w[i+j]=portal_x[i+j]+barrera[numero_barrera].posicion_portal.w;
-            barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=300;
             portal_h[i+j]=portal_y[i+j]+barrera[numero_barrera].posicion_portal.h;
             SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
             break;
             case 2:
-            barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+            if (numero_mapa==0)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=1070;
+                barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=70;
+            }
+            else if (numero_mapa==1)
+            {
+                barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+                barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=500;
+            }
+
             portal_w[i+j]=portal_x[i+j]+barrera[numero_barrera].posicion_portal.w;
-            barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=500;
             portal_h[i+j]=portal_y[i+j]+barrera[numero_barrera].posicion_portal.h;
             SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
             break;
@@ -1207,7 +1260,7 @@ barrera[0].explota=0;
 
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
-        portal(barrera,0,jugador,escenario);
+        portal(barrera,0,jugador,escenario,numero_mapa);
         SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
 
         if(barrera[0].explota)
@@ -1275,8 +1328,8 @@ barrera[0].explota=0;
 
     }//Fin del bucle principal y por tanto de la partida
 
-    if (revancha==0)
-    fichero(jugador,0,nombre_partida);
+    //if (revancha==0)
+    //fichero(jugador,0,nombre_partida);
 
     free(barrera);
     free(jugador);//Libera lo reservado con malloc anteriormente

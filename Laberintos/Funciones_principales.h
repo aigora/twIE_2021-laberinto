@@ -49,6 +49,7 @@ typedef struct
     SDL_Texture *muro;
     SDL_Texture *mina;
     SDL_Texture *explosion;
+    SDL_Texture *portal;
 
 
     SDL_Rect posicion_muro;
@@ -56,11 +57,17 @@ typedef struct
     SDL_Rect posicion_mina;
     SDL_Rect recortar_mina;
     SDL_Rect posicion_explosion;
+    SDL_Rect posicion_portal;
+    SDL_Rect recortar_portal;
 
     _Bool mina_existe;
     _Bool explota;
+    _Bool rojo_activo;
+    _Bool verde_activo;
+    _Bool azul_activo;
 
     int numero_muro;
+    int posicion_aleatoria[3];
     }variables_barrera;
 
 
@@ -86,6 +93,9 @@ void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables
 void mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador, int *tiempo_mina);
 void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables_barrera barrera[], int numero_barrera);
 void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_barrera barrera[],int numero_barrera);
+void posicion_portal(variables_barrera barrera[],int numero_barrera);
+void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jugador[],SDL_Renderer *escenario);
+
 
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador); //Provisional
 void mapa_1(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);//Mapas del modo de juego individual

@@ -309,7 +309,7 @@ void limites_mapa(variables_jugador jugador[],int numero_jugador)//Limita el mov
 {
     const int velocidad_movimiento=2;
 
-    if(jugador[numero_jugador].posicion_animacion.x>=700)//Si el jugador llega a la posicion en cuestion avanzara 2 ya que se esta moviendo, pero retrocedera 2 al haber llegado al limite
+    if(jugador[numero_jugador].posicion_animacion.x>=900)//Si el jugador llega a la posicion en cuestion avanzara 2 ya que se esta moviendo, pero retrocedera 2 al haber llegado al limite
         jugador[numero_jugador].posicion_animacion.x-=velocidad_movimiento;//En consecuencia el jugador no se mueve
 
     if (jugador[numero_jugador].posicion_animacion.x<=0)//Repetimos lo mismo en los lugares que nos interesan para definir el mapa
@@ -318,7 +318,7 @@ void limites_mapa(variables_jugador jugador[],int numero_jugador)//Limita el mov
     if(jugador[numero_jugador].posicion_animacion.y<=0)
         jugador[numero_jugador].posicion_animacion.y+=velocidad_movimiento;
 
-    if(jugador[numero_jugador].posicion_animacion.y>=400)
+    if(jugador[numero_jugador].posicion_animacion.y>=650)
         jugador[numero_jugador].posicion_animacion.y-=velocidad_movimiento;
 
 }
@@ -354,7 +354,8 @@ void recargar_y_movimiento(variables_jugador jugador[], int numero_jugador, int 
         jugador[numero_jugador].posicion_bala.x+=distx;
         jugador[numero_jugador].posicion_bala.y+=disty;
     }
-    if ((jugador[numero_jugador].posicion_bala.x>700||jugador[numero_jugador].posicion_bala.x<0) && jugador[numero_jugador].bala_existe==1)//Si la bala llega a los limites definidos se destruye
+    if ((jugador[numero_jugador].posicion_bala.x>900||jugador[numero_jugador].posicion_bala.x<0
+         ||jugador[numero_jugador].posicion_bala.y>650||jugador[numero_jugador].posicion_bala.y<0) && jugador[numero_jugador].bala_existe==1)//Si la bala llega a los limites definidos se destruye
     {
         jugador[numero_jugador].posicion_bala.x=1300;
         jugador[numero_jugador].bala_existe=0;//La bala ya no existe
@@ -764,18 +765,186 @@ void interseccion_trampa(variables_jugador jugador[], int numero_jugador, variab
         victima[numero_victima].interseca_trampa=0;
 }
 
+void posicion_portal(variables_barrera barrera[],int numero_barrera)
+{
+int i;
+for(i=0;i<3;i++)
+{
+    if(i==0)
+    barrera[numero_barrera].posicion_aleatoria[i]=rand()%3;
+    if(i==1)
+    {
+    barrera[numero_barrera].posicion_aleatoria[i]=rand()%3;
+    if(barrera[numero_barrera].posicion_aleatoria[i]==barrera[numero_barrera].posicion_aleatoria[i-1])
+        i=0;
+    }
+    if(i==2)
+    {
+    barrera[numero_barrera].posicion_aleatoria[i]=rand()%3;
+    if(barrera[numero_barrera].posicion_aleatoria[i]==barrera[numero_barrera].posicion_aleatoria[i-2]
+       ||barrera[numero_barrera].posicion_aleatoria[i]==barrera[numero_barrera].posicion_aleatoria[i-1])
+        i=1;
+
+
+    }
+}
+
+barrera[numero_barrera].rojo_activo=1;
+barrera[numero_barrera].verde_activo=1;
+barrera[numero_barrera].azul_activo=1;
+}
+void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jugador[],SDL_Renderer *escenario)
+{
+    int i,j=1;
+    int portal_x[6];
+    int portal_y[6];
+    int portal_w[6];
+    int portal_h[6];
+    int jug_x[2];
+    int jug_y[2];
+    int jug_w[2];
+    int jug_h[2];
+    int bal_x[2];
+    int bal_y[2];
+    int bal_w[2];
+    int bal_h[2];
+        for(i=0;i<2;i++)
+        {
+            jug_x[i]=jugador[i].posicion_animacion.x;
+            jug_w[i]=jugador[i].posicion_animacion.x+jugador[i].posicion_animacion.w;
+            jug_y[i]=jugador[i].posicion_animacion.y;
+            jug_h[i]=jugador[i].posicion_animacion.y+jugador[i].posicion_animacion.h;
+            bal_x[i]=jugador[i].posicion_bala.x;
+            bal_w[i]=jugador[i].posicion_bala.x+jugador[i].posicion_bala.w;
+            bal_y[i]=jugador[i].posicion_bala.y;
+            bal_h[i]=jugador[i].posicion_bala.y+jugador[i].posicion_bala.h;
+        }
+
+        for(i=0;i<3;i++)
+        {
+            if (i==0)
+            {
+            if(barrera[numero_barrera].rojo_activo)
+            SDL_SetTextureColorMod(barrera[numero_barrera].portal,255,50,50);
+            else
+            SDL_SetTextureColorMod(barrera[numero_barrera].portal,100,20,20);
+
+            barrera[numero_barrera].posicion_portal.x=portal_x[0]=100;
+            portal_w[0]=portal_x[0]+barrera[numero_barrera].posicion_portal.w;
+            barrera[numero_barrera].posicion_portal.y=portal_y[0]=100;
+            portal_h[0]=portal_y[0]+barrera[numero_barrera].posicion_portal.h;
+            SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
+            }
+            else if (i==1)
+            {
+            if(barrera[numero_barrera].verde_activo)
+            SDL_SetTextureColorMod(barrera[numero_barrera].portal,50,255,50);
+            else
+            SDL_SetTextureColorMod(barrera[numero_barrera].portal,20,100,20);
+
+            barrera[numero_barrera].posicion_portal.x=portal_x[2]=100;
+            portal_w[2]=portal_x[2]+barrera[numero_barrera].posicion_portal.w;
+            barrera[numero_barrera].posicion_portal.y=portal_y[2]=300;
+            portal_h[2]=portal_y[2]+barrera[numero_barrera].posicion_portal.h;
+            SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
+            }
+            else if (i==2)
+            {
+            if(barrera[numero_barrera].azul_activo)
+            SDL_SetTextureColorMod(barrera[numero_barrera].portal,50,50,255);
+            else
+            SDL_SetTextureColorMod(barrera[numero_barrera].portal,20,20,100);
+
+            barrera[numero_barrera].posicion_portal.x=portal_x[4]=100;
+            portal_w[4]=portal_x[4]+barrera[numero_barrera].posicion_portal.w;
+            barrera[numero_barrera].posicion_portal.y=portal_y[4]=500;
+            portal_h[4]=portal_y[4]+barrera[numero_barrera].posicion_portal.h;
+            SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
+            }
+            switch(barrera[numero_barrera].posicion_aleatoria[i])
+            {
+            case 0:
+            barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+            portal_w[i+j]=portal_x[i+j]+barrera[numero_barrera].posicion_portal.w;
+            barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=100;
+            portal_h[i+j]=portal_y[i+j]+barrera[numero_barrera].posicion_portal.h;
+            SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
+            break;
+            case 1:
+            barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+            portal_w[i+j]=portal_x[i+j]+barrera[numero_barrera].posicion_portal.w;
+            barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=300;
+            portal_h[i+j]=portal_y[i+j]+barrera[numero_barrera].posicion_portal.h;
+            SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
+            break;
+            case 2:
+            barrera[numero_barrera].posicion_portal.x=portal_x[i+j]=500;
+            portal_w[i+j]=portal_x[i+j]+barrera[numero_barrera].posicion_portal.w;
+            barrera[numero_barrera].posicion_portal.y=portal_y[i+j]=500;
+            portal_h[i+j]=portal_y[i+j]+barrera[numero_barrera].posicion_portal.h;
+            SDL_RenderCopy(escenario,barrera[numero_barrera].portal,&barrera[numero_barrera].recortar_portal,&barrera[numero_barrera].posicion_portal);
+            break;
+            }
+        ++j;
+        }
+    j=1;
+    for(i=0;i<6;i++)
+    {
+     for(j=0;j<2;j++)
+     {
+         if(jug_w[j]<portal_x[i]||portal_w[i]<jug_x[j]||jug_h[j]<portal_y[i]||portal_h[i]<jug_y[j]);
+         else
+         {
+            if (i==0&&barrera[numero_barrera].rojo_activo)
+            {
+            jugador[j].posicion_animacion.x=portal_x[1];
+            jugador[j].posicion_animacion.y=portal_y[1];
+            barrera[numero_barrera].rojo_activo=0;
+            }
+            if(i==1&&barrera[numero_barrera].rojo_activo)
+            {
+            jugador[j].posicion_animacion.x=portal_x[0];
+            jugador[j].posicion_animacion.y=portal_y[0];
+            barrera[numero_barrera].rojo_activo=0;
+            }
+            if(i==2&&barrera[numero_barrera].verde_activo)
+            {
+            jugador[j].posicion_animacion.x=portal_x[3];
+            jugador[j].posicion_animacion.y=portal_y[3];
+            barrera[numero_barrera].verde_activo=0;
+            }
+            if(i==3&&barrera[numero_barrera].verde_activo)
+            {
+            jugador[j].posicion_animacion.x=portal_x[2];
+            jugador[j].posicion_animacion.y=portal_y[2];
+            barrera[numero_barrera].verde_activo=0;
+            }
+            if(i==4&&barrera[numero_barrera].azul_activo)
+            {
+            jugador[j].posicion_animacion.x=portal_x[5];
+            jugador[j].posicion_animacion.y=portal_y[5];
+            barrera[numero_barrera].azul_activo=0;
+            }
+            if(i==5&&barrera[numero_barrera].azul_activo)
+            {
+            jugador[j].posicion_animacion.x=portal_x[4];
+            jugador[j].posicion_animacion.y=portal_y[4];
+            barrera[numero_barrera].azul_activo=0;
+            }
+         }
+        }
+    }
+}
+
 void multijugador(_Bool cargar, char nombre_partida[])
 {
     int control=0;
-    double segma;
-    int chocan;
-    long int seconds;
-    long int microseconds;
-    double elapsed=0;
+    long int segundos;
+    long int microsegundos;
     struct timeval begin,end;
-    int segundos;
     int tiempo_explosion=0;
-    int tiempo_mina=0;
+    double tiempo_mina=0;
+    double tiempo_portal=0;
     int tiempo_estructura=0;
     int tiempo_recarga_estructura=0;
     int tiempo_jugador2=0;
@@ -783,6 +952,7 @@ void multijugador(_Bool cargar, char nombre_partida[])
     int distx1=0,distx2=0,disty1=0,disty2=0;
     int ancho,alto,incremento;
     _Bool trampa_cargada=0;
+
 
 
     SDL_Window *ventanaprincipal=NULL;//Ventana donde se ejecuta el juego
@@ -910,11 +1080,12 @@ barrera[0].explota=0;
         interseccion(jugador,0,jugador,1);//Si las balas intersecan con los jugadores
         interseccion(jugador,1,jugador,0);
 
-        if (tiempo_mina>=200)
+        if (tiempo_mina>=5.0)
         {
-            mina(barrera,0,escenario,jugador,0,&tiempo_mina);
-            mina(barrera,0,escenario,jugador,1,&tiempo_mina);
+            mina(barrera,0,escenario,jugador,0);
+            mina(barrera,0,escenario,jugador,1);
             tiempo_mina=0;
+            posicion_portal(barrera,0);
         }
 
         interseccion_mina(jugador,0,barrera,0);
@@ -940,6 +1111,7 @@ barrera[0].explota=0;
         SDL_RenderClear(escenario);//Limpia lo que haya en el escenario
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
         copiar_atributos(jugador,1,escenario);
+	portal(barrera,0,jugador,escenario);
         SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
 
         if(barrera[0].explota)
@@ -956,12 +1128,10 @@ barrera[0].explota=0;
         SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal
 
         gettimeofday(&end, 0);
-        seconds = end.tv_sec - begin.tv_sec;
-        microseconds = end.tv_usec - begin.tv_usec;
-        elapsed += seconds + microseconds*1e-6;
+        segundos = end.tv_sec - begin.tv_sec;
+        microsegundos = end.tv_usec - begin.tv_usec;
+        tiempo_mina+= segundos + microsegundos*1e-6;
 
-        if (elapsed>100.0)
-            elapsed=0.0;
 
         if (jugador[0].numero_vidas==0||jugador[1].numero_vidas==0)
         {

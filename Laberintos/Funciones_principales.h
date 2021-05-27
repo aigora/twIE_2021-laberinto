@@ -91,15 +91,16 @@ void fichero (variables_jugador jugador[], int numero_jugador, char nombre_parti
 void cargar_partida(variables_jugador jugador[], int numero_jugador, _Bool cargar,  SDL_Renderer *escenario, char nombre_partida[]); //Lee el fichero y asigna cada los valores a cada jugador en el caso de que se quiera recuperar la partida
 void datos_partida(char nombre_partida[50]);//Imprime los datos de la partida
 void multijugador(_Bool cargar, char nombre_partida[], int victorias[],int numero_victoria, _Bool revancha, int numero_mapa);//Funcion principal
-void cargar_muro (variables_barrera barrera[],int numero_barrera, SDL_Renderer *escenario, char ruta[50], char ruta_mina[50]);
+void cargar_muro (variables_barrera barrera[],int numero_barrera, SDL_Renderer *escenario, char ruta[50], char ruta_mina[50],_Bool modo_individual);
 void hacer_muro (int x,int y, int w, int h, int n, char direccion_muro,variables_barrera barrera[],int numero_barrera,
                  SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador);
-void mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador);
+void mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[], int numero_jugador, int numero_mapa);
 void interseccion_mina(variables_jugador jugador[], int numero_jugador,variables_barrera barrera[], int numero_barrera);
 void explosion_mina(variables_jugador jugador[], int numero_jugador, variables_barrera barrera[],int numero_barrera);
 void posicion_portal(variables_barrera barrera[],int numero_barrera);
 void portal(variables_barrera barrera[],int numero_barrera,variables_jugador jugador[],SDL_Renderer *escenario, int numero_mapa);
 
+void individual(char nombre_partida[], int numero_mapa, double *tiempo);
 void mapa_multijugador(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);
 void mapa_multijugador_teletransporte(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);
 

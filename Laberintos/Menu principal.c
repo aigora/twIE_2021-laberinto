@@ -22,8 +22,8 @@ int main (int argc, char *argv[])
     Modo multijugador: se enfrentaran 2 jugadores. Cada jugador tiene 3 vidas.\n\
     \tPierde el jugador al que se le acaben las vidas.\n\
     \tEl movimiento se realizara mediante:\n\n\
-    \tJugador 1: usara las flechas de control para moverse y la barra espaciadora para disparar.\n\
-    \tJugador 2: usara las teclas 'a', 'w', 's', 'd' para moverse y la letra 'f' para disparar.\n\n\
+    \tJugador 1: usara las flechas de control para moverse y la barra espaciadora para disparar.\nUsar 'm' para desplegar trampa.\n\
+    \tJugador 2: usara las teclas 'a', 'w', 's', 'd' para moverse y la letra 'f' para disparar.\nUsar 'e' para desplegar trampa.\n\n\
     La partida se guardara con el nombre que se introduzca durante la configuracion.\n\
     Una vez finalizada la partida selecciona <<Salir>> en caso de haber terminado el juego\n\
     o <<Continuar partida>> si desea seguir jugando.\n\n\
@@ -40,6 +40,7 @@ int main (int argc, char *argv[])
     char nombre_partida[100];
     char comprobacion_nombre[100];
     char aux;
+    double tiempo=0;
     _Bool bucle[10]={1,1,1,1,1,1,1,1};
     FILE *registro_partidas;
     FILE *partida;
@@ -50,6 +51,8 @@ int main (int argc, char *argv[])
     fclose(registro_partidas);
     partida=fopen("Puntuaciones.txt","a");
     fclose(partida);
+    partida=fopen("Puntuaciones individuales.txt","a");
+    fclose(partida);
 
     printf("Juego del laberinto\n\n");
 
@@ -59,17 +62,15 @@ int main (int argc, char *argv[])
         printf("1-<Nueva partida>\n");
         printf("2-<Cargar partida>\n");
         printf("3-<Puntuaciones>\n");
-        printf("4-<Instrucciones>\n");
-        printf("5-<Salir>\n");
+        printf("4-<Puntuaciones individuales>\n");
+        printf("5-<Instrucciones>\n");
+        printf("6-<Salir>\n");
 
         scanf(" %s",&elegir[20][0]);
         printf("\n");
 
         switch(elegir[20][0])
         {
-        case '0':
-            multijugador(0,"JOrge",0,0,0,0);
-            break;
             case '1':
                 while(atras==0)
                 {
@@ -83,10 +84,21 @@ int main (int argc, char *argv[])
                         scanf(" %s",&elegir[20][2]);
                         if (elegir[20][2]=='1')
                         {
-                            printf("Nombre de usuario (la partida se guardara con el mismo nombre): \n");
+                            printf("Nombre de la partida:\n");
+                            scanf(" %[^\n]",nombre_partida);
+                            strcat(nombre_partida,".txt");
+                            printf("Nombre de usuario: \n");
                             scanf(" %[^\n]",usuario);
-                            strcpy(nombre_partida,usuario);
                             printf("Iniciando partida...\n");
+                            individual("Jorge",1,&tiempo);
+                            individual("Jorge",2,&tiempo);
+                            individual("JOrge",3,&tiempo);
+                            individual("Jorge",4,&tiempo);
+                            partida=fopen("Puntuaciones individuales.txt","a");
+                            fprintf(partida,"%s: %lf s\n",nombre_partida,tiempo);
+                            fclose(partida);
+                            atras=1;
+                            bucle[0]=0;
                         }
                         else if (elegir[20][2]=='2')
                         {
@@ -241,10 +253,20 @@ int main (int argc, char *argv[])
                 break;
 
             case '4':
-                printf("%s",instrucciones);
+
+                partida=fopen("Puntuaciones individuales.txt","r");
+
+                while(fscanf(partida,"%c",&aux)!=EOF)
+                    printf("%c",aux);
+
+                fclose(partida);
                 break;
 
             case '5':
+                printf("%s",instrucciones);
+                break;
+
+            case '6':
                 printf("Saliendo...");
                 exit(-1);
                 break;
@@ -257,6 +279,8 @@ int main (int argc, char *argv[])
 
     }
     while(bucle[0]);
+
+    printf("%f",tiempo);
 
     if (fichero_revancha==1)
     {
@@ -274,3 +298,5 @@ int main (int argc, char *argv[])
     }
     return 0;
 }
+
+

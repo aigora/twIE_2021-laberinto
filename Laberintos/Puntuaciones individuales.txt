@@ -1,2 +1,0 @@
-jorge.txt: 75.097585 s
-jorge.txt: 54.464200 s

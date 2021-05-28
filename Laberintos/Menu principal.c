@@ -40,6 +40,7 @@ int main (int argc, char *argv[])
     char nombre_partida[100];
     char comprobacion_nombre[100];
     char aux;
+    int numero_mapa;
     double tiempo=0;
     _Bool bucle[10]={1,1,1,1,1,1,1,1};
     FILE *registro_partidas;
@@ -81,6 +82,7 @@ int main (int argc, char *argv[])
                     {
                         printf("1-<Individual>\n");
                         printf("2-<Multijugador (2 jugadores)>\n");
+                        printf("En el modo multijugador se guardan los datos de la partida, en el individual el tiempo\n");
                         scanf(" %s",&elegir[20][2]);
                         if (elegir[20][2]=='1')
                         {
@@ -89,11 +91,28 @@ int main (int argc, char *argv[])
                             strcat(nombre_partida,".txt");
                             printf("Nombre de usuario: \n");
                             scanf(" %[^\n]",usuario);
-                            printf("Iniciando partida...\n");
-                            individual("Jorge",1,&tiempo);
-                            individual("Jorge",2,&tiempo);
-                            individual("JOrge",3,&tiempo);
-                            individual("Jorge",4,&tiempo);
+                            printf("Modo de juego\n");
+                            printf("1-<Mapa 1>\n2-<Modo 2>\n3-<Modo 3>\n4-<Modo 4>\n");
+                            scanf(" %i",&numero_mapa);
+                            printf("Iniciando...");
+                            switch(numero_mapa)
+                            {
+                            case 1:
+                                individual(nombre_partida,1,&tiempo);
+                                break;
+                            case 2:
+                                individual(nombre_partida,2,&tiempo);
+                                break;
+                            case 3:
+                                individual(nombre_partida,3,&tiempo);
+                                break;
+                            case 4:
+                                individual(nombre_partida,4,&tiempo);
+                                break;
+                            default:
+                                printf("Error");
+                                break;
+                            }
                             partida=fopen("Puntuaciones individuales.txt","a");
                             fprintf(partida,"%s: %lf s\n",nombre_partida,tiempo);
                             fclose(partida);
@@ -157,10 +176,15 @@ int main (int argc, char *argv[])
                                 scanf(" %[^\n]",usuario1);
                                 printf("\nNmbre usuario 2: ");
                                 scanf(" %[^\n]",usuario2);
+                                printf("Modo de juego:\n1-<Modo 1>\n2-<Modo 2>\n");
+                                scanf(" %i",&numero_mapa);
+                                if (numero_mapa!=0||numero_mapa!=1)
+                                    printf("Error\n");
+
                                 while(revancha==1)
                                 {
                                     fichero_revancha=1;
-                                    multijugador(0,nombre_partida,victorias,0,1,0);
+                                    multijugador(0,nombre_partida,victorias,0,1,numero_mapa);
                                     printf("Revancha?\n");
                                     scanf(" %i",&revancha);
                                     if (revancha==0)
@@ -169,6 +193,7 @@ int main (int argc, char *argv[])
                                         bucle[0]=0;
                                     }
                                 }
+
                             }
                             else
                                 printf("Error!");
@@ -187,6 +212,7 @@ int main (int argc, char *argv[])
                 break;
 
             case '2':
+                printf("Se cargan partidas multijugador inciadas anteriormente.\nSi la partida estaba finalizada saltara el mesaje de salida.\n");
                 while(atras==0)
                 {
                 printf("1-<Nombre de la partida>\n");

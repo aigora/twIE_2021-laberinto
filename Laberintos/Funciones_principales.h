@@ -55,6 +55,7 @@ typedef struct //Estructura que contiene todas las variables de un jugador
         int fas_h[3];
         double tiempo_muerto[3];
 
+
     }variables_jugador;
 
 typedef struct
@@ -86,7 +87,7 @@ typedef struct
 
 SDL_Texture *cargar_texturas (char ruta[50],SDL_Renderer *render); //Crea las texturas
 void you_win (SDL_Rect *posicion_texto, int numero_vidas, SDL_Renderer *escenario, SDL_Texture *texto); //Cuando termina el juego dice quién ha ganado
-void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario, _Bool cargar); //Crea el jugador (establece valores predeterminados para cada componente)
+void generar_jugador(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario, _Bool cargar,_Bool bindividual); //Crea el jugador (establece valores predeterminados para cada componente)
 void copiar_atributos(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario); //Mejorar legibilidad, presenta el escenario en pantalla
 void destruir_atributos(variables_jugador jugador[], int numero_jugador); //Mejorar legibilidad, destruye las texturas,renders,etc...utilizados
 void movimiento_jugador(variables_jugador jugador[], int numero_jugador, int *tiempo);//Permite moverse al jugador
@@ -119,5 +120,6 @@ void mapa_4(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escen
 void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],double elapsed,double *segma,char ruta_mina[50],int *chocan);
 void interseccion_trampa(variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima);
 
+void disparar_individual (variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima, SDL_Renderer *escenario, int *distx, int *disty);//Dispara una bala
 void datos_fantasma(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario);
 void hacer_fantasma(variables_jugador jugador[],int numero_jugador,variables_jugador fantasma[],int numero_fantasma,SDL_Renderer *escenario,double tiempo);

@@ -84,107 +84,118 @@ void mapa_multijugador_teletransporte(variables_barrera barrera[], int numero_ba
 void mapa_1(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
     hacer_muro(0,300,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(0,415,10,10,33,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,50,10,10,26,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,50,125,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(215,50,10,215,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(220,150,255,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(325,265,10,160,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(325,265,50,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(475,25,10,505,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(215,530,270,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,415,10,235,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,650,725,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(595,150,10,510,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(475,25,235,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(715,25,10,10,50,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(720,300,240,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(825,415,135,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(825,425,10,235,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,415,33,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,50,10,26,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,50,12,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(215,50,10,22,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(220,150,26,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(325,265,10,16,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(325,265,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(475,50,10,48,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(215,530,27,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,415,10,24,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,650,88,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(595,150,10,51,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(475,50,24,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(715,50,10,48,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(720,520,13,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(825,415,38,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(975,425,10,23,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(825,200,10,22,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(725,100,21,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(935,100,10,19,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(935,290,30,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+
 
 }
 
     void mapa_2(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
-    hacer_muro(0,295,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(0,415,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,25,10,280,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,25,325,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(425,25,10,250,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(215,150,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(215,150,10,345,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(330,265,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,415,10,185,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(100,600,215,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(215,485,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(330,265,10,100,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(315,600,10,100,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(315,700,480,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(675,280,10,310,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(685,415,400,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(445,380,10,200,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(445,580,230,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(560,160,10,310,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(425,150,360,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(785,150,10,150,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(785,295,200,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(785,415,10,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,295,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,415,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,25,10,28,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,25,33,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(425,25,10,25,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(215,150,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(215,150,10,35,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(330,265,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,415,10,19,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,600,22,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(215,490,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(330,265,10,10,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(315,600,10,10,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(315,700,48,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(675,280,10,31,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(685,413,10,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(445,380,10,20,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(445,580,23,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(560,160,10,31,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(425,150,36,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(785,150,10,15,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(785,295,42,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(785,412,10,30,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(905,300,10,24,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(785,650,25,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(1035,430,10,23,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(1035,430,20,10,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
  }
 
     void mapa_3(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
-    hacer_muro(0,0,40,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(0,405,40,315,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(39,0,880,35,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(39,685,880,35,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(920,415,40,315,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(920,0,40,300,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(145,140,450,35,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(700,140,115,35,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(145,545,220,35,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(475,545,340,35,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(145,175,35,370,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(780,175,35,133,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(780,417,35,130,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(725,35,40,105,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(815,475,105,35,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(290,278,30,165,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(320,278,50,30,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(475,278,340,30,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(320,413,350,30,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(580,443,40,105,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(180,350,110,40,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,50,40,25,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,400,40,35,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(39,50,90,35,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(39,710,90,40,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(920,430,40,35,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(920,50,40,25,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(145,160,45,35,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(695,160,12,35,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(145,565,22,35,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(475,565,34,35,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(145,195,35,37,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(780,195,35,13,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(780,437,35,13,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(725,80,40,8,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(815,495,11,35,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(290,298,30,17,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(320,298,10,30,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(475,298,34,30,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(320,437,37,30,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(580,464,40,11,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(180,370,11,40,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(920,295,50,40,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(920,430,50,40,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
 
 }
 void mapa_4(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador)
 {
-    hacer_muro(0,0,10,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(0,405,10,315,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(0,0,960,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(0,710,960,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(950,415,10,315,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(950,0,10,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(10,285,100,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(110,145,10,150,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(10,405,215,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(225,250,10,345,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(110,135,225,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(115,595,120,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(115,520,10,75,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(450,10,10,350,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(345,360,115,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(345,370,10,225,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(345,595,115,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(460,475,10,130,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(470,520,215,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(575,635,10,75,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(685,520,10,85,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(695,595,150,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(600,405,370,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(460,285,150,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(575,170,260,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(725,115,10,295,1,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
-    hacer_muro(845,285,105,10,1,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,50,20,10,25,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,405,20,33,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,50,96,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(0,730,96,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(950,415,20,33,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(950,50,20,25,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(20,280,11,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(110,145,20,15,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(100,405,14,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(225,250,20,36,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(110,135,25,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(115,595,13,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(115,520,20,8,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(450,50,20,31,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(345,360,12,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(345,370,20,23,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(345,595,13,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(460,475,20,14,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(470,520,22,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(575,635,20,10,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(685,520,20,9,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(690,590,15,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(600,405,60,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(460,285,15,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(575,170,26,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(725,130,20,29,10,'v',barrera,numero_barrera,escenario,jugador,numero_jugador);
+    hacer_muro(845,285,50,20,10,'h',barrera,numero_barrera,escenario,jugador,numero_jugador);
 }
 
 void cargar_muro (variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, char ruta_muro[50], char ruta_mina[50],_Bool modo_individual)

@@ -45,7 +45,15 @@ typedef struct //Estructura que contiene todas las variables de un jugador
 
         SDL_Rect recortar_fantasma;
         SDL_Rect posicion_fantasma;
+
         int aleatorio_fantasma[3];
+        int muerto[3];
+        int existe[3];
+        int fas_x[3];
+        int fas_y[3];
+        int fas_w[3];
+        int fas_h[3];
+        double tiempo_muerto[3];
 
     }variables_jugador;
 

@@ -871,3 +871,29 @@
 
 1621166947 source:c:\users\jorge\onedrive\documentos\obs studio\upm\informática\trabajo github\twie_2021-laberinto\laberintos\mapas.c
 
+1622206718 source:c:\users\coronavirus\onedrive\documentos\github\twie_2021-laberinto-master\laberintos\funciones_principales.c
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	"Funciones_principales.h"
+	<sys/time.h>
+	<stdlib.h>
+
+1622208025 c:\users\coronavirus\onedrive\documentos\github\twie_2021-laberinto-master\laberintos\funciones_principales.h
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<sys/time.h>
+	<stdlib.h>
+
+1622206718 source:c:\users\coronavirus\onedrive\documentos\github\twie_2021-laberinto-master\laberintos\menu principal.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	"Funciones_principales.h"
+	<stdlib.h>
+

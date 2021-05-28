@@ -1364,6 +1364,158 @@ barrera[0].explota=0;
     SDL_Quit();//Sale de la libreria SDL
 }
 
+void datos_fantasma(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario)
+{
+ int ancho_fantasma;
+ int alto_fantasma;
+ jugador[numero_jugador].fantasma=cargar_texturas("Estrella.png",escenario);
+ SDL_QueryTexture(jugador[numero_jugador].fantasma,NULL,NULL,&ancho_fantasma,&alto_fantasma);
+ jugador[numero_jugador].recortar_fantasma.x=jugador[numero_jugador].recortar_fantasma.y=0;
+ jugador[numero_jugador].recortar_fantasma.w=ancho_fantasma;
+ jugador[numero_jugador].recortar_fantasma.h=alto_fantasma;
+ jugador[numero_jugador].posicion_fantasma.w=jugador[numero_jugador].posicion_fantasma.h=100;
+jugador[numero_jugador].muerto[0]=jugador[numero_jugador].muerto[1]=jugador[numero_jugador].muerto[2]=0;
+jugador[numero_jugador].existe[0]=jugador[numero_jugador].existe[1]=jugador[numero_jugador].existe[2]=0;
+jugador[numero_jugador].tiempo_muerto[0]=jugador[numero_jugador].tiempo_muerto[1]=jugador[numero_jugador].tiempo_muerto[2]=0;
+}
+
+void hacer_fantasma(variables_jugador jugador[],int numero_jugador,variables_jugador fantasma[],int numero_fantasma,SDL_Renderer *escenario,double tiempo)
+{
+    int i;
+    int jug_x=jugador[numero_jugador].posicion_animacion.x;
+    int jug_w=jugador[numero_jugador].posicion_animacion.x+jugador[numero_jugador].posicion_animacion.w;
+    int jug_y=jugador[numero_jugador].posicion_animacion.y;
+    int jug_h=jugador[numero_jugador].posicion_animacion.y+jugador[numero_jugador].posicion_animacion.h;
+    int bal_x=jugador[numero_jugador].posicion_bala.x;
+    int bal_w=jugador[numero_jugador].posicion_bala.x+jugador[numero_jugador].posicion_bala.w;
+    int bal_y=jugador[numero_jugador].posicion_bala.y;
+    int bal_h=jugador[numero_jugador].posicion_bala.y+jugador[numero_jugador].posicion_bala.h;
+    float x,y,cos,sin,distancia;
+    double desarrollo;
+    int dis_x, dis_y;
+    for(i=0;i<3;i++)
+    {
+        if (fantasma[numero_fantasma].existe[i]==0&&fantasma[numero_fantasma].muerto[i]==0)
+        {
+           if(i==0)
+            fantasma[numero_fantasma].aleatorio_fantasma[i]=rand()%10;
+            if(i==1)
+            {
+            fantasma[numero_fantasma].aleatorio_fantasma[i]=rand()%10;
+            if(fantasma[numero_fantasma].aleatorio_fantasma[i]==fantasma[numero_fantasma].aleatorio_fantasma[i-1])
+            i=0;
+            }
+            if(i==2)
+            {
+            fantasma[numero_fantasma].aleatorio_fantasma[i]=rand()%10;
+            if(fantasma[numero_fantasma].aleatorio_fantasma[i]==fantasma[numero_fantasma].aleatorio_fantasma[i-2]
+            ||fantasma[numero_fantasma].aleatorio_fantasma[i]==fantasma[numero_fantasma].aleatorio_fantasma[i-1])
+            i=1;
+            }
+            fantasma[numero_fantasma].existe[i]=1;
+            switch(fantasma[numero_fantasma].aleatorio_fantasma[i])
+        {
+            case 0:
+            fantasma[numero_fantasma].fas_x[i]=300;
+            fantasma[numero_fantasma].fas_y[i]=127;
+            break;
+            case 1:
+            fantasma[numero_fantasma].fas_x[i]=400;
+            fantasma[numero_fantasma].fas_y[i]=128;
+            break;
+            case 2:
+            fantasma[numero_fantasma].fas_x[i]=500;
+            fantasma[numero_fantasma].fas_y[i]=129;
+            break;
+            case 3:
+            fantasma[numero_fantasma].fas_x[i]=600;
+            fantasma[numero_fantasma].fas_y[i]=130;
+            break;
+            case 4:
+            fantasma[numero_fantasma].fas_x[i]=700;
+            fantasma[numero_fantasma].fas_y[i]=131;
+            break;
+            case 5:
+            fantasma[numero_fantasma].fas_x[i]=800;
+            fantasma[numero_fantasma].fas_y[i]=132;
+            break;
+            case 6:
+            fantasma[numero_fantasma].fas_x[i]=900;
+            fantasma[numero_fantasma].fas_y[i]=133;
+            break;
+            case 7:
+            fantasma[numero_fantasma].fas_x[i]=350;
+            fantasma[numero_fantasma].fas_y[i]=134;
+            break;
+            case 8:
+            fantasma[numero_fantasma].fas_x[i]=450;
+            fantasma[numero_fantasma].fas_y[i]=135;
+            break;
+            case 9:
+            fantasma[numero_fantasma].fas_x[i]=550;
+            fantasma[numero_fantasma].fas_y[i]=136;
+            break;
+        }
+    }
+
+     fantasma[numero_fantasma].fas_w[i]=fantasma[numero_fantasma].fas_x[i]+fantasma[numero_fantasma].posicion_fantasma.w;
+     fantasma[numero_fantasma].fas_h[i]=fantasma[numero_fantasma].fas_y[i]+fantasma[numero_fantasma].posicion_fantasma.h;
+distancia=sqrt(pow(jugador[numero_jugador].posicion_animacion.x-fantasma[numero_fantasma].fas_x[i],2)
+                         +pow(jugador[numero_jugador].posicion_animacion.y-fantasma[numero_fantasma].fas_y[i],2));
+
+    x=jugador[numero_jugador].posicion_animacion.x-fantasma[numero_fantasma].fas_x[i];
+    y=jugador[numero_jugador].posicion_animacion.y-fantasma[numero_fantasma].fas_y[i];
+
+    cos=x/distancia;
+    sin=y/distancia;
+
+    dis_x=2*cos;
+    dis_y=2*sin;
+
+    if((jug_w<fantasma[numero_fantasma].fas_x[i])||(fantasma[numero_fantasma].fas_w[i]<jug_x)
+       ||(jug_h<fantasma[numero_fantasma].fas_y[i])||(fantasma[numero_fantasma].fas_h[i]<jug_y));
+    else
+    {
+    jugador[numero_jugador].numero_vidas--;
+    vidas_restantes(jugador,0);
+    fantasma[numero_fantasma].posicion_fantasma.x=-300;
+    fantasma[numero_fantasma].fas_x[i]=-300;
+    fantasma[numero_fantasma].muerto[i]=1;
+    fantasma[numero_fantasma].existe[i]=0;
+    fantasma[numero_fantasma].tiempo_muerto[i]=tiempo;
+    }
+    if(bal_w<fantasma[numero_fantasma].fas_x[i]||fantasma[numero_fantasma].fas_w[i]<bal_x
+       ||bal_h<fantasma[numero_fantasma].fas_y[i]||fantasma[numero_fantasma].fas_h[i]<bal_y);
+    else
+    {
+    fantasma[numero_fantasma].posicion_fantasma.x=-300;
+    fantasma[numero_fantasma].fas_x[i]=-300;
+    jugador[numero_jugador].posicion_bala.x=-500;
+    fantasma[numero_fantasma].muerto[i]=1;
+    fantasma[numero_fantasma].existe[i]=0;
+    fantasma[numero_fantasma].tiempo_muerto[i]=tiempo;
+    }
+    if (fantasma[numero_fantasma].muerto[i]==1)
+    {
+        if (tiempo-fantasma[numero_fantasma].tiempo_muerto[i]>5.0)
+        {
+        fantasma[numero_fantasma].tiempo_muerto[i]=0;
+        fantasma[numero_fantasma].muerto[i]=0;
+        }
+        else;
+    }
+    else
+    {
+    fantasma[numero_fantasma].fas_x[i]+=dis_x;
+    fantasma[numero_fantasma].fas_y[i]+=dis_y;
+    }
+    fantasma[numero_fantasma].posicion_fantasma.x=fantasma[numero_fantasma].fas_x[i];
+    fantasma[numero_fantasma].posicion_fantasma.y=fantasma[numero_fantasma].fas_y[i];
+    SDL_RenderCopy(escenario,fantasma[numero_fantasma].fantasma,&fantasma[numero_fantasma].recortar_fantasma,&fantasma[numero_fantasma].posicion_fantasma);
+}
+}
+
+
 void individual(char nombre_partida[], int numero_mapa, double *tiempo)
 {
     int control=0;

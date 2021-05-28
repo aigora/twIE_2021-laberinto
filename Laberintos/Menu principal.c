@@ -180,6 +180,8 @@ int main (int argc, char *argv[])
                                 scanf(" %i",&numero_mapa);
                                 if (numero_mapa!=0||numero_mapa!=1)
                                     printf("Error\n");
+                                else
+                                {
 
                                 while(revancha==1)
                                 {
@@ -192,6 +194,7 @@ int main (int argc, char *argv[])
                                         atras=1;
                                         bucle[0]=0;
                                     }
+                                }
                                 }
 
                             }

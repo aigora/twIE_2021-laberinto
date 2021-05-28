@@ -1,0 +1,2 @@
+jorge.txt: 78.387213 s
+jds.txt: 24.873136 s

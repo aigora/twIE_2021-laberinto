@@ -176,12 +176,9 @@ int main (int argc, char *argv[])
                                 scanf(" %[^\n]",usuario1);
                                 printf("\nNmbre usuario 2: ");
                                 scanf(" %[^\n]",usuario2);
-                                printf("Modo de juego:\n1-<Modo 1>\n2-<Modo 2>\n");
+                                printf("Modo de juego:\n0-<Modo 1>\n1-<Modo 2>\n");
                                 scanf(" %i",&numero_mapa);
-                                if (numero_mapa!=0||numero_mapa!=1)
-                                    printf("Error\n");
-                                else
-                                {
+
 
                                 while(revancha==1)
                                 {
@@ -195,7 +192,7 @@ int main (int argc, char *argv[])
                                         bucle[0]=0;
                                     }
                                 }
-                                }
+
 
                             }
                             else
@@ -279,6 +276,7 @@ int main (int argc, char *argv[])
                 while(fscanf(partida,"%c",&aux)!=EOF)
                     printf("%c",aux);
                 fclose(partida);
+                printf("\n");
                 break;
 
             case '4':

@@ -118,3 +118,6 @@ void mapa_3(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escen
 void mapa_4(variables_barrera barrera[], int numero_barrera, SDL_Renderer *escenario, variables_jugador jugador[], int numero_jugador);
 void hacer_mina(variables_barrera barrera[],int numero_barrera,SDL_Renderer *escenario,variables_jugador jugador[],double elapsed,double *segma,char ruta_mina[50],int *chocan);
 void interseccion_trampa(variables_jugador jugador[], int numero_jugador, variables_jugador victima[], int numero_victima);
+
+void datos_fantasma(variables_jugador jugador[], int numero_jugador, SDL_Renderer *escenario);
+void hacer_fantasma(variables_jugador jugador[],int numero_jugador,variables_jugador fantasma[],int numero_fantasma,SDL_Renderer *escenario,double tiempo);

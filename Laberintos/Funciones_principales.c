@@ -1368,12 +1368,12 @@ void datos_fantasma(variables_jugador jugador[], int numero_jugador, SDL_Rendere
 {
  int ancho_fantasma;
  int alto_fantasma;
- jugador[numero_jugador].fantasma=cargar_texturas("Estrella.png",escenario);
+ jugador[numero_jugador].fantasma=cargar_texturas("Fantasma.png",escenario);
  SDL_QueryTexture(jugador[numero_jugador].fantasma,NULL,NULL,&ancho_fantasma,&alto_fantasma);
  jugador[numero_jugador].recortar_fantasma.x=jugador[numero_jugador].recortar_fantasma.y=0;
  jugador[numero_jugador].recortar_fantasma.w=ancho_fantasma;
  jugador[numero_jugador].recortar_fantasma.h=alto_fantasma;
- jugador[numero_jugador].posicion_fantasma.w=jugador[numero_jugador].posicion_fantasma.h=100;
+ jugador[numero_jugador].posicion_fantasma.w=jugador[numero_jugador].posicion_fantasma.h=30;
 jugador[numero_jugador].muerto[0]=jugador[numero_jugador].muerto[1]=jugador[numero_jugador].muerto[2]=0;
 jugador[numero_jugador].existe[0]=jugador[numero_jugador].existe[1]=jugador[numero_jugador].existe[2]=0;
 jugador[numero_jugador].tiempo_muerto[0]=jugador[numero_jugador].tiempo_muerto[1]=jugador[numero_jugador].tiempo_muerto[2]=0;
@@ -1564,7 +1564,7 @@ if (jugador==NULL)//Comprobacion de error
 else//Genera los jugadores con las funciones definidas de antes
 {
     generar_jugador(jugador,0,escenario,0);
-    generar_jugador(jugador,1,escenario,0);
+    datos_fantasma(jugador,1,escenario);
     cargar_partida(jugador,0,0,escenario,nombre_partida);//Si cargamos partida carga los valores guardados sobre la estructura jugador
 }
 
@@ -1600,12 +1600,6 @@ else
                     if (jugador[0].recargando==0 && jugador[0].bala_existe==0)
                     disparar(jugador,0,jugador,1,escenario,&distx1,&disty1);
                 }
-                if(evento.key.keysym.sym==SDLK_f)//Si es una f lo mismo pero para el jugador 2
-                {
-                    if (jugador[1].recargando==0 && jugador[1].bala_existe==0)
-                    disparar(jugador,1,jugador,0,escenario,&distx2,&disty2);
-
-                }
 
                 if (evento.key.keysym.sym==SDLK_m)
                     {
@@ -1616,38 +1610,23 @@ else
                         jugador[0].posicion_trampa.y=jugador[0].posicion_animacion.y;
                         }
                     }
-                if (evento.key.keysym.sym==SDLK_e)
-                    {
-                        if (jugador[1].trampa_cargada==1)
-                        {
-                        jugador[1].trampa_cargada=0;
-                        jugador[1].posicion_trampa.x=jugador[1].posicion_animacion.x;
-                        jugador[1].posicion_trampa.y=jugador[1].posicion_animacion.y;
-                        }
-                    }
             }
         }
 
         recargar_y_movimiento(jugador,0,&tiempo_estructura,distx1,disty1);//Mueve la bala y recarga la municion
-        recargar_y_movimiento(jugador,1,&tiempo_recarga_estructura,distx2,disty2);
+
 
         movimiento_jugador(jugador,0,&tiempo_jugador);//Para mover los jugadores
-        movimiento_jugador(jugador,1,&tiempo_jugador2);
+
 
         limites_mapa(jugador,0);//Donde se pueden mover
-        limites_mapa(jugador,1);
 
-        interseccion(jugador,0,jugador,1);//Si las balas intersecan con los jugadores
-        interseccion(jugador,1,jugador,0);
 
-        interseccion_trampa(jugador,0,jugador,1);
-        interseccion_trampa(jugador,1,jugador,0);
+        //interseccion(jugador,0,jugador,1);//Si las balas intersecan con los jugadores
 
-        if(jugador[1].intersecan || jugador[1].interseca_trampa)//Si la bala 0 interseca con el jugador 1
-                                                            //llama a la funcion vidas restantes
-        {
-            vidas_restantes(jugador,1);
-        }
+
+        //interseccion_trampa(jugador,0,jugador,1);
+
 
         if(jugador[0].intersecan || jugador[0].interseca_trampa)
         {
@@ -1672,11 +1651,8 @@ else
             break;
         }
 
-        if (jugador[0].posicion_animacion.x>=700)
-            ejecutando=0;
-
+        hacer_fantasma(jugador,0,jugador,1,escenario,*tiempo);
         copiar_atributos(jugador,0,escenario); //Pega en el escenario las caracteristicas de cada jugador tras acabar el bucle
-        copiar_atributos(jugador,1,escenario);
         SDL_RenderCopy(escenario,barrera[0].mina,&barrera[0].recortar_mina,&barrera[0].posicion_mina);
 
         SDL_RenderPresent(escenario);//Presenta el render sobre la ventana principal

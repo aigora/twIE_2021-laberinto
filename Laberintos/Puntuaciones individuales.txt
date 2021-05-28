@@ -1,2 +1,7 @@
 jorge.txt: 78.387213 s
 jds.txt: 24.873136 s
+jorge.txt: 19.141006 s
+jorge.txt: 33.290874 s
+jorgea.txt: 20.717258 s
+jorge.txt: 11.609805 s
+haskd.txt: 5.856350 s
